@@ -16,7 +16,7 @@ export default {
                 'accent-brown': '#401f10'
             },
             fontFamily: {
-                display: ['Outfit', 'Noto Sans CJK SC', 'system-ui', 'sans-serif'],
+                display: [ 'Lora', 'Noto Sans CJK SC', 'system-ui', 'serif' ],
                 body: ['Noto Sans CJK SC', 'system-ui', 'sans-serif']
             }
         },
