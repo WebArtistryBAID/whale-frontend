@@ -28,7 +28,7 @@ export default function ComponentOrderedItem({
                         </div>
                         : <div className='flex-shrink flex items-center'>
                             <button className='bg-black p-1 aspect-square w-6 h-6 mr-2 font-bold hover:bg-gray-900 text-lg rounded-full
-                                        transition-colors duration-100 font-display text-white flex justify-center items-center'
+                                        transition-colors duration-100 text-white flex justify-center items-center'
                                     aria-label={t('a11y.remove')}
                                     onClick={() => {
                                         changeAmount(-1)
@@ -40,7 +40,7 @@ export default function ComponentOrderedItem({
                                 {item.amount}
                             </div>
                             <button className='bg-black p-1 aspect-square w-6 h-6 ml-2 font-bold hover:bg-gray-900 text-lg rounded-full
-                                        transition-colors duration-100 font-display text-white flex justify-center items-center'
+                                        transition-colors duration-100 text-white flex justify-center items-center'
                                     aria-label={t('a11y.add')}
                                     onClick={() => {
                                         changeAmount(1)

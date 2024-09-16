@@ -187,7 +187,7 @@ export default function PageCheck(): JSX.Element {
 
                         {order.data.status === OrderStatus.notStarted
                             ? <button onClick={cancel}
-                                      className={`mt-5 p-2 w-full rounded-full font-bold font-display transition-colors duration-100 ${orderCancel.isError || typeof orderCancel.data === 'object' || orderCancel.isPending ? 'bg-gray-300 text-gray-400' : 'bg-accent-red hover:bg-red-500 text-white'}`}>
+                                      className={`mt-5 p-2 w-full rounded-full font-bold transition-colors duration-100 ${orderCancel.isError || typeof orderCancel.data === 'object' || orderCancel.isPending ? 'bg-gray-300 text-gray-400' : 'bg-accent-red hover:bg-red-500 text-white'}`}>
                                 {orderCancel.isPending ? t('check.cancelLoading') : null}
                                 {orderCancel.isIdle ? (cancelConfirm ? t('check.cancelConfirm') : t('check.cancel')) : null}
                                 {orderCancel.isError || typeof orderCancel.data === 'object' ? t('check.cancelFailed') : null}
@@ -281,7 +281,7 @@ export default function PageCheck(): JSX.Element {
 
                             {order.data.status === OrderStatus.notStarted
                                 ? <button onClick={cancel}
-                                          className={`p-2 w-full rounded-full font-bold font-display transition-colors duration-100 ${orderCancel.isError || typeof orderCancel.data === 'object' || orderCancel.isPending ? 'bg-gray-300 text-gray-400' : 'bg-accent-red hover:bg-red-500 text-white'}`}>
+                                          className={`p-2 w-full rounded-full font-bold transition-colors duration-100 ${orderCancel.isError || typeof orderCancel.data === 'object' || orderCancel.isPending ? 'bg-gray-300 text-gray-400' : 'bg-accent-red hover:bg-red-500 text-white'}`}>
                                     {orderCancel.isPending ? t('check.cancelLoading') : null}
                                     {orderCancel.isIdle ? (cancelConfirm ? t('check.cancelConfirm') : t('check.cancel')) : null}
                                     {orderCancel.isError || typeof orderCancel.data === 'object' ? t('check.cancelFailed') : null}

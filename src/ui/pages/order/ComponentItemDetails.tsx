@@ -147,12 +147,12 @@ export default function ComponentItemDetails({
                 </div>
                 <div className='flex-shrink mr-5'>
                     <div className='rounded-full bg-white p-2 flex items-center'>
-                        <button className='mr-3 p-1 font-bold font-display text-xl' onClick={() => {
+                        <button className="mr-3 p-1 font-bold text-xl" onClick={() => {
                             setAmount(Math.max(1, amount - 1))
                         }}>-
                         </button>
                         <p className='font-bold font-display w-3 text-center'>{amount}</p>
-                        <button className='ml-3 p-1 font-bold font-display text-xl' onClick={() => {
+                        <button className="ml-3 p-1 font-bold text-xl" onClick={() => {
                             setAmount(Math.min(10, amount + 1))
                         }}>+
                         </button>

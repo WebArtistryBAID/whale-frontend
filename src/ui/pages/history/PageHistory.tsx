@@ -122,7 +122,7 @@ export default function PageHistory(): JSX.Element {
                             <button onClick={() => {
                                 void query.fetchNextPage()
                             }}
-                                    className="rounded-full py-2 px-5 font-display bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100">{t('history.loadMore')}</button>
+                                    className="rounded-full py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100">{t('history.loadMore')}</button>
                         </div>
                         : null
                     }

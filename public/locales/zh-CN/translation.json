@@ -73,7 +73,6 @@
       "waitTime_one": "现在点单需要等待约 {{count}} 分钟。",
       "waitTime_other": "现在点单需要等待约 {{count}} 分钟。",
       "payment": "请准备好在取餐时 <1><2>现场</2> 付款。</1>",
-      "abuse": "滥用性的点单可能会不经通知地被取消。",
       "orders": "已点产品",
       "total": "需付款 ¥{{count}}",
       "confirm": "确认"

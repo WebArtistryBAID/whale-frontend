@@ -116,7 +116,7 @@ export default function PageManage(): JSX.Element {
 
     return <BasePage>
         <div className='h-screen w-screen p-12 flex flex-col'>
-            <p className='font-display text-lg mb-5 flex-shrink'>{t('manage.title')}</p>
+            <p className="text-lg mb-5 flex-shrink">{t('manage.title')}</p>
             <div className='flex flex-grow'>
                 <div className='w-1/3 2xl:w-1/4 mr-5 rounded-3xl flex h-full flex-col'>
                     <div className='flex-grow rounded-3xl bg-gray-100 p-3 mb-3'>
@@ -125,7 +125,7 @@ export default function PageManage(): JSX.Element {
                             ? availableOrders.data.map(order =>
                                 <button key={order.id} onClick={() => { setSelectedOrder(order) }}
                                         className={`p-3 rounded-2xl w-full text-left bg-white mb-3 hover:bg-gray-50 ${selectedOrder?.id === order.id ? 'shadow-lg text-accent-orange' : ''} transition-colors duration-100`}>
-                                    <p className='font-display font-bold text-xl'>{order.number}</p>
+                                    <p className="font-bold text-xl">{order.number}</p>
                                 </button>
                             )
                             : null}
@@ -142,7 +142,7 @@ export default function PageManage(): JSX.Element {
                             : <>
                                 <p className='flex-grow mr-3'>{getShopOpen.data === '1' ? t('manage.shopOpen') : t('manage.shopClosed')}</p>
                                 <button onClick={toggleShopOpen}
-                                        className="rounded-full font-display bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 px-4 py-2">{getShopOpen.data === '1' ? t('manage.toggleShopClose') : t('manage.toggleShopOpen')}</button>
+                                        className="rounded-full bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 px-4 py-2">{getShopOpen.data === '1' ? t('manage.toggleShopClose') : t('manage.toggleShopOpen')}</button>
                             </>}
                     </div>
                 </div>
@@ -150,66 +150,66 @@ export default function PageManage(): JSX.Element {
                     {selectedOrder == null
                         ? <div className='w-full h-full flex justify-center items-center flex-col'>
                             <FontAwesomeIcon icon={faMugSaucer} className='text-7xl text-gray-400 mb-3' />
-                            <p className='font-display text-lg mb-1'>{t('manage.unselected')}</p>
+                            <p className="text-lg mb-1">{t('manage.unselected')}</p>
                         </div>
                         : <div>
                             <h1 className='font-display font-bold text-5xl mb-3'>{selectedOrder.number}</h1>
 
-                            <p className='font-display text-lg mb-3'>{t('manage.updateStatus')}</p>
+                            <p className="text-lg mb-3">{t('manage.updateStatus')}</p>
                             <div className='w-full rounded-3xl flex mb-8'>
                                 <button onClick={() => { changeStatus.mutate(OrderStatus.notStarted) }}
                                         className={`px-4 py-8 mr-5 rounded-2xl flex w-1/4 h-full flex-col justify-center items-center ${selectedOrder.status === OrderStatus.notStarted ? 'text-accent-orange bg-gray-50' : 'text-gray-500 bg-gray-100'}`}>
                                     <FontAwesomeIcon icon={faHourglass} className='text-6xl mb-2' />
-                                    <p className='font-display text-lg'>{t('check.status.notStarted_' + selectedOrder.type)}</p>
+                                    <p className="text-lg">{t('check.status.notStarted_' + selectedOrder.type)}</p>
                                 </button>
                                 <button onClick={() => { changeStatus.mutate(OrderStatus.inProgress) }}
                                         className={`px-4 py-8 mr-5 rounded-2xl flex w-1/4 h-full flex-col justify-center items-center ${selectedOrder.status === OrderStatus.inProgress ? 'text-blue-500 bg-gray-50' : 'text-gray-500 bg-gray-100'}`}>
                                     <FontAwesomeIcon icon={faHourglassHalf} className='text-6xl mb-2' />
-                                    <p className='font-display text-lg'>{t('check.status.inProgress_' + selectedOrder.type)}</p>
+                                    <p className="text-lg">{t('check.status.inProgress_' + selectedOrder.type)}</p>
                                 </button>
                                 <button onClick={() => { changeStatus.mutate(OrderStatus.ready) }}
                                         className={`px-4 py-8 mr-5 rounded-2xl flex w-1/4 h-full flex-col justify-center items-center ${selectedOrder.status === OrderStatus.ready ? 'text-green-400 bg-gray-50' : 'text-gray-500 bg-gray-100'}`}>
                                     <FontAwesomeIcon icon={selectedOrder.type === OrderType.delivery ? faTruck : faCircleCheck} className='text-6xl mb-2' />
-                                    <p className='font-display text-lg'>{t('check.status.ready_' + selectedOrder.type)}</p>
+                                    <p className="text-lg">{t('check.status.ready_' + selectedOrder.type)}</p>
                                 </button>
                                 <button onClick={() => { changeStatus.mutate(OrderStatus.pickedUp) }}
                                         className={`px-4 py-8 rounded-2xl flex w-1/4 h-full flex-col justify-center items-center ${selectedOrder.status === OrderStatus.pickedUp ? 'text-yellow-400 bg-gray-50' : 'text-gray-500 bg-gray-100'}`}>
                                     <FontAwesomeIcon icon={faFaceSmile} className='text-6xl mb-2' />
-                                    <p className='font-display text-lg'>{t('check.status.pickedUp_' + selectedOrder.type)}</p>
+                                    <p className="text-lg">{t('check.status.pickedUp_' + selectedOrder.type)}</p>
                                 </button>
                             </div>
 
                             <div className='flex mb-5'>
                                 <div className='w-1/3'>
-                                    <p className='font-display text-lg mb-3'>{t('manage.amountCharge')}</p>
-                                    <p className='font-display text-5xl font-bold'>¥{selectedOrder.totalPrice}</p>
+                                    <p className="text-lg mb-3">{t('manage.amountCharge')}</p>
+                                    <p className="text-5xl font-bold">¥{selectedOrder.totalPrice}</p>
                                 </div>
                                 <div className='w-1/3'>
-                                    <p className='font-display text-lg mb-3'>{t('manage.orderTime')}</p>
-                                    <p className='font-display text-5xl font-bold'>{selectedOrder.status === OrderStatus.pickedUp ? t('manage.done') : msToTime(currentTime)}</p>
+                                    <p className="text-lg mb-3">{t('manage.orderTime')}</p>
+                                    <p className="text-5xl font-bold">{selectedOrder.status === OrderStatus.pickedUp ? t('manage.done') : msToTime(currentTime)}</p>
                                 </div>
                                 <div className='w-1/3'>
-                                    <p className='font-display text-lg mb-3'>{t('manage.orderBy')}</p>
-                                    <p className='font-display text-5xl font-bold'>{selectedOrder.user?.name ?? t('manage.onSite')}</p>
+                                    <p className="text-lg mb-3">{t('manage.orderBy')}</p>
+                                    <p className="text-5xl font-bold">{selectedOrder.user?.name ?? t('manage.onSite')}</p>
                                 </div>
                             </div>
                             <div className='flex mb-3'>
                                 <div className='w-1/3'>
-                                    <p className='font-display text-lg mb-3'>{t('manage.orderType')}</p>
-                                    <p className='font-display text-5xl font-bold'>{t('order.type.' + selectedOrder.type)}</p>
+                                    <p className="text-lg mb-3">{t('manage.orderType')}</p>
+                                    <p className="text-5xl font-bold">{t('order.type.' + selectedOrder.type)}</p>
                                 </div>
                                 <div className='w-1/3'>
-                                    <p className='font-display text-lg mb-3'>{t('manage.deliveryRoom')}</p>
-                                    <p className='font-display text-5xl font-bold'>{selectedOrder.type === OrderType.delivery ? selectedOrder.deliveryRoom : 'N/A'}</p>
+                                    <p className="text-lg mb-3">{t('manage.deliveryRoom')}</p>
+                                    <p className="text-5xl font-bold">{selectedOrder.type === OrderType.delivery ? selectedOrder.deliveryRoom : 'N/A'}</p>
                                 </div>
                                 <button
-                                    className='w-1/3 rounded-3xl bg-accent-red hover:bg-red-500 p-8 font-display font-bold text-3xl text-white'
+                                    className="w-1/3 rounded-3xl bg-accent-red hover:bg-red-500 p-8 font-bold text-3xl text-white"
                                     onClick={cancel}>
                                     {cancelConfirm ? t('check.cancelConfirm') : t('check.cancel')}
                                 </button>
                             </div>
 
-                            <p className='font-display text-lg mb-3'>{t('manage.itemOrdered')}</p>
+                            <p className="text-lg mb-3">{t('manage.itemOrdered')}</p>
                             <div className='grid xl:grid-cols-1 2xl:grid-cols-2 gap-5'>
                                 {selectedOrder.items.map(item => <div key={item.id} className='rounded-3xl bg-accent-yellow-bg p-1'>
                                     <ComponentOrderedItem item={item} />

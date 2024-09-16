@@ -30,7 +30,7 @@ export default function ComponentItemType({
                                     className='text-[0]'>{t('a11y.previousPrice')}</span> {item.basePrice.toString()}</span>
                             : null}</p>
                     <button className='bg-black px-3 py-1 font-bold hover:bg-gray-900 lg:text-sm rounded-full
-                                        transition-colors duration-100 font-display text-xs text-white'>
+                                        transition-colors duration-100 text-xs text-white'>
                         {t('order.item.pick')}
                     </button>
                 </div>

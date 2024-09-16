@@ -96,7 +96,7 @@ export default function PageStats(): JSX.Element {
 
     return <BasePage>
         <div className='h-screen w-screen p-12 flex flex-col'>
-            <p className='font-display text-lg mb-5 flex-shrink'>{t('stats.title')}</p>
+            <p className="text-lg mb-5 flex-shrink">{t('stats.title')}</p>
             <div className="flex mb-5">
                 <div className="mr-3">
                     <p className="text-gray-500 text-sm mb-1">{t('stats.limit')}</p>

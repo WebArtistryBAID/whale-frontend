@@ -73,7 +73,6 @@
       "waitTime_one": "You will be waiting for approximately {{count}} minute.",
       "waitTime_other": "You will be waiting for approximately {{count}} minutes.",
       "payment": "Please be ready to pay <1><2>in-person</2> after getting your drink.</1>",
-      "abuse": "Abusive orders may be cancelled without notice.",
       "orders": "Your Orders",
       "total": "¥{{count}} Total",
       "confirm": "Confirm"

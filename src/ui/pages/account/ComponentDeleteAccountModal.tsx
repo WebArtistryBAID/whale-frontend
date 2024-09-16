@@ -55,18 +55,18 @@ export default function ComponentDeleteAccountModal({ open, close, deletable }: 
                                 <>
                                     <button className='w-1/2 lg:rounded-bl-3xl transition-colors duration-100
                                 flex bg-gray-100 hover:bg-gray-200 py-3 px-8 justify-center items-center' onClick={() => { close() }}>
-                                        <p className='font-display'>{t('account.deleteConfirm.cancel')}</p>
+                                        <p>{t('account.deleteConfirm.cancel')}</p>
                                     </button>
                                     <button className='w-1/2 lg:rounded-br-3xl transition-colors duration-100
                             flex bg-accent-orange-bg hover:bg-amber-100 py-3 px-8 justify-center items-center' onClick={() => { deleteAcc.mutate() }}>
-                                        <p className='font-display'>{t('account.deleteConfirm.confirm')}</p>
+                                        <p>{t('account.deleteConfirm.confirm')}</p>
                                     </button>
                                 </>
                             )
                             : (
                                 <button className='w-full lg:rounded-b-3xl transition-colors duration-100
                                 flex bg-gray-100 hover:bg-gray-200 py-3 px-8 justify-center items-center' onClick={() => { close() }}>
-                                    <p className='font-display'>{t('account.deleteConfirm.cancel')}</p>
+                                    <p>{t('account.deleteConfirm.cancel')}</p>
                                 </button>
                             )}
 

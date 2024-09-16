@@ -5,6 +5,8 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { useTranslation } from 'react-i18next'
 import { type PersistentStorage, usePersistentStorage } from '../../../data/persistentStorage.tsx'
 
+import loginBg from './assets/login-bg.webp'
+
 export default function PageLoginOnboarding(): JSX.Element {
     const { redirect } = useParams()
     const { t } = useTranslation()
@@ -14,7 +16,8 @@ export default function PageLoginOnboarding(): JSX.Element {
 
     if (searchParams.has('error') || !searchParams.has('token')) {
         return <BasePage>
-            <div className='flex justify-center items-center w-screen h-screen bg-gray-50'>
+            <div className="flex justify-center items-center w-screen h-screen bg-cover bg-center"
+                 style={{ backgroundImage: `url(${loginBg})` }}>
                 <div className='p-8 w-full h-full lg:w-1/2 xl:w-1/3 2xl:w-1/4 lg:h-auto bg-white rounded-3xl'>
                     <div className='flex items-center mb-16'>
                         <button onClick={() => {
@@ -34,7 +37,7 @@ export default function PageLoginOnboarding(): JSX.Element {
                     <p className='text-xs text-gray-400 mb-5'>{t('login.privacy')}</p>
                     <button
                         className='w-full rounded-full bg-blue-500 hover:bg-blue-600 hover:shadow-lg
-                 transition-colors duration-100 p-2 font-display text-white mb-8'
+                 transition-colors duration-100 p-2 text-white mb-8'
                         onClick={() => {
                             navigate(`/login/oauth2/${redirect}`)
                         }}>
@@ -48,7 +51,8 @@ export default function PageLoginOnboarding(): JSX.Element {
     persistentStorage.setToken(searchParams.get('token'))
 
     return <BasePage>
-        <div className='flex justify-center items-center w-screen h-screen bg-gray-50'>
+        <div className="flex justify-center items-center w-screen h-screen bg-cover bg-center"
+             style={{ backgroundImage: `url(${loginBg})` }}>
             <div className='p-8 w-full h-full lg:w-1/2 xl:w-1/3 2xl:w-1/4 lg:h-auto bg-white rounded-3xl'>
                 <div className='flex items-center mb-16'>
                     <a className='skip-to-main' href='#main'>{t('a11y.skipToMain')}</a>
@@ -70,7 +74,7 @@ export default function PageLoginOnboarding(): JSX.Element {
 
                     <button
                         className='w-full rounded-full bg-blue-500 hover:bg-blue-600 hover:shadow-lg
-                     transition-colors duration-100 p-2 font-display text-white mb-8'
+                     transition-colors duration-100 p-2 text-white mb-8'
                         onClick={() => {
                             navigate(redirect!.replace(/_/g, '/'))
                         }}>
