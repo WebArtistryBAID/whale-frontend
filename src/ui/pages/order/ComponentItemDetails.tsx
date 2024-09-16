@@ -36,7 +36,7 @@ function ComponentOption({
                     return <button onClick={() => {
                         setSelected(item.id)
                     }} key={item.id}
-                        className={`${selected.get(optionType.id) === item.id ? 'bg-black text-white font-bold' : 'bg-gray-100'} rounded-full mr-3 
+                                   className={`${selected.get(optionType.id) === item.id ? 'bg-black text-white font-bold' : 'bg-gray-100'} rounded-full mr-3 
                             transition-colors duration-100 px-3 py-1`}>
                         <p className='text-[0]'>{t('a11y.selection')}</p>
                         <p className='text-sm'>{item.name}</p>
@@ -110,15 +110,15 @@ export default function ComponentItemDetails({
                     <FontAwesomeIcon icon={faClose} className='text-xl' />
                 </button>
 
-                <img alt={`Image of ${item?.name}`} src={item?.image}
-                    className='object-cover h-48 lg:h-56 xl:h-72 w-full rounded-3xl mb-8' />
+                <img alt={`Image of ${item?.name}`} src={`${import.meta.env.VITE_API_HOST}/${item?.image}`}
+                     className="object-cover h-48 lg:h-56 xl:h-72 w-full rounded-3xl mb-8"/>
 
                 <div className='flex flex-col lg:flex-row lg:items-center mb-5'>
                     <p className='text-2xl lg:text-3xl xl:text-4xl font-bold font-display mb-2 lg:mb-0 lg:mr-5'>{item?.name}</p>
                     <div className='flex' role='status'>
                         {item?.tags.map(tag =>
                             <div key={tag.id} style={{ backgroundColor: tag.color }}
-                                className={`py-1 px-2 lg:px-3 rounded-full mr-2 ${shouldUseWhiteText(tag.color) ? 'text-white' : 'text-black'}`}>
+                                 className={`py-1 px-2 lg:px-3 rounded-full mr-2 ${shouldUseWhiteText(tag.color) ? 'text-white' : 'text-black'}`}>
                                 <p className='font-display font-bold text-xs lg:text-sm'>{tag.name}</p>
                             </div>)}
                     </div>
@@ -132,10 +132,10 @@ export default function ComponentItemDetails({
                 {item?.options.map(option =>
                     <div key={option.id} className='mb-3'>
                         <ComponentOption optionType={option}
-                            selected={options}
-                            setSelected={(newItem) => {
-                                setOptions(prevOptions => new Map(prevOptions).set(option.id, newItem))
-                            }} />
+                                         selected={options}
+                                         setSelected={(newItem) => {
+                                             setOptions(prevOptions => new Map(prevOptions).set(option.id, newItem))
+                                         }}/>
                     </div>
                 )}
             </div>
@@ -160,7 +160,7 @@ export default function ComponentItemDetails({
                 </div>
                 <button className='flex-shrink lg:rounded-r-full transition-colors duration-100
                      flex bg-accent-orange-bg hover:bg-amber-100 py-5 px-8 justify-center items-center'
-                    onClick={add}>
+                        onClick={add}>
                     <p className='font-display'>{t('order.add')}</p>
                 </button>
             </div>

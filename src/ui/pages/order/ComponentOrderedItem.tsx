@@ -11,7 +11,8 @@ export default function ComponentOrderedItem({
     return (
         <div className='flex items-center p-4 rounded-xl'>
             <div className='mr-5 flex-shrink'>
-                <img src={item.itemType.image} alt={`Picture of ${item.itemType.name}`}
+                <img src={`${import.meta.env.VITE_API_HOST}/${item.itemType.image}`}
+                     alt={`Picture of ${item.itemType.name}`}
                      className='rounded-full w-16 lg:w-24 aspect-square object-cover' />
             </div>
             <div className='flex-grow'>
