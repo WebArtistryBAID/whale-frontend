@@ -179,8 +179,8 @@ export async function getStats(by: string, limit: number, token: string): Promis
     return await get('statistics', new Map([['by', by], ['limit', limit.toString()]]), token)
 }
 
-export async function getStatsExport(by: string, limit: number, token: string): Promise<string | GenericError> {
-    return await get('statistics/export/token', new Map([['by', by], ['limit', limit.toString()]]), token)
+export async function getStatsExport(type: string, by: string, limit: number, token: string): Promise<string | GenericError> {
+    return await get('statistics/export/token', new Map([['type', type], ['by', by], ['limit', limit.toString()]]), token)
 }
 
 export async function getAds(): Promise<AdSchema[]> {

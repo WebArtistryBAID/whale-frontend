@@ -1,5 +1,4 @@
 import BasePage from '../../../BasePage.tsx'
-import { Chart } from 'react-google-charts'
 import { type PersistentStorage, usePersistentStorage } from '../../../data/persistentStorage.tsx'
 import { useQuery } from '@tanstack/react-query'
 import { getStats, getStatsExport } from '../../../data/api.ts'
@@ -22,7 +21,14 @@ export default function PageStats(): JSX.Element {
 
     const statsExport = useQuery({
         queryKey: ['stats-export'],
-        queryFn: async () => await getStatsExport(by, limit, persistentStorage.getToken()!),
+        queryFn: async () => await getStatsExport('statsExport', by, limit, persistentStorage.getToken()!),
+        enabled: false,
+        gcTime: Infinity
+    })
+
+    const ordersExport = useQuery({
+        queryKey: ['orders-export'],
+        queryFn: async () => await getStatsExport('ordersExport', by, limit, persistentStorage.getToken()!),
         enabled: false,
         gcTime: Infinity
     })
@@ -80,29 +86,37 @@ export default function PageStats(): JSX.Element {
         location.href = `${import.meta.env.VITE_API_HOST}/statistics/export?token=${result.data}`
     }
 
+    async function exportOrders(): Promise<void> {
+        const result = await ordersExport.refetch()
+        if (result.isError || result.isRefetchError || typeof result.data === 'object') {
+            return
+        }
+        location.href = `${import.meta.env.VITE_API_HOST}/statistics/export?token=${result.data}`
+    }
+
     return <BasePage>
         <div className='h-screen w-screen p-12 flex flex-col'>
             <p className='font-display text-lg mb-5 flex-shrink'>{t('stats.title')}</p>
-            <div className='flex mb-5'>
-                <div className='mr-3'>
-                    <p className='text-gray-500 text-sm mb-1'>{t('stats.limit')}</p>
-                    <div className='p-2 bg-accent-yellow-bg w-32 rounded-full'>
-                        <input type='number' value={limit} onChange={e => {
+            <div className="flex mb-5">
+                <div className="mr-3">
+                    <p className="text-gray-500 text-sm mb-1">{t('stats.limit')}</p>
+                    <div className="p-2 bg-accent-yellow-bg w-32 rounded-full">
+                        <input type="number" value={limit} onChange={e => {
                             setLimit(parseInt(e.target.value))
-                        }} className='bg-transparent w-full' />
+                        }} className="bg-transparent w-full"/>
                     </div>
                 </div>
 
-                <div className='mr-3'>
-                    <p className='text-gray-500 text-sm mb-1'>{t('stats.by')}</p>
-                    <div className='p-2 bg-accent-yellow-bg w-32 rounded-full'>
+                <div className="mr-3">
+                    <p className="text-gray-500 text-sm mb-1">{t('stats.by')}</p>
+                    <div className="p-2 bg-accent-yellow-bg w-32 rounded-full">
                         <select value={by} onChange={e => {
                             setBy(e.target.value)
-                        }} className='bg-transparent w-full'>
-                            <option value='individual'>{t('stats.individual')}</option>
-                            <option value='day'>{t('stats.day')}</option>
-                            <option value='week'>{t('stats.week')}</option>
-                            <option value='month'>{t('stats.month')}</option>
+                        }} className="bg-transparent w-full">
+                            <option value="individual">{t('stats.individual')}</option>
+                            <option value="day">{t('stats.day')}</option>
+                            <option value="week">{t('stats.week')}</option>
+                            <option value="month">{t('stats.month')}</option>
                         </select>
                     </div>
                 </div>
@@ -111,7 +125,7 @@ export default function PageStats(): JSX.Element {
                     onClick={() => {
                         void stats.refetch()
                     }}
-                    className='rounded-3xl bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 py-2 px-4 font-bold font-display text-lg mr-3'>
+                    className="rounded-3xl bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 py-2 px-4 text-lg mr-3">
                     {t('stats.refetch')}
                 </button>
 
@@ -119,15 +133,23 @@ export default function PageStats(): JSX.Element {
                     onClick={() => {
                         void exportStats()
                     }}
-                    className='rounded-3xl bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 py-2 px-4 font-bold font-display text-lg'>
+                    className="rounded-3xl bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 py-2 px-4 text-lg mr-3">
                     {t('stats.export')}
+                </button>
+
+                <button
+                    onClick={() => {
+                        void exportOrders()
+                    }}
+                    className="rounded-3xl bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 py-2 px-4 text-lg">
+                    {t('stats.exportOrders')}
                 </button>
             </div>
 
-            <div className='flex mb-5'>
-                <div className='mr-5'>
-                    <p className='text-sm text-gray-500 mb-1'>{t('stats.todayRevenue')}</p>
-                    <p className='font-bold text-4xl font-display'>¥{stats.data.todayRevenue}</p>
+            <div className="flex mb-5">
+                <div className="mr-5">
+                    <p className="text-sm text-gray-500 mb-1">{t('stats.todayRevenue')}</p>
+                    <p className="font-bold text-4xl font-display">¥{stats.data.todayRevenue}</p>
                 </div>
                 <div className='mr-5'>
                     <p className='text-sm text-gray-500 mb-1'>{t('stats.todayOrders')}</p>
@@ -145,80 +167,6 @@ export default function PageStats(): JSX.Element {
                     <p className='text-sm text-gray-500 mb-1'>{t('stats.weekRevenue')} ({stats.data.weekRevenueRange})</p>
                     <p className='font-bold text-4xl font-display'>¥{stats.data.weekRevenue}</p>
                 </div>
-            </div>
-
-            <div className='grid grid-cols-2 grid-rows-2 w-full h-[80vh]'>
-                <Chart
-                    chartType='Line' width='100%' height='100%' data={revenue}
-                    loader={<ComponentLoading />}
-                    options={{
-                        chart: {
-                            title: t('stats.revenue')
-                        },
-                        series: {
-                            0: { axis: 'revenue' }
-                        },
-                        axes: {
-                            y: {
-                                revenue: { label: t('stats.revenueAxis') }
-                            }
-                        },
-                        intervals: { style: 'points', pointSize: 4 }
-                    }} />
-
-                <Chart
-                    chartType='Line' width='100%' height='100%' data={orders}
-                    loader={<ComponentLoading />}
-                    options={{
-                        chart: {
-                            title: t('stats.orders')
-                        },
-                        series: {
-                            0: { axis: 'orders' }
-                        },
-                        axes: {
-                            y: {
-                                orders: { label: t('stats.ordersAxis') }
-                            }
-                        },
-                        intervals: { style: 'points', pointSize: 4 }
-                    }} />
-
-                <Chart
-                    chartType='Line' width='100%' height='100%' data={cups}
-                    loader={<ComponentLoading />}
-                    options={{
-                        chart: {
-                            title: t('stats.cups')
-                        },
-                        series: {
-                            0: { axis: 'cups' }
-                        },
-                        axes: {
-                            y: {
-                                cups: { label: t('stats.cupsAxis') }
-                            }
-                        },
-                        intervals: { style: 'points', pointSize: 4 }
-                    }} />
-
-                <Chart
-                    chartType='Line' width='100%' height='100%' data={uniqueUsers}
-                    loader={<ComponentLoading />}
-                    options={{
-                        chart: {
-                            title: t('stats.uniqueUsers')
-                        },
-                        series: {
-                            0: { axis: 'uniqueUsers' }
-                        },
-                        axes: {
-                            y: {
-                                uniqueUsers: { label: t('stats.uniqueUsersAxis') }
-                            }
-                        },
-                        intervals: { style: 'points', pointSize: 4 }
-                    }} />
             </div>
         </div>
     </BasePage>
