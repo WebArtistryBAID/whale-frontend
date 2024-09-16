@@ -132,7 +132,7 @@ export default function PageManage(): JSX.Element {
                         {availableOrders.isSuccess && availableOrders.data.length < 1
                             ? <div className='w-full h-full flex justify-center items-center flex-col'>
                                 <FontAwesomeIcon icon={faMugSaucer} className='text-7xl text-gray-400 mb-3' />
-                                <p className='font-display text-lg mb-1'>{t('manage.noOrders')}</p>
+                                <p className="text-lg mb-1">{t('manage.noOrders')}</p>
                             </div>
                             : null}
                     </div>

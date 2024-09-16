@@ -75,7 +75,7 @@ export default function PageOrder(): JSX.Element {
         return <></>
     }
 
-    if (meCanOrder.data === false) {
+    if (meCanOrder.data === false && shoppingCart.getOnSiteOrderMode() === false) {
         return <BasePage>
             <div className="flex justify-center items-center w-screen h-screen bg-gray-50 bg-cover bg-center"
                  style={{ backgroundImage: `url(${loginBg})` }}>

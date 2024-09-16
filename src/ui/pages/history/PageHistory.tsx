@@ -75,7 +75,7 @@ export default function PageHistory(): JSX.Element {
                     {!hasItems
                         ? <div className='w-full h-full flex flex-col justify-center items-center'>
                             <FontAwesomeIcon icon={faMugSaucer} className='text-4xl text-gray-400 mb-3' />
-                            <p className='font-display text-lg mb-1'>{t('order.empty')}</p>
+                            <p className="text-lg mb-1">{t('order.empty')}</p>
                         </div>
                         : null}
                 </div>
@@ -86,10 +86,11 @@ export default function PageHistory(): JSX.Element {
                 <div className='flex-shrink'>
                     <ComponentTopBar />
                 </div>
-                <div id='main' className='flex flex-grow min-h-0 flex-col h-full overflow-y-auto p-12'>
+                <div id="main"
+                     className="flex flex-grow min-h-0 flex-col h-full overflow-y-auto px-12 xl:px-48 2xl:px-96 py-12">
                     <h1 className='text-4xl mb-8 font-display font-bold'>{t('navbar.history')}</h1>
 
-                    <div className='w-full 2xl:w-2/3 mb-3'>
+                    <div className="w-full mb-3">
                         <div className='grid grid-cols-2 xl:grid-cols-3 gap-x-3 gap-y-1'>
                             {query.data.pages.map((page, i) => (
                                 <React.Fragment key={i}>
@@ -105,7 +106,7 @@ export default function PageHistory(): JSX.Element {
                         {!hasItems
                             ? <div className='w-96 flex flex-col justify-center items-center'>
                                 <FontAwesomeIcon icon={faMugSaucer} className='text-4xl text-gray-400 mb-3' />
-                                <p className='font-display text-lg mb-1'>{t('order.empty')}</p>
+                                <p className="text-lg mb-1">{t('order.empty')}</p>
                             </div>
                             : null}
                     </div>

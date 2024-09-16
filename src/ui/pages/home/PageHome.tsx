@@ -13,8 +13,8 @@ export default function PageHome(): JSX.Element {
 
     return (
         <BasePage>
-            <div className='block lg:hidden'>
-                <div className='top-0 left-0 absolute h-[50vh] bg-cover -z-10 w-full'
+            <div className="block lg:hidden h-screen bg-accent-latte">
+                <div className="top-0 left-0 absolute h-[50vh] bg-cover w-full"
                      style={{ backgroundImage: `url(${mobileDeco})` }}></div>
                 <div className='w-full px-3 translate-y-[40vh] flex justify-center items-center flex-col'>
                     <div
