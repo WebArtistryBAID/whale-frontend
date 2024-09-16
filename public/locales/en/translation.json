@@ -58,6 +58,10 @@
     "notOpenDescription": "Ordering is currently closed. Please wait until the shop reopens.",
     "back": "Back",
     "exitOnSite": "Exit On-Site Ordering",
+    "activeOrder": {
+      "title": "Active Order",
+      "description": "Whale Cafe has a cause to support. All of your purchases aid charity causes. Please complete and pay for your previous order before making a new one."
+    },
     "confirm": {
       "title": "Confirm Your Order",
       "deliveryInformation": "Delivery Information",

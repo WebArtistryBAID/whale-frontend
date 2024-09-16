@@ -58,6 +58,10 @@
     "notOpenDescription": "点单尚未开放，请等待开放后再试。",
     "back": "返回",
     "exitOnSite": "退出现场点单",
+    "activeOrder": {
+      "title": "尚未付款",
+      "description": "在白鲸咖啡馆，您的每一次消费都在助力公益事业。您有一个尚未完成的订单，请完成后再重新点单。"
+    },
     "confirm": {
       "title": "确认点单",
       "deliveryInformation": "外送信息",

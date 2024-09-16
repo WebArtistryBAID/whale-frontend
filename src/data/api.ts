@@ -163,6 +163,10 @@ export async function getMe(token: string): Promise<UserSchemaSecure | GenericEr
     return await get('me', new Map(), token)
 }
 
+export async function getMeCanOrder(token: string): Promise<boolean | GenericError> {
+    return await get('me/canorder', new Map(), token)
+}
+
 export async function getMeStatistics(token: string): Promise<UserStatisticsSchema | GenericError> {
     return await get('me/statistics', new Map(), token)
 }
