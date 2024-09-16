@@ -4,7 +4,7 @@ import ComponentPickupButton from './ComponentPickupButton.tsx'
 import ComponentHistoryButton from './ComponentHistoryButton.tsx'
 import ComponentHomeStatus from './ComponentHomeStatus.tsx'
 import { Trans, useTranslation } from 'react-i18next'
-import AnimatedPage from '../../../AnimatedPage.tsx'
+import BasePage from '../../../BasePage.tsx'
 import ComponentBottomNav from '../../common/ComponentBottomNav.tsx'
 import ComponentAccountButton from './ComponentAccountButton.tsx'
 
@@ -12,10 +12,10 @@ export default function PageHome(): JSX.Element {
     const { t } = useTranslation()
 
     return (
-        <AnimatedPage>
+        <BasePage>
             <div className='block lg:hidden'>
                 <div className='top-0 left-0 absolute h-[50vh] bg-cover -z-10 w-full'
-                    style={{ backgroundImage: `url(${mobileDeco})` }}></div>
+                     style={{ backgroundImage: `url(${mobileDeco})` }}></div>
                 <div className='w-full px-3 translate-y-[40vh] flex justify-center items-center flex-col'>
                     <div
                         className='grid grid-cols-2 grid-rows-1 place-content-center w-full bg-white rounded-3xl shadow-xl p-8 mb-5'>
@@ -32,7 +32,7 @@ export default function PageHome(): JSX.Element {
 
             <div className='hidden lg:block bg-accent-latte'>
                 <div className='absolute select-none w-screen top-0 left-0 h-[30vh] flex justify-center items-center'
-                    aria-hidden={true}>
+                     aria-hidden={true}>
                     <p className='text-[7rem] xl:text-[10rem] bg-clip-text text-transparent from-[#401f1022] to-[#401f1000] bg-gradient-to-b
                                     font-bold font-display'>{t('home.backgroundText')}</p>
                 </div>
@@ -48,7 +48,7 @@ export default function PageHome(): JSX.Element {
 
                     <div className='flex justify-center items-center z-10'>
                         <img src={desktopDeco} role='presentation' alt=''
-                            className='rounded-3xl w-64 xl:w-72 object-cover h-80 xl:h-96' />
+                             className="rounded-3xl w-64 xl:w-72 object-cover h-80 xl:h-96"/>
                     </div>
                 </div>
 
@@ -75,6 +75,6 @@ export default function PageHome(): JSX.Element {
                     </div>
                 </div>
             </div>
-        </AnimatedPage>
+        </BasePage>
     )
 }

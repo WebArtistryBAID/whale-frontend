@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { getLoginRedirectTarget } from '../../../data/api.ts'
 import ComponentError from '../../common/ComponentError.tsx'
-import AnimatedPage from '../../../AnimatedPage.tsx'
+import BasePage from '../../../BasePage.tsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate, useParams } from 'react-router-dom'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
@@ -23,7 +23,7 @@ export default function PageLogin(): JSX.Element {
     if (target.isError) {
         return <ComponentError screen={true} detail={target} />
     }
-    return <AnimatedPage>
+    return <BasePage>
         <div className='flex justify-center items-center w-screen h-screen bg-gray-50'>
             <div className='p-8 w-full h-full lg:w-1/2 xl:w-1/3 2xl:w-1/4 lg:h-auto bg-white rounded-3xl'>
                 <div className='flex items-center mb-16'>
@@ -63,5 +63,5 @@ export default function PageLogin(): JSX.Element {
                 </div>
             </div>
         </div>
-    </AnimatedPage>
+    </BasePage>
 }

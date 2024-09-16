@@ -1,4 +1,4 @@
-import AnimatedPage from '../../../AnimatedPage.tsx'
+import BasePage from '../../../BasePage.tsx'
 import { useNavigate, useParams } from 'react-router-dom'
 import ComponentError from '../../common/ComponentError.tsx'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -35,7 +35,7 @@ export default function PageCheck(): JSX.Element {
 
     const { id } = useParams()
     if (id == null) {
-        return <AnimatedPage><ComponentError screen={true} /></AnimatedPage>
+        return <BasePage><ComponentError screen={true}/></BasePage>
     }
 
     const order = useQuery({
@@ -65,15 +65,15 @@ export default function PageCheck(): JSX.Element {
     })
 
     if (order.isPending || estimate.isPending) {
-        return <AnimatedPage><ComponentLoading screen={true} /></AnimatedPage>
+        return <BasePage><ComponentLoading screen={true}/></BasePage>
     }
 
     if (order.isError || 'detail' in order.data) {
-        return <AnimatedPage><ComponentError screen={true} detail={order} /></AnimatedPage>
+        return <BasePage><ComponentError screen={true} detail={order}/></BasePage>
     }
 
     if (estimate.isError || 'detail' in estimate.data) {
-        return <AnimatedPage><ComponentError screen={true} detail={estimate} /></AnimatedPage>
+        return <BasePage><ComponentError screen={true} detail={estimate}/></BasePage>
     }
 
     function cancel(): void {
@@ -85,7 +85,7 @@ export default function PageCheck(): JSX.Element {
     }
 
     return (
-        <AnimatedPage>
+        <BasePage>
             <div className='lg:hidden flex flex-col h-screen bg-accent-latte'>
                 <div className='flex-shrink'>
                     <ComponentTopBar />
@@ -99,11 +99,11 @@ export default function PageCheck(): JSX.Element {
                                 ? <>
                                     <p className='text-sm text-center'>
                                         <Trans i18nKey='check.estimateOrders' count={estimate.data.orders}
-                                            components={{ 1: <strong></strong> }} />
+                                               components={{ 1: <strong></strong> }}/>
                                     </p>
                                     <p className='text-sm mb-5 text-center'>
                                         <Trans i18nKey='check.estimateTime' count={estimate.data.time}
-                                            components={{ 1: <strong></strong> }} />
+                                               components={{ 1: <strong></strong> }}/>
                                     </p></>
                                 : <p className='text-sm mb-5 text-center'>{t(`check.${order.data.status}_${order.data.type}`)}</p>}
                         </div>
@@ -183,11 +183,11 @@ export default function PageCheck(): JSX.Element {
 
                         <p className='text-gray-400 text-xs mb-2'>{t('check.products')}</p>
                         {order.data.items.map((item: OrderedItemSchema) => <ComponentOrderedItem key={item.id}
-                            item={item} />)}
+                                                                                                 item={item}/>)}
 
                         {order.data.status === OrderStatus.notStarted
                             ? <button onClick={cancel}
-                                className={`mt-5 p-2 w-full rounded-full font-bold font-display transition-colors duration-100 ${orderCancel.isError || typeof orderCancel.data === 'object' || orderCancel.isPending ? 'bg-gray-300 text-gray-400' : 'bg-accent-red hover:bg-red-500 text-white'}`}>
+                                      className={`mt-5 p-2 w-full rounded-full font-bold font-display transition-colors duration-100 ${orderCancel.isError || typeof orderCancel.data === 'object' || orderCancel.isPending ? 'bg-gray-300 text-gray-400' : 'bg-accent-red hover:bg-red-500 text-white'}`}>
                                 {orderCancel.isPending ? t('check.cancelLoading') : null}
                                 {orderCancel.isIdle ? (cancelConfirm ? t('check.cancelConfirm') : t('check.cancel')) : null}
                                 {orderCancel.isError || typeof orderCancel.data === 'object' ? t('check.cancelFailed') : null}
@@ -209,11 +209,11 @@ export default function PageCheck(): JSX.Element {
                             ? <>
                                 <p className='text-xl mb-1 text-center'>
                                     <Trans i18nKey='check.estimateOrders' count={estimate.data.orders}
-                                        components={{ 1: <strong></strong> }} />
+                                           components={{ 1: <strong></strong> }}/>
                                 </p>
                                 <p className='text-xl mb-8 text-center'>
                                     <Trans i18nKey='check.estimateTime' count={estimate.data.time}
-                                        components={{ 1: <strong></strong> }} />
+                                           components={{ 1: <strong></strong> }}/>
                                 </p>
                             </>
                             : <p className='text-xl mb-8 text-center'>{t(`check.${order.data.status}_${order.data.type}`)}</p>}
@@ -281,7 +281,7 @@ export default function PageCheck(): JSX.Element {
 
                             {order.data.status === OrderStatus.notStarted
                                 ? <button onClick={cancel}
-                                    className={`p-2 w-full rounded-full font-bold font-display transition-colors duration-100 ${orderCancel.isError || typeof orderCancel.data === 'object' || orderCancel.isPending ? 'bg-gray-300 text-gray-400' : 'bg-accent-red hover:bg-red-500 text-white'}`}>
+                                          className={`p-2 w-full rounded-full font-bold font-display transition-colors duration-100 ${orderCancel.isError || typeof orderCancel.data === 'object' || orderCancel.isPending ? 'bg-gray-300 text-gray-400' : 'bg-accent-red hover:bg-red-500 text-white'}`}>
                                     {orderCancel.isPending ? t('check.cancelLoading') : null}
                                     {orderCancel.isIdle ? (cancelConfirm ? t('check.cancelConfirm') : t('check.cancel')) : null}
                                     {orderCancel.isError || typeof orderCancel.data === 'object' ? t('check.cancelFailed') : null}
@@ -305,10 +305,10 @@ export default function PageCheck(): JSX.Element {
 
                         <p className='text-gray-400 text-xs mb-2'>{t('check.products')}</p>
                         {order.data.items.map((item: OrderedItemSchema) => <ComponentOrderedItem key={item.id}
-                            item={item} />)}
+                                                                                                 item={item}/>)}
                     </div>
                 </div>
             </div>
-        </AnimatedPage>
+        </BasePage>
     )
 }

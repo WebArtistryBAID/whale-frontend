@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import AnimatedPage from '../../../AnimatedPage'
+import BasePage from '../../../BasePage.tsx'
 import ComponentBottomNav from '../../common/ComponentBottomNav'
 import ComponentTopBar from '../../common/ComponentTopBar'
 import { useInfiniteQuery } from '@tanstack/react-query'
@@ -53,7 +53,7 @@ export default function PageHistory(): JSX.Element {
     }
 
     return (
-        <AnimatedPage>
+        <BasePage>
             <div className='lg:hidden flex flex-col h-screen bg-accent-latte'>
                 <div className='flex-shrink'>
                     <ComponentTopBar />
@@ -112,9 +112,9 @@ export default function PageHistory(): JSX.Element {
 
                     {query.isFetchingNextPage
                         ? <div className='flex justify-center items-center mb-3'><FontAwesomeIcon icon={faSpinner}
-                            aria-label={t('a11y.loading')}
-                            className='text-4xl text-gray-400'
-                            spin={true} /></div>
+                                                                                                  aria-label={t('a11y.loading')}
+                                                                                                  className="text-4xl text-gray-400"
+                                                                                                  spin={true}/></div>
                         : null}
 
                     {query.hasNextPage && !query.isFetchingNextPage
@@ -122,12 +122,12 @@ export default function PageHistory(): JSX.Element {
                             <button onClick={() => {
                                 void query.fetchNextPage()
                             }}
-                                className='rounded-full py-2 px-5 font-display bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100'>{t('history.loadMore')}</button>
+                                    className="rounded-full py-2 px-5 font-display bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100">{t('history.loadMore')}</button>
                         </div>
                         : null
                     }
                 </div>
             </div>
-        </AnimatedPage>
+        </BasePage>
     )
 }

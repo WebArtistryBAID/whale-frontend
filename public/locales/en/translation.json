@@ -222,6 +222,11 @@
     "todayCups": "Today's Cups (Count)",
     "weekRevenue": "Calendar Week Revenue (CN¥)"
   },
+  "blocked": {
+    "title": "Blocked",
+    "description": "There is an issue with your account. Please contact support.",
+    "logOut": "Log Out"
+  },
   "a11y": {
     "back": "Navigate Home",
     "error": "An error occurred",

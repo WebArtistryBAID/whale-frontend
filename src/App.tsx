@@ -12,6 +12,7 @@ import PageHistory from './ui/pages/history/PageHistory.tsx'
 import PageAccount from './ui/pages/account/PageAccount.tsx'
 import PageManage from './ui/pages/manage/PageManage.tsx'
 import PageStats from './ui/pages/stats/PageStats.tsx'
+import PageBlocked from './ui/pages/blocked/PageBlocked.tsx'
 
 const queryClient = new QueryClient()
 
@@ -33,6 +34,7 @@ export default function App(): JSX.Element {
                             <Route path="account" element={<PageAccount/>}/>
                             <Route path="manage" element={<PageManage/>}/>
                             <Route path="statistics" element={<PageStats/>}/>
+                            <Route path="blocked" element={<PageBlocked/>}/>
                         </Routes>
                     </PersistentStorageProvider>
                 </ShoppingCartProvider>

@@ -1,5 +1,5 @@
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import AnimatedPage from '../../../AnimatedPage.tsx'
+import BasePage from '../../../BasePage.tsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { useTranslation } from 'react-i18next'
@@ -13,7 +13,7 @@ export default function PageLoginOnboarding(): JSX.Element {
     const persistentStorage: PersistentStorage = usePersistentStorage()
 
     if (searchParams.has('error') || !searchParams.has('token')) {
-        return <AnimatedPage>
+        return <BasePage>
             <div className='flex justify-center items-center w-screen h-screen bg-gray-50'>
                 <div className='p-8 w-full h-full lg:w-1/2 xl:w-1/3 2xl:w-1/4 lg:h-auto bg-white rounded-3xl'>
                     <div className='flex items-center mb-16'>
@@ -42,12 +42,12 @@ export default function PageLoginOnboarding(): JSX.Element {
                     </button>
                 </div>
             </div>
-        </AnimatedPage>
+        </BasePage>
     }
 
     persistentStorage.setToken(searchParams.get('token'))
 
-    return <AnimatedPage>
+    return <BasePage>
         <div className='flex justify-center items-center w-screen h-screen bg-gray-50'>
             <div className='p-8 w-full h-full lg:w-1/2 xl:w-1/3 2xl:w-1/4 lg:h-auto bg-white rounded-3xl'>
                 <div className='flex items-center mb-16'>
@@ -79,5 +79,5 @@ export default function PageLoginOnboarding(): JSX.Element {
                 </div>
             </div>
         </div>
-    </AnimatedPage>
+    </BasePage>
 }

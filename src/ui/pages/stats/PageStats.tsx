@@ -1,4 +1,4 @@
-import AnimatedPage from '../../../AnimatedPage.tsx'
+import BasePage from '../../../BasePage.tsx'
 import { Chart } from 'react-google-charts'
 import { type PersistentStorage, usePersistentStorage } from '../../../data/persistentStorage.tsx'
 import { useQuery } from '@tanstack/react-query'
@@ -80,7 +80,7 @@ export default function PageStats(): JSX.Element {
         location.href = `${import.meta.env.VITE_API_HOST}/statistics/export?token=${result.data}`
     }
 
-    return <AnimatedPage>
+    return <BasePage>
         <div className='h-screen w-screen p-12 flex flex-col'>
             <p className='font-display text-lg mb-5 flex-shrink'>{t('stats.title')}</p>
             <div className='flex mb-5'>
@@ -221,5 +221,5 @@ export default function PageStats(): JSX.Element {
                     }} />
             </div>
         </div>
-    </AnimatedPage>
+    </BasePage>
 }

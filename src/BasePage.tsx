@@ -2,8 +2,9 @@ import { motion } from 'framer-motion'
 import { type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
-export default function AnimatedPage({ children }: { children: ReactNode }): JSX.Element {
+export default function BasePage({ children }: { children: ReactNode }): JSX.Element {
     const { t } = useTranslation()
+
     return (
         <motion.main
             className='main-animation'>

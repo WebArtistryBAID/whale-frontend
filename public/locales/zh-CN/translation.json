@@ -222,6 +222,11 @@
     "todayCups": "本自然日杯 (数量)",
     "weekRevenue": "本自然周总收入 (CN¥)"
   },
+  "blocked": {
+    "title": "无法访问",
+    "description": "您的账号存在问题，请联系客服。",
+    "logOut": "退出登录"
+  },
   "a11y": {
     "back": "返回主页",
     "error": "发生了一个错误",
