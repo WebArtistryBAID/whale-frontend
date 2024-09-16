@@ -83,3 +83,10 @@ export interface OrderSchema {
     user: UserSchema
     items: OrderedItemSchema[]
 }
+
+export interface AdSchema {
+    id: number
+    name: string
+    image: string
+    url: string
+}

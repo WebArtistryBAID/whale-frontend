@@ -6,7 +6,7 @@ import ComponentShoppingCart from './ComponentShoppingCart.tsx'
 import { useEffect, useState } from 'react'
 import ComponentOrderConfirmModal from './ComponentOrderConfirmModal.tsx'
 import { useQuery } from '@tanstack/react-query'
-import { getCategories, getMe, getSettings } from '../../../data/api.ts'
+import { getAds, getCategories, getMe, getSettings } from '../../../data/api.ts'
 import ComponentError from '../../common/ComponentError.tsx'
 import ComponentLoading from '../../common/ComponentLoading.tsx'
 import { type ItemTypeSchema } from '../../../data/dataTypes.ts'
@@ -38,6 +38,11 @@ export default function PageOrder(): JSX.Element {
         queryFn: async () => await getSettings('shop-open')
     })
 
+    const ads = useQuery({
+        queryKey: ['ads'],
+        queryFn: async () => await getAds()
+    })
+
     useEffect(() => {
         if (persistentStorage.getToken() == null) {
             navigate('/login/oauth2/_order')
@@ -49,11 +54,12 @@ export default function PageOrder(): JSX.Element {
         queryFn: async () => await getMe(persistentStorage.getToken()!)
     })
 
-    if (categories.isError || getShopOpen.isError || me.isError || (typeof categories.data === 'object' && 'detail' in categories.data) || (typeof me.data === 'object' && 'detail' in me.data)) {
+    if (categories.isError || getShopOpen.isError || me.isError || ads.isError ||
+        (typeof categories.data === 'object' && 'detail' in categories.data) || (typeof me.data === 'object' && 'detail' in me.data)) {
         return <BasePage><ComponentError detail={categories} screen={true}/></BasePage>
     }
 
-    if (categories.isPending || getShopOpen.isPending || me.isPending) {
+    if (categories.isPending || getShopOpen.isPending || me.isPending || ads.isPending) {
         return <BasePage><ComponentLoading screen={true}/></BasePage>
     }
 
@@ -126,7 +132,7 @@ export default function PageOrder(): JSX.Element {
                         <h1 className="text-2xl font-display font-bold mb-5">{t('navbar.order')}</h1>
 
                         <div className="h-40 mb-8">
-                            <ComponentAd/>
+                            <ComponentAd ads={ads.data}/>
                         </div>
 
                         {resultedCategories.map(category =>
@@ -174,7 +180,7 @@ export default function PageOrder(): JSX.Element {
                     <div className="w-1/2 h-full p-8 xl:p-12 2xl:px-24 2xl:py-16">
                         <div className="flex flex-col h-full">
                             <div className="h-64 lg:h-2/5 mb-5">
-                                <ComponentAd/>
+                                <ComponentAd ads={ads.data}/>
                             </div>
                             <div className="lg:h-3/5">
                                 <ComponentShoppingCart order={() => {

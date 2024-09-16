@@ -1,4 +1,5 @@
 import {
+    type AdSchema,
     type CategorySchema,
     type ItemTypeSchema,
     type OrderSchema,
@@ -176,4 +177,8 @@ export async function getStats(by: string, limit: number, token: string): Promis
 
 export async function getStatsExport(by: string, limit: number, token: string): Promise<string | GenericError> {
     return await get('statistics/export/token', new Map([['by', by], ['limit', limit.toString()]]), token)
+}
+
+export async function getAds(): Promise<AdSchema[]> {
+    return await get('ads')
 }
