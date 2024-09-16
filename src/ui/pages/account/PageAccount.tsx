@@ -63,7 +63,7 @@ export default function PageAccount(): JSX.Element {
                     <ComponentTopBar />
                 </div>
                 <div id='main'
-                    className='flex flex-grow min-h-0 flex-col h-full overflow-y-auto px-6 lg:px-24 xl:px-48 2xl:px-96 py-6 lg:pt-12 pb-36 lg:pb-12 bg-accent-latte'>
+                     className='flex flex-grow min-h-0 flex-col h-full overflow-y-auto px-6 lg:px-24 xl:px-48 2xl:px-96 py-6 lg:pt-12 pb-36 lg:pb-12 bg-accent-latte'>
                     <h1 className='flex-shrink text-2xl lg:text-4xl mb-8 font-display font-bold'>{t('navbar.account')}</h1>
 
                     <div className='flex flex-grow flex-col'>
@@ -101,11 +101,12 @@ export default function PageAccount(): JSX.Element {
                             className='text-sm mb-1'>{t('account.onSiteOrdering')}</p>
                             <button onClick={onSiteOrdering} className='rounded-full w-48 py-2 px-5 font-display bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3'>{t('account.onSiteOrdering')}</button></>}
 
-                        {(Boolean(me.data.permissions.includes('admin.manage'))) && <><p
+                        {(Boolean(me.data.permissions.includes('admin.cms'))) && <><p
                             className='text-sm mb-1'>{t('account.contentManagement')}</p>
-                            <a href='/nc/' className='rounded-full w-48 py-2 px-5 font-display bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3'>{t('account.contentManagement')}</a></>}
+                            <a href="/api/admin/"
+                           className="rounded-full w-48 py-2 px-5 font-display bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3">{t('account.contentManagement')}</a></>}
 
-                        {(Boolean(me.data.permissions.includes('admin.statistics'))) && <><p
+                        {(Boolean(me.data.permissions.includes('admin.cms'))) && <><p
                             className='text-sm mb-1'>{t('account.statisticsManagement')}</p>
                             <button onClick={() => { navigate('/statistics') }} className='rounded-full w-48 py-2 px-5 font-display bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3'>{t('account.statisticsManagement')}</button></>}
 
@@ -128,7 +129,7 @@ export default function PageAccount(): JSX.Element {
                         <button onClick={() => {
                             setOpen(true)
                         }}
-                            className='rounded-full text-white w-48 py-2 px-5 font-display bg-accent-red hover:bg-red-500 transition-colors duration-100 mb-5'>{t('account.deleteAccount')}</button>
+                                className='rounded-full text-white w-48 py-2 px-5 font-display bg-accent-red hover:bg-red-500 transition-colors duration-100 mb-5'>{t('account.deleteAccount')}</button>
 
                         <p className='text-xs text-gray-500 mb-1'>{t('account.about')}</p>
                         <hr className='w-full border-gray-200 mb-3' />
