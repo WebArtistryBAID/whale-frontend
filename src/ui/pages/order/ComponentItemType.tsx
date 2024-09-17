@@ -14,8 +14,10 @@ export default function ComponentItemType({
             className='cursor-pointer hover:bg-accent-yellow-bg transition-colors duration-100 flex items-center p-4 rounded-xl'
             onClick={pickItem}>
             <div className='mr-5 flex-shrink'>
-                <img src={`${import.meta.env.VITE_API_HOST}/${item.image}`} alt={`Image of ${item.name}`}
-                     className="rounded-full w-24 aspect-square object-cover"/>
+                <img
+                    src={`${import.meta.env.VITE_API_HOST}${new URL(import.meta.env.VITE_API_HOST as string).pathname}/${item.image}`}
+                    alt={`Image of ${item.name}`}
+                    className="rounded-full w-24 aspect-square object-cover"/>
             </div>
             <div className='flex-grow'>
                 <div className='w-full mb-2'>

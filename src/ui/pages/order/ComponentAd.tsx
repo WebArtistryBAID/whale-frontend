@@ -28,7 +28,7 @@ export default function ComponentAd({ ads }: { ads: AdSchema[] }): JSX.Element {
                 {ads.map((ad, index) =>
                     <a href={ad.url} target="_blank" className="h-full w-full" rel="noreferrer" key={index}>
                         <img className="inline-block h-full object-cover w-full "
-                             src={`${import.meta.env.VITE_API_HOST}/${ad.image}`}
+                             src={`${import.meta.env.VITE_API_HOST}${new URL(import.meta.env.VITE_API_HOST as string).pathname}/${ad.image}`}
                              alt={ad.name}/>
                     </a>)}
             </div>

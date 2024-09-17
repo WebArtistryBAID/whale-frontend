@@ -110,7 +110,8 @@ export default function ComponentItemDetails({
                     <FontAwesomeIcon icon={faClose} className='text-xl' />
                 </button>
 
-                <img alt={`Image of ${item?.name}`} src={`${import.meta.env.VITE_API_HOST}/${item?.image}`}
+                <img alt={`Image of ${item?.name}`}
+                     src={`${import.meta.env.VITE_API_HOST}${new URL(import.meta.env.VITE_API_HOST as string).pathname}/${item?.image}`}
                      className="object-cover h-48 lg:h-56 xl:h-72 w-full rounded-3xl mb-8"/>
 
                 <div className='flex flex-col lg:flex-row lg:items-center mb-5'>
