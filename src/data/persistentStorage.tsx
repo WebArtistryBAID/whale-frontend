@@ -77,7 +77,8 @@ export function PersistentStorageProvider({ children }: { children: ReactNode })
         return {
             id: decoded.id,
             name: decoded.name,
-            permissions: decoded.permissions
+            permissions: decoded.permissions,
+            blocked: false
         }
     }
 
