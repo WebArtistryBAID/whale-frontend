@@ -184,5 +184,5 @@ export async function getStatsExport(type: string, by: string, limit: number, to
 }
 
 export async function getAds(): Promise<AdSchema[]> {
-    return await get('ads')
+    return await get('pms')
 }
