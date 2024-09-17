@@ -1,6 +1,7 @@
 import { type OrderedItemSchema } from '../../../data/dataTypes.ts'
 import { frontendCalculate, moneyRound } from '../../../utils.ts'
 import { useTranslation } from 'react-i18next'
+import { getUploadsRoot } from '../../../data/api.ts'
 
 export default function ComponentOrderedItem({
     item,
@@ -12,7 +13,7 @@ export default function ComponentOrderedItem({
         <div className='flex items-center p-4 rounded-xl'>
             <div className='mr-5 flex-shrink'>
                 <img
-                    src={`${import.meta.env.VITE_API_HOST}${new URL(import.meta.env.VITE_API_HOST as string).pathname}/${item.itemType.image}`}
+                    src={`${getUploadsRoot()}/${item.itemType.image}`}
                     alt={`Picture of ${item.itemType.name}`}
                     className='rounded-full w-16 lg:w-24 aspect-square object-cover' />
             </div>

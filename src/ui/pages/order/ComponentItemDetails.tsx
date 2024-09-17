@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Decimal from 'decimal.js'
 import { useShoppingCart } from '../../../data/shoppingCart.tsx'
+import { getUploadsRoot } from '../../../data/api.ts'
 
 function shouldUseWhiteText(hexColor: string): boolean {
     const hexToDecimal = (hex: string): number => parseInt(hex, 16)
@@ -111,7 +112,7 @@ export default function ComponentItemDetails({
                 </button>
 
                 <img alt={`Image of ${item?.name}`}
-                     src={`${import.meta.env.VITE_API_HOST}${new URL(import.meta.env.VITE_API_HOST as string).pathname}/${item?.image}`}
+                     src={`${getUploadsRoot()}/${item?.image}`}
                      className="object-cover h-48 lg:h-56 xl:h-72 w-full rounded-3xl mb-8"/>
 
                 <div className='flex flex-col lg:flex-row lg:items-center mb-5'>

@@ -186,3 +186,11 @@ export async function getStatsExport(type: string, by: string, limit: number, to
 export async function getAds(): Promise<AdSchema[]> {
     return await get('pms')
 }
+
+export function getUploadsRoot(): string {
+    // Hack, I just want to get this done
+    if ((import.meta.env.VITE_API_HOST as string).startsWith('/')) {
+        return `${import.meta.env.VITE_API_HOST}${import.meta.env.VITE_API_HOST}`
+    }
+    return `${import.meta.env.VITE_API_HOST}${new URL(import.meta.env.VITE_API_HOST as string).pathname}`
+}

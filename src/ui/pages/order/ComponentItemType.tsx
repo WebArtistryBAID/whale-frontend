@@ -2,6 +2,7 @@ import { type ItemTypeSchema } from '../../../data/dataTypes.ts'
 import { moneyRound } from '../../../utils.ts'
 import { useTranslation } from 'react-i18next'
 import Decimal from 'decimal.js'
+import { getUploadsRoot } from '../../../data/api.ts'
 
 export default function ComponentItemType({
     item,
@@ -15,7 +16,7 @@ export default function ComponentItemType({
             onClick={pickItem}>
             <div className='mr-5 flex-shrink'>
                 <img
-                    src={`${import.meta.env.VITE_API_HOST}${new URL(import.meta.env.VITE_API_HOST as string).pathname}/${item.image}`}
+                    src={`${getUploadsRoot()}/${item.image}`}
                     alt={`Image of ${item.name}`}
                     className="rounded-full w-24 aspect-square object-cover"/>
             </div>
