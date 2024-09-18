@@ -1,4 +1,4 @@
-import { type OrderType, type OrderSchema, type OrderStatus } from './dataTypes.ts'
+import { type OrderSchema, type OrderStatus, type OrderType } from './dataTypes.ts'
 
 export interface LoginRedirectTarget {
     target: string
@@ -15,6 +15,7 @@ export interface OrderCreateSchema {
     deliveryRoom: string | null
     items: OrderedItemCreateSchema[]
     onSiteOrder: boolean
+    onSiteName: string | null
 }
 
 export interface OrderEstimateSchema {

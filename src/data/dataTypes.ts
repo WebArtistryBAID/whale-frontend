@@ -82,6 +82,7 @@ export interface OrderSchema {
     createdTime: string
     user: UserSchema
     items: OrderedItemSchema[]
+    onSiteName: string | null
 }
 
 export interface AdSchema {

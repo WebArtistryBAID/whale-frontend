@@ -67,6 +67,8 @@
       "deliveryInformation": "Delivery Information",
       "room": "Room",
       "roomError": "Enter a proper room number",
+      "onSiteName": "Your Name",
+      "onSiteNameError": "Enter your name",
       "importantInformation": "Important Information",
       "waitError": "Failed to load wait time information.",
       "waitLoading": "You will be waiting for approximately ... minutes.",

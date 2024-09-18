@@ -26,6 +26,8 @@ export default function ComponentOrderConfirmModal({
     const navigate = useNavigate()
     const persistentStorage: PersistentStorage = usePersistentStorage()
     const [orderType, setOrderType] = useState(OrderType.pickUp)
+    const [onSiteName, setOnSiteName] = useState('')
+    const [onSiteNameError, setOnSiteNameError] = useState('')
     const [deliveryRoom, setDeliveryRoom] = useState('')
     const [deliveryRoomError, setDeliveryRoomError] = useState('')
 
@@ -60,6 +62,12 @@ export default function ComponentOrderConfirmModal({
             return
         }
 
+        setOnSiteNameError('')
+        if (getOnSiteOrderMode() as boolean && onSiteName.length < 1) {
+            setOnSiteNameError(t('order.confirm.onSiteNameError'))
+            return
+        }
+
         const createItems: OrderedItemCreateSchema[] = []
 
         for (const item of items) {
@@ -74,7 +82,8 @@ export default function ComponentOrderConfirmModal({
             type: orderType,
             deliveryRoom,
             items: createItems,
-            onSiteOrder: getOnSiteOrderMode()
+            onSiteOrder: getOnSiteOrderMode(),
+            onSiteName: getOnSiteOrderMode() as boolean ? onSiteName : null
         })
     }
 
@@ -130,6 +139,21 @@ export default function ComponentOrderConfirmModal({
                                                    }}/>
                                         </div>
                                         <p className='mb-2 text-xs text-accent-red'>{deliveryRoomError}</p>
+                                    </div>
+                                    : null}
+
+                                {getOnSiteOrderMode() as boolean
+                                    ? <div className="mb-5">
+                                        <p className="text-gray-400 text-xs mb-2">{t('order.confirm.onSiteName')}</p>
+                                        <div className="mb-1 rounded-full bg-accent-yellow-bg p-2">
+                                            <input placeholder={t('order.confirm.onSiteName')}
+                                                   aria-label={t('order.confirm.onSiteName')} type="text"
+                                                   className="w-full bg-transparent" value={onSiteName}
+                                                   onChange={(e) => {
+                                                       setOnSiteName(e.target.value)
+                                                   }}/>
+                                        </div>
+                                        <p className="mb-2 text-xs text-accent-red">{onSiteNameError}</p>
                                     </div>
                                     : null}
 
