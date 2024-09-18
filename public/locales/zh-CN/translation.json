@@ -86,6 +86,7 @@
     "estimateTime_one": "需要等待约 <1>{{count}}</1> 分钟",
     "estimateTime_other": "需要等待约 <1>{{count}}</1> 分钟",
     "payQR": "使用微信提前扫描二维码付款",
+    "payQRNote": "付款时请务必备注您的订单号!",
     "status": {
       "notStarted_pickUp": "待备餐",
       "inProgress_pickUp": "备餐中",

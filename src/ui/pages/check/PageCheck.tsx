@@ -1,12 +1,12 @@
 import BasePage from '../../../BasePage.tsx'
-import {useNavigate, useParams} from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import ComponentError from '../../common/ComponentError.tsx'
-import {useMutation, useQuery} from '@tanstack/react-query'
-import {cancelOrder, getOrder, getOrderTimeEstimate} from '../../../data/api.ts'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { cancelOrder, getOrder, getOrderTimeEstimate } from '../../../data/api.ts'
 import ComponentLoading from '../../common/ComponentLoading.tsx'
 import ComponentTopBar from '../../common/ComponentTopBar.tsx'
-import {Trans, useTranslation} from 'react-i18next'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { Trans, useTranslation } from 'react-i18next'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faCircleCheck,
     faFaceSmile,
@@ -21,11 +21,11 @@ import {
     faHourglass as faHourglassR,
     faHourglassHalf as faHourglassHalfR
 } from '@fortawesome/free-regular-svg-icons'
-import {type OrderedItemSchema, OrderStatus, OrderType} from '../../../data/dataTypes.ts'
+import { type OrderedItemSchema, OrderStatus, OrderType } from '../../../data/dataTypes.ts'
 import ComponentIconText from '../../common/ComponentIconText.tsx'
 import ComponentOrderedItem from '../order/ComponentOrderedItem.tsx'
-import {useState} from 'react'
-import {type PersistentStorage, usePersistentStorage} from '../../../data/persistentStorage.tsx'
+import { useState } from 'react'
+import { type PersistentStorage, usePersistentStorage } from '../../../data/persistentStorage.tsx'
 
 import payQR from './assets/pay-qr.jpg'
 
@@ -101,14 +101,13 @@ export default function PageCheck(): JSX.Element {
                                 ? <>
                                     <p className="text-sm text-center">
                                         <Trans i18nKey="check.estimateOrders" count={estimate.data.orders}
-                                               components={{1: <strong></strong>}}/>
+                                               components={{ 1: <strong></strong> }}/>
                                     </p>
                                     <p className="text-sm mb-5 text-center">
                                         <Trans i18nKey="check.estimateTime" count={estimate.data.time}
-                                               components={{1: <strong></strong>}}/>
+                                               components={{ 1: <strong></strong> }}/>
                                     </p></>
-                                :
-                                <p className="text-sm mb-5 text-center">{t(`check.${order.data.status}_${order.data.type}`)}</p>}
+                                : <p className="text-sm mb-5 text-center">{t(`check.${order.data.status}_${order.data.type}`)}</p>}
                         </div>
 
                         <div className="flex mb-5 justify-center">
@@ -185,6 +184,7 @@ export default function PageCheck(): JSX.Element {
                             : null}
 
                         <p className="text-gray-400 text-xs mb-2">{t('check.payQR')}</p>
+                        <p className="text-accent-red text-xl mb-2">{t('check.payQRNote')}</p>
                         <img src={payQR} alt="QR code" className="w-full rounded-3xl mx-auto mb-5"/>
 
                         <p className="text-gray-400 text-xs mb-2">{t('check.products')}</p>
@@ -295,24 +295,25 @@ export default function PageCheck(): JSX.Element {
                                 : null}
                         </div>
                     </div>
-                    <div className='w-1/2 h-full p-8 xl:p-12 2xl:px-24 2xl:py-16 overflow-y-auto'>
-                        <p className='text-gray-400 text-xs mb-2'>{t('check.totalPrice')}</p>
-                        <p className='font-display font-bold text-4xl mb-5'>¥{order.data.totalPrice}</p>
+                    <div className="w-1/2 h-full p-8 xl:p-12 2xl:px-24 2xl:py-16 overflow-y-auto">
+                        <p className="text-gray-400 text-xs mb-2">{t('check.totalPrice')}</p>
+                        <p className="font-display font-bold text-4xl mb-5">¥{order.data.totalPrice}</p>
 
-                        <p className='text-gray-400 text-xs mb-2'>{t('check.orderType')}</p>
-                        <p className='font-display font-bold text-4xl mb-5'>{t(`order.type.${order.data.type}`)}</p>
+                        <p className="text-gray-400 text-xs mb-2">{t('check.orderType')}</p>
+                        <p className="font-display font-bold text-4xl mb-5">{t(`order.type.${order.data.type}`)}</p>
 
                         {order.data.type === OrderType.delivery
-                            ? <p className='text-gray-400 text-xs mb-2'>{t('check.deliveryRoom')}</p>
+                            ? <p className="text-gray-400 text-xs mb-2">{t('check.deliveryRoom')}</p>
                             : null}
                         {order.data.type === OrderType.delivery
-                            ? <p className='font-display font-bold text-4xl mb-5'>{order.data.deliveryRoom}</p>
+                            ? <p className="font-display font-bold text-4xl mb-5">{order.data.deliveryRoom}</p>
                             : null}
 
                         <p className="text-gray-400 text-xs mb-2">{t('check.payQR')}</p>
+                        <p className="text-accent-red text-2xl mb-2">{t('check.payQRNote')}</p>
                         <img src={payQR} alt="QR code" className="w-full rounded-3xl xl:w-1/2 mx-auto mb-5"/>
 
-                        <p className='text-gray-400 text-xs mb-2'>{t('check.products')}</p>
+                        <p className="text-gray-400 text-xs mb-2">{t('check.products')}</p>
                         {order.data.items.map((item: OrderedItemSchema) => <ComponentOrderedItem key={item.id}
                                                                                                  item={item}/>)}
                     </div>

@@ -86,6 +86,7 @@
     "estimateTime_one": "~<1>{{count}}</1> minute remaining",
     "estimateTime_other": "~<1>{{count}}</1> minutes remaining",
     "payQR": "Pay in advance with WeChat Pay",
+    "payQRNote": "Please make sure to note your order number when paying!",
     "status": {
       "notStarted_pickUp": "Not Started",
       "inProgress_pickUp": "In Progress",
