@@ -124,7 +124,7 @@ export default function PageManage(): JSX.Element {
                         {availableOrders.isSuccess
                             ? availableOrders.data.map(order =>
                                 <button key={order.id} onClick={() => { setSelectedOrder(order) }}
-                                        className={`p-3 rounded-2xl w-full text-left ${selectedOrder?.type === OrderType.pickUp ? 'bg-white hover:bg-gray-50' : 'bg-lime-50 hover:bg-lime-100'} mb-3 
+                                        className={`p-3 rounded-2xl w-full text-left ${order.type === OrderType.pickUp ? 'bg-white hover:bg-gray-50' : 'bg-orange-50 hover:bg-orange-100'} mb-3 
                                         ${selectedOrder?.id === order.id ? 'shadow-lg text-accent-orange' : ''} transition-colors duration-100`}>
                                     <p className="font-bold text-xl">{order.number}</p>
                                 </button>
