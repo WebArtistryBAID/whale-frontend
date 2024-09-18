@@ -191,7 +191,7 @@ export default function PageManage(): JSX.Element {
                                 </div>
                                 <div className='w-1/3'>
                                     <p className="text-lg mb-3">{t('manage.orderBy')}</p>
-                                    <p className="text-5xl font-bold">{selectedOrder.user?.name ?? t('manage.onSite')}</p>
+                                    <p className="text-5xl font-bold">{selectedOrder.user?.name ?? selectedOrder.onSiteName}</p>
                                 </div>
                             </div>
                             <div className='flex mb-3'>
