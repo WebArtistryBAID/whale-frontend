@@ -185,7 +185,7 @@ export default function PageCheck(): JSX.Element {
                             : null}
 
                         <p className="text-gray-400 text-xs mb-2">{t('check.payQR')}</p>
-                        <img src={payQR} alt="QR code" className="w-full mx-auto mb-5"/>
+                        <img src={payQR} alt="QR code" className="w-full rounded-3xl mx-auto mb-5"/>
 
                         <p className="text-gray-400 text-xs mb-2">{t('check.products')}</p>
                         {order.data.items.map((item: OrderedItemSchema) => <ComponentOrderedItem key={item.id}
@@ -310,7 +310,7 @@ export default function PageCheck(): JSX.Element {
                             : null}
 
                         <p className="text-gray-400 text-xs mb-2">{t('check.payQR')}</p>
-                        <img src={payQR} alt="QR code" className="w-full xl:w-1/2 mx-auto mb-5"/>
+                        <img src={payQR} alt="QR code" className="w-full rounded-3xl xl:w-1/2 mx-auto mb-5"/>
 
                         <p className='text-gray-400 text-xs mb-2'>{t('check.products')}</p>
                         {order.data.items.map((item: OrderedItemSchema) => <ComponentOrderedItem key={item.id}
