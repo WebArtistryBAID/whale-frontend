@@ -3,7 +3,7 @@ WORKDIR .
 CMD ["mkdir", "whale-frontend"]
 COPY . ./whale-frontend/
 WORKDIR whale-frontend
-RUN npm install --force
+RUN npm install --force --registry=http://registry.npmmirror.com/
 RUN npm run build
 FROM nginx:stable-alpine as runtime
 COPY --from=builder /whale-frontend/dist /usr/share/nginx/html
