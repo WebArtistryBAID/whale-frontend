@@ -6,7 +6,7 @@ import { type OptionTypeSchema, type OrderedItemSchema, type OrderSchema, OrderT
 import ComponentOrderedItem from './ComponentOrderedItem.tsx'
 import { useShoppingCart } from '../../../data/shoppingCart.tsx'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { getOrderTimeEstimateNow, order } from '../../../data/api.ts'
+import { getOnSiteEligibility, getOrderTimeEstimateNow, order } from '../../../data/api.ts'
 import {
     type OrderCreateSchema,
     type OrderedItemCreateSchema,
@@ -54,7 +54,14 @@ export default function ComponentOrderConfirmModal({
         refetchInterval: 10000
     })
 
-    function submit(): void {
+    const osnEligibility = useQuery({
+        queryKey: ['osn-eligibility', `osn-eligibility-${onSiteName}`],
+        queryFn: async () => await getOnSiteEligibility(onSiteName),
+        enabled: false,
+        gcTime: Infinity
+    })
+
+    async function submit(): Promise<void> {
         setDeliveryRoomError('')
         if (orderType === OrderType.delivery && (deliveryRoom.length !== 3 || Number.isNaN(parseInt(deliveryRoom)) ||
             parseInt(deliveryRoom[0]) < 1 || parseInt(deliveryRoom[0]) > 4 || parseInt(deliveryRoom[1]) > 2)) {
@@ -65,6 +72,14 @@ export default function ComponentOrderConfirmModal({
         setOnSiteNameError('')
         if (getOnSiteOrderMode() as boolean && onSiteName.length < 1) {
             setOnSiteNameError(t('order.confirm.onSiteNameError'))
+            return
+        }
+        const result = await osnEligibility.refetch()
+        if (result.isError) {
+            return
+        }
+        if (result.data === false) {
+            setOnSiteNameError(t('order.confirm.onSiteNameIneligible'))
             return
         }
 
@@ -196,7 +211,9 @@ export default function ComponentOrderConfirmModal({
 
                                 <button className='flex-shrink lg:rounded-br-3xl transition-colors duration-100
                      flex bg-accent-orange-bg hover:bg-amber-100 py-3 px-8 justify-center items-center'
-                                        onClick={submit}>
+                                        onClick={() => {
+                                            void submit()
+                                        }}>
                                     <p>{t('order.confirm.confirm')}</p>
                                 </button>
                             </div>

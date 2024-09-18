@@ -69,6 +69,7 @@
       "roomError": "Enter a proper room number",
       "onSiteName": "Your Name",
       "onSiteNameError": "Enter your name",
+      "onSiteNameIneligible": "You have an active order",
       "importantInformation": "Important Information",
       "waitError": "Failed to load wait time information.",
       "waitLoading": "You will be waiting for approximately ... minutes.",

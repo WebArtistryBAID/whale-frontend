@@ -69,6 +69,7 @@
       "roomError": "必须填写正确的外送房间号",
       "onSiteName": "您的姓名",
       "onSiteNameError": "必须填写您的姓名",
+      "onSiteNameIneligible": "您有尚未付款的订单",
       "importantInformation": "重要信息",
       "waitError": "暂时无法加载点单等待时间信息。",
       "waitLoading": "现在点单需要等待约 ... 分钟。",

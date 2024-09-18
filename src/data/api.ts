@@ -151,6 +151,10 @@ export async function cancelOrder(id: number, token: string): Promise<boolean | 
     return await del('order', new Map([['id', id.toString()]]), token)
 }
 
+export async function getOnSiteEligibility(name: string): Promise<boolean> {
+    return await get('order/on-site-eligibility', new Map([['name', name]]))
+}
+
 export async function order(create: OrderCreateSchema, token: string): Promise<OrderSchema | GenericError> {
     return await post('order', create, token)
 }
