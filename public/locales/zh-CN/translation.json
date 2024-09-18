@@ -127,7 +127,7 @@
     "privacy": "希悦是由北京悦活教育科技有限责任公司运营的产品，继续登录即代表您同意希悦的有关条款与条件。",
     "permissions": {
       "name": "白鲸会获得您的真实姓名。",
-      "eduId": "白鲸会获得您的北京教育 ID 或其他用户编码。",
+      "eduId": "白鲸会获得您的希悦用户 ID。",
       "phone": "如果可用的话，白鲸会获得您的手机号码。",
       "noPassword": "白鲸不会获得您的密码。"
     },
@@ -155,7 +155,7 @@
   "account": {
     "userGratification": "感谢光临白鲸咖啡馆!",
     "basicInformation": "基本信息",
-    "eduId": "北京教育 ID 或其他用户编码",
+    "eduId": "希悦用户 ID",
     "phone": "手机号码",
     "unavailable": "无",
     "statistics": "统计数据",

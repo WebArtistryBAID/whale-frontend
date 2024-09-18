@@ -127,7 +127,7 @@
     "privacy": "SEIUE is a product operated by Beijing Yuehuo Education Technology Limited. By continuing to log in, you indicate your agreement to SEIUE's terms and conditions.",
     "permissions": {
       "name": "Whale will receive your real name.",
-      "eduId": "Whale will receive your Beijing Education ID or other user IDs.",
+      "eduId": "Whale will receive your SEIUE user ID.",
       "phone": "Whale will receive your phone number, if available.",
       "noPassword": "Whale will not be able to receive your password."
     },
@@ -155,7 +155,7 @@
   "account": {
     "userGratification": "Thank you for being with Whale Cafe!",
     "basicInformation": "Basic Information",
-    "eduId": "Beijing Education ID or Other User IDs",
+    "eduId": "SEIUE User ID",
     "phone": "Phone Number",
     "unavailable": "N/A",
     "statistics": "My Statistics",
@@ -164,7 +164,7 @@
     "orderManagement": "Manage Orders",
     "statisticsManagement": "Manage Statistics",
     "onSiteOrdering": "On Site Ordering",
-    "contentManagement": "Content Management",
+    "contentManagement": "Content Changes",
     "totalSpent": "Total Spent",
     "totalOrders": "Total Orders",
     "totalCups": "Total Cups",
