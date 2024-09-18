@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react'
-import { type PersistentStorage, usePersistentStorage } from '../../../data/persistentStorage'
-import { useNavigate } from 'react-router-dom'
+import {useEffect, useState} from 'react'
+import {type PersistentStorage, usePersistentStorage} from '../../../data/persistentStorage'
+import {useNavigate} from 'react-router-dom'
 import BasePage from '../../../BasePage.tsx'
-import { Trans, useTranslation } from 'react-i18next'
+import {Trans, useTranslation} from 'react-i18next'
 import ComponentTopBar from '../../common/ComponentTopBar'
-import { useQuery } from '@tanstack/react-query'
-import { getMe, getMeStatistics } from '../../../data/api'
+import {useQuery} from '@tanstack/react-query'
+import {getMe, getMeStatistics} from '../../../data/api'
 import ComponentLoading from '../../common/ComponentLoading'
 import ComponentError from '../../common/ComponentError'
 import ComponentDeleteAccountModal from './ComponentDeleteAccountModal'
 import ComponentBottomNav from '../../common/ComponentBottomNav.tsx'
-import { type ShoppingCart, useShoppingCart } from '../../../data/shoppingCart.tsx'
+import {type ShoppingCart, useShoppingCart} from '../../../data/shoppingCart.tsx'
 
 export default function PageAccount(): JSX.Element {
     const persistentStorage: PersistentStorage = usePersistentStorage()
@@ -121,7 +121,7 @@ export default function PageAccount(): JSX.Element {
                             {(Boolean(me.data.permissions.includes('admin.cms'))) && <><p
                             className="text-sm mb-1">{t('account.contentManagement')}</p>
                                 <a href={`${import.meta.env.VITE_API_HOST}/admin/`}
-                               className="rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3">{t('account.contentManagement')}</a></>}
+                                   className="block rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3">{t('account.contentManagement')}</a></>}
 
                             {(Boolean(me.data.permissions.includes('admin.cms'))) && <><p
                             className="text-sm mb-1">{t('account.statisticsManagement')}</p>
