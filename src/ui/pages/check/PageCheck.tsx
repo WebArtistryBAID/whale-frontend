@@ -1,12 +1,12 @@
 import BasePage from '../../../BasePage.tsx'
-import { useNavigate, useParams } from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import ComponentError from '../../common/ComponentError.tsx'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { cancelOrder, getOrder, getOrderTimeEstimate } from '../../../data/api.ts'
+import {useMutation, useQuery} from '@tanstack/react-query'
+import {cancelOrder, getOrder, getOrderTimeEstimate} from '../../../data/api.ts'
 import ComponentLoading from '../../common/ComponentLoading.tsx'
 import ComponentTopBar from '../../common/ComponentTopBar.tsx'
-import { Trans, useTranslation } from 'react-i18next'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {Trans, useTranslation} from 'react-i18next'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {
     faCircleCheck,
     faFaceSmile,
@@ -21,11 +21,11 @@ import {
     faHourglass as faHourglassR,
     faHourglassHalf as faHourglassHalfR
 } from '@fortawesome/free-regular-svg-icons'
-import { type OrderedItemSchema, OrderStatus, OrderType } from '../../../data/dataTypes.ts'
+import {type OrderedItemSchema, OrderStatus, OrderType} from '../../../data/dataTypes.ts'
 import ComponentIconText from '../../common/ComponentIconText.tsx'
 import ComponentOrderedItem from '../order/ComponentOrderedItem.tsx'
-import { useState } from 'react'
-import { type PersistentStorage, usePersistentStorage } from '../../../data/persistentStorage.tsx'
+import {useState} from 'react'
+import {type PersistentStorage, usePersistentStorage} from '../../../data/persistentStorage.tsx'
 
 import payQR from './assets/pay-qr.jpg'
 
@@ -185,7 +185,7 @@ export default function PageCheck(): JSX.Element {
                             : null}
 
                         <p className="text-gray-400 text-xs mb-2">{t('check.payQR')}</p>
-                        <img src={payQR} alt="QR code" className="w-full lg:w-1/2 mx-auto mb-5"/>
+                        <img src={payQR} alt="QR code" className="w-full mx-auto mb-5"/>
 
                         <p className="text-gray-400 text-xs mb-2">{t('check.products')}</p>
                         {order.data.items.map((item: OrderedItemSchema) => <ComponentOrderedItem key={item.id}
@@ -308,6 +308,9 @@ export default function PageCheck(): JSX.Element {
                         {order.data.type === OrderType.delivery
                             ? <p className='font-display font-bold text-4xl mb-5'>{order.data.deliveryRoom}</p>
                             : null}
+
+                        <p className="text-gray-400 text-xs mb-2">{t('check.payQR')}</p>
+                        <img src={payQR} alt="QR code" className="w-full xl:w-1/2 mx-auto mb-5"/>
 
                         <p className='text-gray-400 text-xs mb-2'>{t('check.products')}</p>
                         {order.data.items.map((item: OrderedItemSchema) => <ComponentOrderedItem key={item.id}
