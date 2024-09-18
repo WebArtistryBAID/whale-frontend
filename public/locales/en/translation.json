@@ -39,7 +39,7 @@
       "inProgress_delivery_one": "Making your drink, <1>~{{count}} minute remaining.</1>",
       "inProgress_delivery_other": "Making your drink, <1>~{{count}} minutes remaining.</1>",
       "ready_delivery": "Delivering your drink! <1>You will pay on delivery.</1>",
-      "pickedUp_delivery": "Order finished, thank you for your patronage!"
+      "pickedUp_delivery": "Order finished and paid, thank you for your patronage!"
     }
   },
   "order": {
@@ -89,11 +89,11 @@
       "notStarted_pickUp": "Not Started",
       "inProgress_pickUp": "In Progress",
       "ready_pickUp": "Ready to Pick",
-      "pickedUp_pickUp": "Picked Up",
+      "pickedUp_pickUp": "Paid",
       "notStarted_delivery": "Not Started",
       "inProgress_delivery": "In Progress",
       "ready_delivery": "Delivering",
-      "pickedUp_delivery": "Picked Up",
+      "pickedUp_delivery": "Paid",
       "current": "(Current Status)"
     },
     "message": {

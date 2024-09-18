@@ -33,13 +33,13 @@
       "inProgress_pickUp_one": "正在制作，<1>大约需等待 {{count}} 分钟。<1>",
       "inProgress_pickUp_other": "正在制作，<1>大约需等待 {{count}} 分钟。<1>",
       "ready_pickUp": "制作完成，请尽快取餐。<1>请携带平板现场付款。</1>",
-      "pickedUp_pickUp": "已取餐，感谢您光临白鲸咖啡馆!",
+      "pickedUp_pickUp": "已付款，感谢您光临白鲸咖啡馆!",
       "notStarted_delivery_one": "正在等待开始制作，<1>大约需等待 {{count}} 分钟。<1>",
       "notStarted_delivery_other": "正在等待开始制作，<1>大约需等待 {{count}} 分钟。<1>",
       "inProgress_delivery_one": "正在制作，<1>大约需等待 {{count}} 分钟。<1>",
       "inProgress_delivery_other": "正在制作，<1>大约需等待 {{count}} 分钟。<1>",
       "ready_delivery": "制作完成，正在配送中。<1>您将会取餐时付款。</1>",
-      "pickedUp_delivery": "已取餐，感谢您光临白鲸咖啡馆!"
+      "pickedUp_delivery": "已付款，感谢您光临白鲸咖啡馆!"
     }
   },
   "order": {
@@ -89,11 +89,11 @@
       "notStarted_pickUp": "待备餐",
       "inProgress_pickUp": "备餐中",
       "ready_pickUp": "待取餐",
-      "pickedUp_pickUp": "已取餐",
+      "pickedUp_pickUp": "已付款",
       "notStarted_delivery": "待备餐",
       "inProgress_delivery": "备餐中",
       "ready_delivery": "配送中",
-      "pickedUp_delivery": "已取餐",
+      "pickedUp_delivery": "已付款",
       "current": "(目前状态)"
     },
     "message": {
