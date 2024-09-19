@@ -54,6 +54,7 @@
     "shoppingCart": "Shopping Cart",
     "empty": "Fancy drinking something?",
     "order": "Order",
+    "singleQuota": "Max. {{count}} Cups",
     "add": "Add",
     "notOpenTitle": "Ordering Unavailable",
     "notOpenDescription": "Ordering is available starting at 10 a.m. daily.",

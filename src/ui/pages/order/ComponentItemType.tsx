@@ -1,8 +1,7 @@
 import { type ItemTypeSchema } from '../../../data/dataTypes.ts'
-import { moneyRound } from '../../../utils.ts'
+import { getUploadsRoot, moneyRound } from '../../../utils.ts'
 import { useTranslation } from 'react-i18next'
 import Decimal from 'decimal.js'
-import { getUploadsRoot } from '../../../data/api.ts'
 
 export default function ComponentItemType({
     item,

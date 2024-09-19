@@ -58,6 +58,11 @@ export default function PageOrder(): JSX.Element {
         queryFn: async () => await getOrderQuota()
     })
 
+    const singleQuota = useQuery({
+        queryKey: ['order-single-quota'],
+        queryFn: async () => await getSettings('order-quota')
+    })
+
     const onSiteQuota = useQuery({
         queryKey: ['order-on-site-quota'],
         queryFn: async () => await getSettings('on-site-quota')
@@ -76,11 +81,13 @@ export default function PageOrder(): JSX.Element {
 
     if (categories.isError || getShopOpen.isError || me.isError || ads.isError || meCanOrder.isError || quota.isError || onSiteQuota.isError || onlineQuota.isError ||
         (typeof categories.data === 'object' && 'detail' in categories.data) || (typeof me.data === 'object' && 'detail' in me.data) ||
-        (typeof quota.data === 'object' && 'detail' in quota.data) || typeof onSiteQuota.data === 'object' || typeof onlineQuota.data === 'object') {
+        (typeof quota.data === 'object' && 'detail' in quota.data) || typeof onSiteQuota.data === 'object' || typeof onlineQuota.data === 'object' ||
+        typeof singleQuota.data === 'object' || singleQuota.isError) {
         return <BasePage><ComponentError detail={categories} screen={true}/></BasePage>
     }
 
-    if (categories.isPending || getShopOpen.isPending || me.isPending || ads.isPending || meCanOrder.isPending || quota.isPending || onSiteQuota.isPending || onlineQuota.isPending) {
+    if (categories.isPending || getShopOpen.isPending || me.isPending || ads.isPending || meCanOrder.isPending || quota.isPending ||
+        onSiteQuota.isPending || onlineQuota.isPending || singleQuota.isPending) {
         return <BasePage><ComponentLoading screen={true}/></BasePage>
     }
 
@@ -126,6 +133,8 @@ export default function PageOrder(): JSX.Element {
         })}/>
     }
 
+    const singleQuotaInt = parseInt(singleQuota.data ?? 999)
+
     const resultedCategories = categories.data
 
     return (
@@ -168,7 +177,7 @@ export default function PageOrder(): JSX.Element {
                 </div>
 
                 <div className="flex-shrink w-full">
-                    <ComponentShoppingCart order={() => {
+                    <ComponentShoppingCart singleQuota={singleQuotaInt} order={() => {
                         if (shoppingCart.getTotalItems() > 0) {
                             setConfirmModalOpen(true)
                         }
@@ -206,7 +215,7 @@ export default function PageOrder(): JSX.Element {
                                 <ComponentAd ads={ads.data}/>
                             </div>
                             <div className="lg:h-3/5">
-                                <ComponentShoppingCart order={() => {
+                                <ComponentShoppingCart singleQuota={singleQuotaInt} order={() => {
                                     if (shoppingCart.getTotalItems() > 0) {
                                         setConfirmModalOpen(true)
                                     }

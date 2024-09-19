@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { type OrderSchema } from '../../../data/dataTypes'
 import { useNavigate } from 'react-router-dom'
-import { getUploadsRoot } from '../../../data/api.ts'
+import { getUploadsRoot } from '../../../utils.ts'
 
 export default function ComponentHistoricalOrder({ order }: { order: OrderSchema }): JSX.Element {
     const { t } = useTranslation()

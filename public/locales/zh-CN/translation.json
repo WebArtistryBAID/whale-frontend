@@ -54,6 +54,7 @@
     "shoppingCart": "购物车",
     "empty": "喝些什么?",
     "order": "下单",
+    "singleQuota": "最多 {{count}} 杯",
     "add": "添加",
     "notOpenTitle": "点单未开放",
     "notOpenDescription": "每日上午 10 时将开放点单。",

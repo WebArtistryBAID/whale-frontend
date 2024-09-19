@@ -7,7 +7,10 @@ import { faClose, faMugSaucer } from '@fortawesome/free-solid-svg-icons'
 import { useShoppingCart } from '../../../data/shoppingCart.tsx'
 import ComponentBottomNav from '../../common/ComponentBottomNav.tsx'
 
-export default function ComponentShoppingCart({ order }: { order: () => void }): JSX.Element {
+export default function ComponentShoppingCart({ order, singleQuota }: {
+    order: () => void
+    singleQuota: number
+}): JSX.Element {
     const [modalOpen, setModalOpen] = useState(false)
     const {
         items,
@@ -67,11 +70,11 @@ export default function ComponentShoppingCart({ order }: { order: () => void }):
                 </div>
                 <button className='flex-shrink transition-colors duration-100
                      flex bg-accent-orange-bg hover:bg-amber-100 py-3 px-8 justify-center items-center'
-                        onClick={items.length > 0
+                        onClick={items.length > 0 && getTotalItems() <= singleQuota
                             ? order
                             : () => {
                             }}>
-                    <p className='font-display'>{t('order.order')}</p>
+                    <p>{getTotalItems() <= singleQuota ? t('order.order') : t('order.singleQuota', { count: singleQuota })}</p>
                 </button>
             </div>
 
@@ -106,8 +109,11 @@ export default function ComponentShoppingCart({ order }: { order: () => void }):
                         </div>
                         <button className='flex-shrink rounded-br-3xl transition-colors duration-100
                      flex h-full bg-accent-orange-bg hover:bg-amber-100 py-3 px-8 justify-center items-center'
-                                onClick={order}>
-                            <p className='font-display'>{t('order.order')}</p>
+                                onClick={items.length > 0 && getTotalItems() <= singleQuota
+                                    ? order
+                                    : () => {
+                                    }}>
+                            <p>{getTotalItems() <= singleQuota ? t('order.order') : t('order.singleQuota', { count: singleQuota })}</p>
                         </button>
                     </div>
                 </div>
