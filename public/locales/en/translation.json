@@ -55,7 +55,7 @@
     "order": "Order",
     "add": "Add",
     "notOpenTitle": "Ordering Unavailable",
-    "notOpenDescription": "Ordering is currently closed. Please wait until the shop reopens.",
+    "notOpenDescription": "Ordering is available starting at 10 a.m. daily.",
     "quotaTitle": "Quota Exceeded",
     "quotaOnSiteDescription": "Thank you for your patronage! Unfortunately, Whale Cafe's production capabilities are limited. There have been {{count}} cups ordered on-site today, which exceeds the quota of {{quota}}. You're welcome to order tomorrow.",
     "quotaOnSiteRedirect": "Thank you for your patronage! Unfortunately, Whale Cafe's production capabilities are limited. There have been {{count}} cups ordered on-site today, which exceeds the quota of {{quota}}. Online ordering is still available.",
@@ -202,13 +202,16 @@
     "orderBy": "Ordered By",
     "onSite": "On Site",
     "orderType": "Order Type",
+    "orderedOn": "Ordered On",
     "deliveryRoom": "Delivery Room",
     "itemOrdered": "Items Ordered",
     "shopOpen": "Ready for Ordering",
     "shopClosed": "Ordering Closed",
     "toggleShopOpen": "Enable Ordering",
     "toggleShopClose": "Disable Ordering",
-    "done": "Done!"
+    "done": "Done!",
+    "today": "Today",
+    "historical": "Historical"
   },
   "stats": {
     "title": "Whale Cafe: Statistics",
