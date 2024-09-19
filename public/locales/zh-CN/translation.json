@@ -44,7 +44,8 @@
   },
   "order": {
     "item": {
-      "pick": "选规格"
+      "pick": "选规格",
+      "soldOut": "售罄"
     },
     "type": {
       "pickUp": "自取",

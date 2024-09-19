@@ -44,7 +44,8 @@
   },
   "order": {
     "item": {
-      "pick": "Pick"
+      "pick": "Pick",
+      "soldOut": "Sold Out"
     },
     "type": {
       "pickUp": "Pick Up",
