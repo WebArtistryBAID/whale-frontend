@@ -11,6 +11,7 @@ import {
     type LoginRedirectTarget,
     type OrderCreateSchema,
     type OrderEstimateSchema,
+    type OrderQuotaSchema,
     type StatsAggregateSchema,
     type UserOrdersResponse,
     type UserStatisticsSchema
@@ -125,6 +126,10 @@ export async function getOrder(id: number): Promise<OrderSchema | GenericError> 
 
 export async function getOrders(page: number, token: string): Promise<UserOrdersResponse | GenericError> {
     return await get('orders', new Map([['page', page.toString()], ['size', '20']]), token)
+}
+
+export async function getOrderQuota(): Promise<OrderQuotaSchema | GenericError> {
+    return await get('order/quota')
 }
 
 export async function getOrderByNumber(number: string): Promise<OrderSchema | GenericError> {

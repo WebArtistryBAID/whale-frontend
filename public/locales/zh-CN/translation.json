@@ -56,6 +56,11 @@
     "add": "添加",
     "notOpenTitle": "点单未开放",
     "notOpenDescription": "点单尚未开放，请等待开放后再试。",
+    "quotaTitle": "超出限额",
+    "quotaOnSiteDescription": "感谢您对白鲸咖啡馆的支持! 很遗憾，白鲸咖啡馆的生产能力有限。今天已有现场点单 {{count}} 杯，超出了 {{quota}} 的限制。您可以明天点单。",
+    "quotaOnSiteRedirect": "感谢您对白鲸咖啡馆的支持! 很遗憾，白鲸咖啡馆的生产能力有限。今天已有现场点单 {{count}} 杯，超出了 {{quota}} 的限制。线上点单仍然可用。",
+    "quotaOnlineDescription": "感谢您对白鲸咖啡馆的支持! 很遗憾，白鲸咖啡馆的生产能力有限。今天已有线上点单 {{count}} 杯，超出了 {{quota}} 的限制。您可以明天点单。",
+    "quotaOnlineRedirect": "感谢您对白鲸咖啡馆的支持! 很遗憾，白鲸咖啡馆的生产能力有限。今天已有线上点单 {{count}} 杯，超出了 {{quota}} 的限制。现场点单仍然可用。",
     "back": "返回",
     "exitOnSite": "退出现场点单",
     "activeOrder": {

@@ -54,6 +54,11 @@ export interface StatsAggregateSchema {
     cups: Record<string, number>
 }
 
+export interface OrderQuotaSchema {
+    onSiteToday: number
+    onlineToday: number
+}
+
 export interface GenericError {
     detail: string
 }

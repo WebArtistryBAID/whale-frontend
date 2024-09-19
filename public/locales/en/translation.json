@@ -56,6 +56,11 @@
     "add": "Add",
     "notOpenTitle": "Ordering Unavailable",
     "notOpenDescription": "Ordering is currently closed. Please wait until the shop reopens.",
+    "quotaTitle": "Quota Exceeded",
+    "quotaOnSiteDescription": "Thank you for your patronage! Unfortunately, Whale Cafe's production capabilities are limited. There have been {{count}} cups ordered on-site today, which exceeds the quota of {{quota}}. You're welcome to order tomorrow.",
+    "quotaOnSiteRedirect": "Thank you for your patronage! Unfortunately, Whale Cafe's production capabilities are limited. There have been {{count}} cups ordered on-site today, which exceeds the quota of {{quota}}. Online ordering is still available.",
+    "quotaOnlineDescription": "Thank you for your patronage! Unfortunately, Whale Cafe's production capabilities are limited. There have been {{count}} cups ordered online today, which exceeds the quota of {{quota}}. You're welcome to order tomorrow.",
+    "quotaOnlineRedirect": "Thank you for your patronage! Unfortunately, Whale Cafe's production capabilities are limited. There have been {{count}} cups ordered online today, which exceeds the quota of {{quota}}. On-site ordering is still available.",
     "back": "Back",
     "exitOnSite": "Exit On-Site Ordering",
     "activeOrder": {
