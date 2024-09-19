@@ -90,11 +90,12 @@ export default function PageOrder(): JSX.Element {
     }
 
     if (meCanOrder.data === false && shoppingCart.getOnSiteOrderMode() === false) {
-        return <FullScreenMessage title="order.activeOrder.title" description="order.activeOrder.description"/>
+        return <FullScreenMessage title={t('order.activeOrder.title')}
+                                  description={t('order.activeOrder.description')}/>
     }
 
     if (getShopOpen.data === '0' || typeof getShopOpen.data === 'object') {
-        return <FullScreenMessage title="order.notOpenTitle" description="order.notOpenDescription"/>
+        return <FullScreenMessage title={t('order.notOpenTitle')} description={t('order.notOpenDescription')}/>
     }
 
     const onSiteQuotaInt = parseInt(onSiteQuota.data ?? 999)
