@@ -10,7 +10,8 @@ export function getUploadsRoot(): string {
     if ((import.meta.env.VITE_API_HOST as string).startsWith('/')) {
         return `${import.meta.env.VITE_API_HOST}${import.meta.env.VITE_API_HOST}`
     }
-    return `${import.meta.env.VITE_API_HOST}${new URL(import.meta.env.VITE_API_HOST as string).pathname}`
+    const path = new URL(import.meta.env.VITE_API_HOST as string).pathname
+    return `${import.meta.env.VITE_API_HOST}${path === '/' ? '' : path}`
 }
 
 // Frontend money calculation is for display only -- real money calculation is done on the backend with Decimals
