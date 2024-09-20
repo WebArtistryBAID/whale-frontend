@@ -27,6 +27,9 @@ export default function PageManage(): JSX.Element {
     const [cancelConfirm, setCancelConfirm] = useState(false)
     let legacyInterval = -1
 
+    const now = new Date()
+    const day = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`
+
     useEffect(() => {
         if (legacyInterval !== -1) {
             clearInterval(legacyInterval)
@@ -55,7 +58,9 @@ export default function PageManage(): JSX.Element {
 
     const changeShopOpen = useMutation({
         mutationFn: async (open: string) => await setSettings('shop-open', open === '1' ? '0' : '1', persistentStorage.getToken()!),
-        onSuccess: () => void getShopOpen.refetch()
+        onSuccess: () => {
+            void getShopOpen.refetch()
+        }
     })
 
     const changeStatus = useMutation({
@@ -117,18 +122,34 @@ export default function PageManage(): JSX.Element {
     return <BasePage>
         <div className='h-screen w-screen p-12 flex flex-col'>
             <p className="text-lg mb-5 flex-shrink">{t('manage.title')}</p>
-            <div className='flex flex-grow'>
-                <div className='w-1/3 2xl:w-1/4 mr-5 rounded-3xl flex h-full flex-col'>
-                    <div className='flex-grow rounded-3xl bg-gray-100 p-3 mb-3'>
+            <div className="flex flex-grow min-h-0">
+                <div className="w-1/3 2xl:w-1/4 mr-5 rounded-3xl h-full flex flex-col min-h-0">
+                    <div className="rounded-3xl bg-gray-100 p-3 mb-3 flex-grow overflow-y-auto">
                         {availableOrders.isPending ? <ComponentLoading /> : null}
                         {availableOrders.isSuccess
-                            ? availableOrders.data.map(order =>
-                                <button key={order.id} onClick={() => { setSelectedOrder(order) }}
-                                        className={`p-3 rounded-2xl w-full text-left ${order.type === OrderType.pickUp ? 'bg-white hover:bg-gray-50' : 'bg-orange-50 hover:bg-orange-100'} mb-3 
+                            ? <>
+                                <p className="text-center text-sm text-gray-800 mb-3">{t('manage.today')}</p>
+                                {availableOrders.data.map(order => order.createdTime.startsWith(day)
+                                    ? <button key={order.id} onClick={() => {
+                                        setSelectedOrder(order)
+                                    }}
+                                              className={`p-3 rounded-2xl w-full text-left ${order.type === OrderType.pickUp ? 'bg-white hover:bg-gray-50' : 'bg-orange-50 hover:bg-orange-100'} mb-3 
                                         ${selectedOrder?.id === order.id ? 'shadow-lg text-accent-orange' : ''} transition-colors duration-100`}>
-                                    <p className="font-bold text-xl">{order.number}</p>
-                                </button>
-                            )
+                                        <p className="font-bold text-xl">{order.number}</p>
+                                    </button>
+                                    : null)}
+
+                                <p className="text-center text-sm text-gray-800 mt-5 mb-3">{t('manage.historical')}</p>
+                                {availableOrders.data.map(order => !order.createdTime.startsWith(day)
+                                    ? <button key={order.id} onClick={() => {
+                                        setSelectedOrder(order)
+                                    }}
+                                              className={`p-3 rounded-2xl w-full text-left ${order.type === OrderType.pickUp ? 'bg-white hover:bg-gray-50' : 'bg-orange-50 hover:bg-orange-100'} mb-3 
+                                        ${selectedOrder?.id === order.id ? 'shadow-lg text-accent-orange' : ''} transition-colors duration-100`}>
+                                        <p className="font-bold text-xl">{order.number}</p>
+                                    </button>
+                                    : null)}
+                            </>
                             : null}
                         {availableOrders.isSuccess && availableOrders.data.length < 1
                             ? <div className='w-full h-full flex justify-center items-center flex-col'>
@@ -183,25 +204,30 @@ export default function PageManage(): JSX.Element {
                             <div className='flex mb-5'>
                                 <div className='w-1/3'>
                                     <p className="text-lg mb-3">{t('manage.amountCharge')}</p>
-                                    <p className="text-5xl font-bold">¥{selectedOrder.totalPrice}</p>
+                                    <p className="text-4xl font-bold">¥{selectedOrder.totalPrice}</p>
                                 </div>
-                                <div className='w-1/3'>
-                                    <p className="text-lg mb-3">{t('manage.orderTime')}</p>
-                                    <p className="text-5xl font-bold">{selectedOrder.status === OrderStatus.pickedUp ? t('manage.done') : msToTime(currentTime)}</p>
-                                </div>
-                                <div className='w-1/3'>
+                                {selectedOrder.createdTime.startsWith(day)
+                                    ? <div className="w-1/3">
+                                        <p className="text-lg mb-3">{t('manage.orderTime')}</p>
+                                        <p className="text-4xl font-bold">{(selectedOrder.status === OrderStatus.pickedUp || selectedOrder.status === OrderStatus.ready) ? t('manage.done') : msToTime(currentTime)}</p>
+                                    </div>
+                                    : <div className="w-1/3">
+                                        <p className="text-lg mb-3">{t('manage.orderedOn')}</p>
+                                        <p className="text-4xl font-bold">{selectedOrder.createdTime.substring(0, 10)}</p>
+                                    </div>}
+                                <div className="w-1/3">
                                     <p className="text-lg mb-3">{t('manage.orderBy')}</p>
-                                    <p className="text-5xl font-bold">{selectedOrder.user?.name ?? selectedOrder.onSiteName}</p>
+                                    <p className="text-4xl font-bold">{selectedOrder.user?.name ?? selectedOrder.onSiteName}</p>
                                 </div>
                             </div>
                             <div className='flex mb-3'>
                                 <div className='w-1/3'>
                                     <p className="text-lg mb-3">{t('manage.orderType')}</p>
-                                    <p className="text-5xl font-bold">{t('order.type.' + selectedOrder.type)}</p>
+                                    <p className="text-4xl font-bold">{t('order.type.' + selectedOrder.type)}</p>
                                 </div>
                                 <div className='w-1/3'>
                                     <p className="text-lg mb-3">{t('manage.deliveryRoom')}</p>
-                                    <p className="text-5xl font-bold">{selectedOrder.type === OrderType.delivery ? selectedOrder.deliveryRoom : 'N/A'}</p>
+                                    <p className="text-4xl font-bold">{selectedOrder.type === OrderType.delivery ? selectedOrder.deliveryRoom : 'N/A'}</p>
                                 </div>
                                 <button
                                     className="w-1/3 rounded-3xl bg-accent-red hover:bg-red-500 p-8 font-bold text-3xl text-white"

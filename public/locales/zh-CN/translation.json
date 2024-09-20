@@ -44,7 +44,8 @@
   },
   "order": {
     "item": {
-      "pick": "选规格"
+      "pick": "选规格",
+      "soldOut": "售罄"
     },
     "type": {
       "pickUp": "自取",
@@ -53,9 +54,15 @@
     "shoppingCart": "购物车",
     "empty": "喝些什么?",
     "order": "下单",
+    "singleQuota": "最多 {{count}} 杯",
     "add": "添加",
     "notOpenTitle": "点单未开放",
-    "notOpenDescription": "点单尚未开放，请等待开放后再试。",
+    "notOpenDescription": "每日上午 10 时将开放点单。",
+    "quotaTitle": "超出限额",
+    "quotaOnSiteDescription": "感谢您对白鲸咖啡馆的支持! 很遗憾，白鲸咖啡馆的生产能力有限。今天已有现场点单 {{count}} 杯，超出了 {{quota}} 的限制。您可以明天点单。",
+    "quotaOnSiteRedirect": "感谢您对白鲸咖啡馆的支持! 很遗憾，白鲸咖啡馆的生产能力有限。今天已有现场点单 {{count}} 杯，超出了 {{quota}} 的限制。线上点单仍然可用。",
+    "quotaOnlineDescription": "感谢您对白鲸咖啡馆的支持! 很遗憾，白鲸咖啡馆的生产能力有限。今天已有线上点单 {{count}} 杯，超出了 {{quota}} 的限制。您可以明天点单。",
+    "quotaOnlineRedirect": "感谢您对白鲸咖啡馆的支持! 很遗憾，白鲸咖啡馆的生产能力有限。今天已有线上点单 {{count}} 杯，超出了 {{quota}} 的限制。现场点单仍然可用。",
     "back": "返回",
     "exitOnSite": "退出现场点单",
     "activeOrder": {
@@ -198,13 +205,16 @@
     "orderBy": "点单客户",
     "onSite": "现场点单",
     "orderType": "订单类型",
+    "orderedOn": "点单时间",
     "deliveryRoom": "外送房间号",
     "itemOrdered": "订单产品",
     "shopOpen": "正在接受订单",
     "shopClosed": "未开始接受订单",
     "toggleShopOpen": "开店",
     "toggleShopClose": "闭店",
-    "done": "已完成!"
+    "done": "已完成!",
+    "today": "今天",
+    "historical": "历史"
   },
   "stats": {
     "title": "白鲸: 总计数据",

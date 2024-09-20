@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { type AdSchema } from '../../../data/dataTypes.ts'
-import { getUploadsRoot } from '../../../data/api.ts'
+import { getUploadsRoot } from '../../../utils.ts'
 
 export default function ComponentAd({ ads }: { ads: AdSchema[] }): JSX.Element {
     const [index, setIndex] = useState(0)

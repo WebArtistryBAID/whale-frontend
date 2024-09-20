@@ -1,7 +1,6 @@
 import { type OrderedItemSchema } from '../../../data/dataTypes.ts'
-import { frontendCalculate, moneyRound } from '../../../utils.ts'
+import { frontendCalculate, getUploadsRoot, moneyRound } from '../../../utils.ts'
 import { useTranslation } from 'react-i18next'
-import { getUploadsRoot } from '../../../data/api.ts'
 
 export default function ComponentOrderedItem({
     item,

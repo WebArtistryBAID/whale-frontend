@@ -50,6 +50,7 @@ export interface ItemTypeSchema {
     options: OptionTypeSchema[]
     basePrice: string
     salePercent: number
+    soldOut: boolean
 }
 
 export interface OrderedItemSchema {

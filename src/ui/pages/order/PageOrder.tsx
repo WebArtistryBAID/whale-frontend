@@ -6,7 +6,7 @@ import ComponentShoppingCart from './ComponentShoppingCart.tsx'
 import { useEffect, useState } from 'react'
 import ComponentOrderConfirmModal from './ComponentOrderConfirmModal.tsx'
 import { useQuery } from '@tanstack/react-query'
-import { getAds, getCategories, getMe, getMeCanOrder, getSettings } from '../../../data/api.ts'
+import { getAds, getCategories, getMe, getMeCanOrder, getOrderQuota, getSettings } from '../../../data/api.ts'
 import ComponentError from '../../common/ComponentError.tsx'
 import ComponentLoading from '../../common/ComponentLoading.tsx'
 import { type ItemTypeSchema } from '../../../data/dataTypes.ts'
@@ -16,10 +16,8 @@ import { type PersistentStorage, usePersistentStorage } from '../../../data/pers
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import ComponentTopBar from '../../common/ComponentTopBar.tsx'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
-import loginBg from './assets/login-bg.webp'
+import FullScreenMessage from '../../common/FullScreenMessage.tsx'
 
 export default function PageOrder(): JSX.Element {
     const { t } = useTranslation()
@@ -45,12 +43,6 @@ export default function PageOrder(): JSX.Element {
         queryFn: async () => await getAds()
     })
 
-    useEffect(() => {
-        if (persistentStorage.getToken() == null) {
-            navigate('/login/oauth2/_order')
-        }
-    }, [])
-
     const me = useQuery({
         queryKey: ['user-info-from-token'],
         queryFn: async () => await getMe(persistentStorage.getToken()!)
@@ -61,12 +53,41 @@ export default function PageOrder(): JSX.Element {
         queryFn: async () => await getMeCanOrder(persistentStorage.getToken()!)
     })
 
-    if (categories.isError || getShopOpen.isError || me.isError || ads.isError || meCanOrder.isError ||
-        (typeof categories.data === 'object' && 'detail' in categories.data) || (typeof me.data === 'object' && 'detail' in me.data)) {
+    const quota = useQuery({
+        queryKey: ['order-quota'],
+        queryFn: async () => await getOrderQuota()
+    })
+
+    const singleQuota = useQuery({
+        queryKey: ['order-single-quota'],
+        queryFn: async () => await getSettings('order-quota')
+    })
+
+    const onSiteQuota = useQuery({
+        queryKey: ['order-on-site-quota'],
+        queryFn: async () => await getSettings('on-site-quota')
+    })
+
+    const onlineQuota = useQuery({
+        queryKey: ['order-online-quota'],
+        queryFn: async () => await getSettings('online-quota')
+    })
+
+    useEffect(() => {
+        if (persistentStorage.getToken() == null) {
+            navigate('/login/oauth2/_order')
+        }
+    }, [])
+
+    if (categories.isError || getShopOpen.isError || me.isError || ads.isError || meCanOrder.isError || quota.isError || onSiteQuota.isError || onlineQuota.isError ||
+        (typeof categories.data === 'object' && 'detail' in categories.data) || (typeof me.data === 'object' && 'detail' in me.data) ||
+        (typeof quota.data === 'object' && 'detail' in quota.data) || typeof onSiteQuota.data === 'object' || typeof onlineQuota.data === 'object' ||
+        typeof singleQuota.data === 'object' || singleQuota.isError) {
         return <BasePage><ComponentError detail={categories} screen={true}/></BasePage>
     }
 
-    if (categories.isPending || getShopOpen.isPending || me.isPending || ads.isPending || meCanOrder.isPending) {
+    if (categories.isPending || getShopOpen.isPending || me.isPending || ads.isPending || meCanOrder.isPending || quota.isPending ||
+        onSiteQuota.isPending || onlineQuota.isPending || singleQuota.isPending) {
         return <BasePage><ComponentLoading screen={true}/></BasePage>
     }
 
@@ -76,76 +97,43 @@ export default function PageOrder(): JSX.Element {
     }
 
     if (meCanOrder.data === false && shoppingCart.getOnSiteOrderMode() === false) {
-        return <BasePage>
-            <div className="flex justify-center items-center w-screen h-screen bg-gray-50 bg-cover bg-center"
-                 style={{ backgroundImage: `url(${loginBg})` }}>
-                <div className="p-8 w-full h-full lg:w-1/2 xl:w-1/3 2xl:w-1/4 lg:h-auto bg-white rounded-3xl">
-                    <div className="flex items-center mb-16">
-                        <a className="skip-to-main" href="#main">{t('a11y.skipToMain')}</a>
-                        <button onClick={() => {
-                            navigate('/')
-                        }} className="rounded-full p-1 hover:bg-gray-200 transition-colors duration-100 w-8 h-8 mr-3"
-                                aria-label={t('a11y.back')}>
-                            <FontAwesomeIcon icon={faArrowLeft} className="text-gray-800 text-lg"/>
-                        </button>
-                        <p className="font-display">{t('name')}</p>
-                    </div>
-
-                    <div id="main" className="h-full">
-                        <h1 className="font-display text-3xl font-bold mb-1">{t('order.activeOrder.title')}</h1>
-                        <p className="text-sm mb-5">
-                            {t('order.activeOrder.description')}
-                        </p>
-
-                        <button
-                            className="w-full rounded-full bg-blue-500 hover:bg-blue-600 hover:shadow-lg
-                     transition-colors duration-100 p-2 text-white mb-8"
-                            onClick={() => {
-                                navigate('/')
-                            }}>
-                            {t('order.back')}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </BasePage>
+        return <FullScreenMessage title={t('order.activeOrder.title')}
+                                  description={t('order.activeOrder.description')}/>
     }
 
     if (getShopOpen.data === '0' || typeof getShopOpen.data === 'object') {
-        return <BasePage>
-            <div className="flex justify-center items-center w-screen h-screen bg-gray-50 bg-cover bg-center"
-                 style={{ backgroundImage: `url(${loginBg})` }}>
-                <div className="p-8 w-full h-full lg:w-1/2 xl:w-1/3 2xl:w-1/4 lg:h-auto bg-white rounded-3xl">
-                    <div className="flex items-center mb-16">
-                        <a className="skip-to-main" href="#main">{t('a11y.skipToMain')}</a>
-                        <button onClick={() => {
-                            navigate('/')
-                        }} className="rounded-full p-1 hover:bg-gray-200 transition-colors duration-100 w-8 h-8 mr-3"
-                                aria-label={t('a11y.back')}>
-                            <FontAwesomeIcon icon={faArrowLeft} className="text-gray-800 text-lg"/>
-                        </button>
-                        <p className="font-display">{t('name')}</p>
-                    </div>
-
-                    <div id="main" className="h-full">
-                        <h1 className="font-display text-3xl font-bold mb-1">{t('order.notOpenTitle')}</h1>
-                        <p className="text-sm mb-5">
-                            {t('order.notOpenDescription')}
-                        </p>
-
-                        <button
-                            className="w-full rounded-full bg-blue-500 hover:bg-blue-600 hover:shadow-lg
-                     transition-colors duration-100 p-2 text-white mb-8"
-                            onClick={() => {
-                                navigate('/')
-                            }}>
-                            {t('order.back')}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </BasePage>
+        return <FullScreenMessage title={t('order.notOpenTitle')} description={t('order.notOpenDescription')}/>
     }
+
+    const onSiteQuotaInt = parseInt(onSiteQuota.data ?? 999)
+    const onlineQuotaInt = parseInt(onlineQuota.data ?? 999)
+    if (quota.data.onSiteToday >= onSiteQuotaInt && (Boolean(shoppingCart.getOnSiteOrderMode()))) {
+        if (quota.data.onlineToday < onlineQuotaInt) {
+            return <FullScreenMessage title={t('order.quotaTitle')} description={t('order.quotaOnSiteRedirect', {
+                count: quota.data.onSiteToday,
+                quota: onSiteQuotaInt
+            })}/>
+        }
+        return <FullScreenMessage title={t('order.quotaTitle')} description={t('order.quotaOnSiteDescription', {
+            count: quota.data.onSiteToday,
+            quota: onSiteQuotaInt
+        })}/>
+    }
+
+    if (quota.data.onlineToday >= onlineQuotaInt && !(shoppingCart.getOnSiteOrderMode())) {
+        if (quota.data.onSiteToday < onSiteQuotaInt) {
+            return <FullScreenMessage title={t('order.quotaTitle')} description={t('order.quotaOnlineRedirect', {
+                count: quota.data.onlineToday,
+                quota: onlineQuotaInt
+            })}/>
+        }
+        return <FullScreenMessage title={t('order.quotaTitle')} description={t('order.quotaOnlineDescription', {
+            count: quota.data.onlineToday,
+            quota: onlineQuotaInt
+        })}/>
+    }
+
+    const singleQuotaInt = parseInt(singleQuota.data ?? 999)
 
     const resultedCategories = categories.data
 
@@ -189,7 +177,7 @@ export default function PageOrder(): JSX.Element {
                 </div>
 
                 <div className="flex-shrink w-full">
-                    <ComponentShoppingCart order={() => {
+                    <ComponentShoppingCart singleQuota={singleQuotaInt} order={() => {
                         if (shoppingCart.getTotalItems() > 0) {
                             setConfirmModalOpen(true)
                         }
@@ -227,7 +215,7 @@ export default function PageOrder(): JSX.Element {
                                 <ComponentAd ads={ads.data}/>
                             </div>
                             <div className="lg:h-3/5">
-                                <ComponentShoppingCart order={() => {
+                                <ComponentShoppingCart singleQuota={singleQuotaInt} order={() => {
                                     if (shoppingCart.getTotalItems() > 0) {
                                         setConfirmModalOpen(true)
                                     }

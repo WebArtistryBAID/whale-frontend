@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Decimal from 'decimal.js'
 import { useShoppingCart } from '../../../data/shoppingCart.tsx'
-import { getUploadsRoot } from '../../../data/api.ts'
+import { getUploadsRoot } from '../../../utils.ts'
 
 function shouldUseWhiteText(hexColor: string): boolean {
     const hexToDecimal = (hex: string): number => parseInt(hex, 16)

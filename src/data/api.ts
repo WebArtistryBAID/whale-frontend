@@ -11,6 +11,7 @@ import {
     type LoginRedirectTarget,
     type OrderCreateSchema,
     type OrderEstimateSchema,
+    type OrderQuotaSchema,
     type StatsAggregateSchema,
     type UserOrdersResponse,
     type UserStatisticsSchema
@@ -127,6 +128,10 @@ export async function getOrders(page: number, token: string): Promise<UserOrders
     return await get('orders', new Map([['page', page.toString()], ['size', '20']]), token)
 }
 
+export async function getOrderQuota(): Promise<OrderQuotaSchema | GenericError> {
+    return await get('order/quota')
+}
+
 export async function getOrderByNumber(number: string): Promise<OrderSchema | GenericError> {
     return await get('order/bynumber', new Map([['number', number]]))
 }
@@ -189,12 +194,4 @@ export async function getStatsExport(type: string, by: string, limit: number, to
 
 export async function getAds(): Promise<AdSchema[]> {
     return await get('pms')
-}
-
-export function getUploadsRoot(): string {
-    // Hack, I just want to get this done
-    if ((import.meta.env.VITE_API_HOST as string).startsWith('/')) {
-        return `${import.meta.env.VITE_API_HOST}${import.meta.env.VITE_API_HOST}`
-    }
-    return `${import.meta.env.VITE_API_HOST}${new URL(import.meta.env.VITE_API_HOST as string).pathname}`
 }

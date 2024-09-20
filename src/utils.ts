@@ -5,6 +5,15 @@ export function moneyRound(n: Decimal): Decimal {
     return n.mul(100).round().div(100)
 }
 
+export function getUploadsRoot(): string {
+    // Hack, I just want to get this done
+    if ((import.meta.env.VITE_API_HOST as string).startsWith('/')) {
+        return `${import.meta.env.VITE_API_HOST}${import.meta.env.VITE_API_HOST}`
+    }
+    const path = new URL(import.meta.env.VITE_API_HOST as string).pathname
+    return `${import.meta.env.VITE_API_HOST}${path === '/' ? '' : path}`
+}
+
 // Frontend money calculation is for display only -- real money calculation is done on the backend with Decimals
 export function frontendCalculate(item: OrderedItemSchema): Decimal {
     return new Decimal(item.itemType.basePrice)
