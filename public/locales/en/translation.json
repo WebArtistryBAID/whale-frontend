@@ -88,6 +88,7 @@
     "estimateOrders_other": "<1>{{count}}</1> orders in front of you",
     "estimateTime_one": "~<1>{{count}}</1> minute remaining",
     "estimateTime_other": "~<1>{{count}}</1> minutes remaining",
+    "waitingToStart": "Production starts at 12:30 p.m.",
     "payQR": "Pay in advance with WeChat Pay",
     "payQRNote": "Please make sure to note your order number when paying!",
     "status": {

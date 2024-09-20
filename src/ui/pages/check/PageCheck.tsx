@@ -66,6 +66,9 @@ export default function PageCheck(): JSX.Element {
         }
     })
 
+    const now = new Date()
+    const productionNotStarted = now.getHours() < 12 || (now.getHours() === 12 && now.getMinutes() < 30)
+
     if (order.isPending || estimate.isPending) {
         return <BasePage><ComponentLoading screen={true}/></BasePage>
     }
@@ -88,25 +91,32 @@ export default function PageCheck(): JSX.Element {
 
     return (
         <BasePage>
-            <div className='lg:hidden flex flex-col h-screen bg-accent-latte'>
-                <div className='flex-shrink'>
-                    <ComponentTopBar />
+            <div className="lg:hidden flex flex-col h-screen bg-accent-latte">
+                <div className="flex-shrink">
+                    <ComponentTopBar/>
                 </div>
 
-                <div id='main' className='h-full'>
+                <div id="main" className="h-full">
                     <div className="flex-grow p-8 pt-16">
                         <div className="flex flex-col items-center">
                             <h1 className="text-6xl font-bold font-display mb-3">{order.data.number}</h1>
                             {(order.data.status === OrderStatus.notStarted || order.data.status === OrderStatus.inProgress)
-                                ? <>
-                                    <p className="text-sm text-center">
-                                        <Trans i18nKey="check.estimateOrders" count={estimate.data.orders}
-                                               components={{ 1: <strong></strong> }}/>
-                                    </p>
-                                    <p className="text-sm mb-5 text-center">
-                                        <Trans i18nKey="check.estimateTime" count={estimate.data.time}
-                                               components={{ 1: <strong></strong> }}/>
-                                    </p></>
+                                ? (
+                                    productionNotStarted
+                                        ? <p className="text-sm mb-5 text-center">
+                                            {t('check.waitingToStart')}
+                                        </p>
+                                        : <>
+                                            <p className="text-sm text-center">
+                                                <Trans i18nKey="check.estimateOrders" count={estimate.data.orders}
+                                                       components={{ 1: <strong></strong> }}/>
+                                            </p>
+                                            <p className="text-sm mb-5 text-center">
+                                                <Trans i18nKey="check.estimateTime" count={estimate.data.time}
+                                                       components={{ 1: <strong></strong> }}/>
+                                            </p>
+                                        </>
+                                )
                                 : <p className="text-sm mb-5 text-center">{t(`check.${order.data.status}_${order.data.type}`)}</p>}
                         </div>
 
@@ -203,36 +213,42 @@ export default function PageCheck(): JSX.Element {
                 </div>
             </div>
 
-            <div className='hidden lg:flex h-screen flex-col bg-accent-latte'>
-                <div className='flex-shrink'>
-                    <ComponentTopBar />
+            <div className="hidden lg:flex h-screen flex-col bg-accent-latte">
+                <div className="flex-shrink">
+                    <ComponentTopBar/>
                 </div>
-                <div id='main' className='flex flex-grow min-h-0'>
+                <div id="main" className="flex flex-grow min-h-0">
                     <div
-                        className='w-1/2 border-r border-gray-300 border-solid p-16 h-full overflow-y-auto relative flex flex-col justify-center items-center'>
-                        <h1 className='text-7xl xl:text-[7rem] font-bold font-display mb-3'>{order.data.number}</h1>
+                        className="w-1/2 border-r border-gray-300 border-solid p-16 h-full overflow-y-auto relative flex flex-col justify-center items-center">
+                        <h1 className="text-7xl xl:text-[7rem] font-bold font-display mb-3">{order.data.number}</h1>
                         {(order.data.status === OrderStatus.notStarted || order.data.status === OrderStatus.inProgress)
-                            ? <>
-                                <p className='text-xl mb-1 text-center'>
-                                    <Trans i18nKey='check.estimateOrders' count={estimate.data.orders}
-                                           components={{ 1: <strong></strong> }}/>
-                                </p>
-                                <p className='text-xl mb-8 text-center'>
-                                    <Trans i18nKey='check.estimateTime' count={estimate.data.time}
-                                           components={{ 1: <strong></strong> }}/>
-                                </p>
-                            </>
-                            : <p className='text-xl mb-8 text-center'>{t(`check.${order.data.status}_${order.data.type}`)}</p>}
+                            ? (
+                                productionNotStarted
+                                    ? <p className="text-xl mb-8 text-center">
+                                        {t('check.waitingToStart')}
+                                    </p>
+                                    : <>
+                                        <p className="text-xl mb-1 text-center">
+                                            <Trans i18nKey="check.estimateOrders" count={estimate.data.orders}
+                                                   components={{ 1: <strong></strong> }}/>
+                                        </p>
+                                        <p className="text-xl mb-8 text-center">
+                                            <Trans i18nKey="check.estimateTime" count={estimate.data.time}
+                                                   components={{ 1: <strong></strong> }}/>
+                                        </p>
+                                    </>
+                            )
+                            : <p className="text-xl mb-8 text-center">{t(`check.${order.data.status}_${order.data.type}`)}</p>}
 
-                        <div className='flex mb-8'>
+                        <div className="flex mb-8">
                             <div
                                 className={`flex flex-col items-center mr-5 ${order.data.status !== OrderStatus.notStarted ? 'text-gray-400' : 'text-accent-orange'}`}>
                                 <FontAwesomeIcon
                                     icon={order.data.status === OrderStatus.notStarted ? faHourglass : faHourglassR}
-                                    className='text-4xl mb-1' />
-                                <p className='text-sm text-center'>{t('check.status.notStarted_' + order.data.type)}</p>
+                                    className="text-4xl mb-1"/>
+                                <p className="text-sm text-center">{t('check.status.notStarted_' + order.data.type)}</p>
                                 {order.data.status === OrderStatus.notStarted
-                                    ? <p className='w-0 h-0 overflow-hidden'>{t('check.status.current')}</p>
+                                    ? <p className="w-0 h-0 overflow-hidden">{t('check.status.current')}</p>
                                     : null}
                             </div>
 
@@ -240,10 +256,10 @@ export default function PageCheck(): JSX.Element {
                                 className={`flex flex-col items-center mr-5 ${order.data.status !== OrderStatus.inProgress ? 'text-gray-400' : 'text-blue-500'}`}>
                                 <FontAwesomeIcon
                                     icon={order.data.status === OrderStatus.inProgress ? faHourglassHalf : faHourglassHalfR}
-                                    className='text-4xl mb-1' />
-                                <p className='text-sm text-center'>{t('check.status.inProgress_' + order.data.type)}</p>
+                                    className="text-4xl mb-1"/>
+                                <p className="text-sm text-center">{t('check.status.inProgress_' + order.data.type)}</p>
                                 {order.data.status === OrderStatus.inProgress
-                                    ? <p className='w-0 h-0 overflow-hidden'>{t('check.status.current')}</p>
+                                    ? <p className="w-0 h-0 overflow-hidden">{t('check.status.current')}</p>
                                     : null}
                             </div>
 
@@ -251,10 +267,10 @@ export default function PageCheck(): JSX.Element {
                                 className={`flex flex-col items-center mr-5 ${order.data.status !== OrderStatus.ready ? 'text-gray-400' : 'text-green-400'}`}>
                                 <FontAwesomeIcon
                                     icon={order.data.type === OrderType.delivery ? faTruck : (order.data.status === OrderStatus.ready ? faCircleCheck : faCircleCheckR)}
-                                    className='text-4xl mb-1' />
-                                <p className='text-sm text-center'>{t('check.status.ready_' + order.data.type)}</p>
+                                    className="text-4xl mb-1"/>
+                                <p className="text-sm text-center">{t('check.status.ready_' + order.data.type)}</p>
                                 {order.data.status === OrderStatus.ready
-                                    ? <p className='w-0 h-0 overflow-hidden'>{t('check.status.current')}</p>
+                                    ? <p className="w-0 h-0 overflow-hidden">{t('check.status.current')}</p>
                                     : null}
                             </div>
 
@@ -262,25 +278,25 @@ export default function PageCheck(): JSX.Element {
                                 className={`flex flex-col items-center ${order.data.status !== OrderStatus.pickedUp ? 'text-gray-400' : 'text-yellow-400'}`}>
                                 <FontAwesomeIcon
                                     icon={order.data.status === OrderStatus.pickedUp ? faFaceSmile : faFaceSmileR}
-                                    className='text-4xl mb-1' />
-                                <p className='text-sm text-center'>{t('check.status.pickedUp_' + order.data.type)}</p>
+                                    className="text-4xl mb-1"/>
+                                <p className="text-sm text-center">{t('check.status.pickedUp_' + order.data.type)}</p>
                                 {order.data.status === OrderStatus.pickedUp
-                                    ? <p className='w-0 h-0 overflow-hidden'>{t('check.status.current')}</p>
+                                    ? <p className="w-0 h-0 overflow-hidden">{t('check.status.current')}</p>
                                     : null}
                             </div>
                         </div>
 
-                        <div className='w-96'>
-                            <div className='mb-3'>
+                        <div className="w-96">
+                            <div className="mb-3">
                                 <ComponentIconText
-                                    icon={<FontAwesomeIcon icon={faTriangleExclamation} className='text-yellow-400' />}>
+                                    icon={<FontAwesomeIcon icon={faTriangleExclamation} className="text-yellow-400"/>}>
                                     {t('check.message.orderNumber')}
                                 </ComponentIconText>
                             </div>
 
-                            <div className='mb-3'>
+                            <div className="mb-3">
                                 <ComponentIconText
-                                    icon={<FontAwesomeIcon icon={faTriangleExclamation} className='text-yellow-400' />}>
+                                    icon={<FontAwesomeIcon icon={faTriangleExclamation} className="text-yellow-400"/>}>
                                     {t('check.message.pay')}
                                 </ComponentIconText>
                             </div>
