@@ -99,7 +99,7 @@ export default function ComponentItemDetails({
     }
 
     return (
-        <div className='w-screen h-screen lg:h-full lg:w-full bg-accent-latte relative'>
+        <div className="w-screen h-screen lg:h-full lg:w-full bg-accent-latte relative z-20">
             <div className='p-8 lg:p-12 xl:p-24'>
                 <button
                     className='absolute right-12 top-12 bg-white
