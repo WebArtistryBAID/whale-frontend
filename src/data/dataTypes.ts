@@ -62,10 +62,8 @@ export interface OrderedItemSchema {
 }
 
 export enum OrderStatus {
-    notStarted = 'notStarted',
-    inProgress = 'inProgress',
-    ready = 'ready',
-    pickedUp = 'pickedUp'
+    waiting = 'waiting',
+    done = 'done'
 }
 
 export enum OrderType {
@@ -84,6 +82,7 @@ export interface OrderSchema {
     user: UserSchema
     items: OrderedItemSchema[]
     onSiteName: string | null
+    paid: boolean
 }
 
 export interface AdSchema {

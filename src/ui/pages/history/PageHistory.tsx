@@ -104,7 +104,7 @@ export default function PageHistory(): JSX.Element {
                         </div>
 
                         {!hasItems
-                            ? <div className='w-96 flex flex-col justify-center items-center'>
+                            ? <div className="w-full flex flex-col justify-center items-center">
                                 <FontAwesomeIcon icon={faMugSaucer} className='text-4xl text-gray-400 mb-3' />
                                 <p className="text-lg mb-1">{t('order.empty')}</p>
                             </div>

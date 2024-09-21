@@ -9,10 +9,10 @@ import { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faCircleCheck,
-    faFaceSmile,
     faHourglass,
-    faHourglassHalf,
+    faMoneyBill,
     faMugSaucer,
+    faPiggyBank,
     faTruck
 } from '@fortawesome/free-solid-svg-icons'
 import { type OrderSchema, OrderStatus, OrderType } from '../../../data/dataTypes'
@@ -64,7 +64,10 @@ export default function PageManage(): JSX.Element {
     })
 
     const changeStatus = useMutation({
-        mutationFn: async (newStatus: OrderStatus) => await updateOrderStatus(selectedOrder!.id, newStatus, persistentStorage.getToken()!),
+        mutationFn: async ({ newStatus, newPaid }: {
+            newStatus: OrderStatus | null
+            newPaid: boolean | null
+        }) => await updateOrderStatus(selectedOrder!.id, newStatus, newPaid, persistentStorage.getToken()!),
         onSuccess: (data) => {
             if (typeof data === 'object' && 'detail' in data) {
                 return
@@ -177,39 +180,60 @@ export default function PageManage(): JSX.Element {
                         : <div>
                             <h1 className='font-display font-bold text-5xl mb-3'>{selectedOrder.number}</h1>
 
-                            <p className="text-lg mb-3">{t('manage.updateStatus')}</p>
-                            <div className='w-full rounded-3xl flex mb-8'>
-                                <button onClick={() => { changeStatus.mutate(OrderStatus.notStarted) }}
-                                        className={`px-4 py-8 mr-5 rounded-2xl flex w-1/4 h-full flex-col justify-center items-center ${selectedOrder.status === OrderStatus.notStarted ? 'text-accent-orange bg-gray-50' : 'text-gray-500 bg-gray-100'}`}>
-                                    <FontAwesomeIcon icon={faHourglass} className='text-6xl mb-2' />
-                                    <p className="text-lg">{t('check.status.notStarted_' + selectedOrder.type)}</p>
-                                </button>
-                                <button onClick={() => { changeStatus.mutate(OrderStatus.inProgress) }}
-                                        className={`px-4 py-8 mr-5 rounded-2xl flex w-1/4 h-full flex-col justify-center items-center ${selectedOrder.status === OrderStatus.inProgress ? 'text-blue-500 bg-gray-50' : 'text-gray-500 bg-gray-100'}`}>
-                                    <FontAwesomeIcon icon={faHourglassHalf} className='text-6xl mb-2' />
-                                    <p className="text-lg">{t('check.status.inProgress_' + selectedOrder.type)}</p>
-                                </button>
-                                <button onClick={() => { changeStatus.mutate(OrderStatus.ready) }}
-                                        className={`px-4 py-8 mr-5 rounded-2xl flex w-1/4 h-full flex-col justify-center items-center ${selectedOrder.status === OrderStatus.ready ? 'text-green-400 bg-gray-50' : 'text-gray-500 bg-gray-100'}`}>
-                                    <FontAwesomeIcon icon={selectedOrder.type === OrderType.delivery ? faTruck : faCircleCheck} className='text-6xl mb-2' />
-                                    <p className="text-lg">{t('check.status.ready_' + selectedOrder.type)}</p>
-                                </button>
-                                <button onClick={() => { changeStatus.mutate(OrderStatus.pickedUp) }}
-                                        className={`px-4 py-8 rounded-2xl flex w-1/4 h-full flex-col justify-center items-center ${selectedOrder.status === OrderStatus.pickedUp ? 'text-yellow-400 bg-gray-50' : 'text-gray-500 bg-gray-100'}`}>
-                                    <FontAwesomeIcon icon={faFaceSmile} className='text-6xl mb-2' />
-                                    <p className="text-lg">{t('check.status.pickedUp_' + selectedOrder.type)}</p>
-                                </button>
+                            <div className="flex mb-8">
+                                <div className="w-1/2 mr-8">
+                                    <p className="text-lg mb-3">{t('manage.updateStatus')}</p>
+                                    <div className="w-full rounded-3xl flex">
+                                        <button onClick={() => {
+                                            changeStatus.mutate({ newStatus: OrderStatus.waiting, newPaid: null })
+                                        }}
+                                                className={`px-4 py-8 mr-5 rounded-2xl flex w-1/2 h-full flex-col justify-center items-center ${selectedOrder.status === OrderStatus.waiting ? 'text-accent-orange bg-gray-50' : 'text-gray-500 bg-gray-100'}`}>
+                                            <FontAwesomeIcon icon={faHourglass} className="text-6xl mb-2"/>
+                                            <p className="text-lg">{t('check.status.waiting_' + selectedOrder.type)}</p>
+                                        </button>
+                                        <button onClick={() => {
+                                            changeStatus.mutate({ newStatus: OrderStatus.done, newPaid: null })
+                                        }}
+                                                className={`px-4 py-8 rounded-2xl flex w-1/2 h-full flex-col justify-center items-center ${selectedOrder.status === OrderStatus.done ? 'text-green-400 bg-gray-50' : 'text-gray-500 bg-gray-100'}`}>
+                                            <FontAwesomeIcon
+                                                icon={selectedOrder.type === OrderType.delivery ? faTruck : faCircleCheck}
+                                                className="text-6xl mb-2"/>
+                                            <p className="text-lg">{t('check.status.done_' + selectedOrder.type)}</p>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="w-1/2">
+                                    <p className="text-lg mb-3">{t('manage.updatePaid')}</p>
+                                    <div className="w-full rounded-3xl flex">
+                                        <button onClick={() => {
+                                            changeStatus.mutate({ newStatus: null, newPaid: false })
+                                        }}
+                                                className={`px-4 py-8 mr-5 rounded-2xl flex w-1/2 h-full flex-col justify-center items-center ${!selectedOrder.paid ? 'text-yellow-400 bg-gray-50' : 'text-gray-500 bg-gray-100'}`}>
+                                            <FontAwesomeIcon icon={faPiggyBank} className="text-6xl mb-2"/>
+                                            <p className="text-lg">{t('manage.notPaid')}</p>
+                                        </button>
+                                        <button onClick={() => {
+                                            changeStatus.mutate({ newStatus: null, newPaid: true })
+                                        }}
+                                                className={`px-4 py-8 rounded-2xl flex w-1/2 h-full flex-col justify-center items-center ${selectedOrder.paid ? 'text-yellow-400 bg-gray-50' : 'text-gray-500 bg-gray-100'}`}>
+                                            <FontAwesomeIcon
+                                                icon={faMoneyBill}
+                                                className="text-6xl mb-2"/>
+                                            <p className="text-lg">{t('manage.paid')}</p>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div className='flex mb-5'>
-                                <div className='w-1/3'>
+                            <div className="flex mb-5">
+                                <div className="w-1/3">
                                     <p className="text-lg mb-3">{t('manage.amountCharge')}</p>
                                     <p className="text-4xl font-bold">¥{selectedOrder.totalPrice}</p>
                                 </div>
                                 {selectedOrder.createdTime.startsWith(day)
                                     ? <div className="w-1/3">
                                         <p className="text-lg mb-3">{t('manage.orderTime')}</p>
-                                        <p className="text-4xl font-bold">{(selectedOrder.status === OrderStatus.pickedUp || selectedOrder.status === OrderStatus.ready) ? t('manage.done') : msToTime(currentTime)}</p>
+                                        <p className="text-4xl font-bold">{selectedOrder.status === OrderStatus.done ? t('manage.done') : msToTime(currentTime)}</p>
                                     </div>
                                     : <div className="w-1/3">
                                         <p className="text-lg mb-3">{t('manage.orderedOn')}</p>
@@ -220,8 +244,8 @@ export default function PageManage(): JSX.Element {
                                     <p className="text-4xl font-bold">{selectedOrder.user?.name ?? selectedOrder.onSiteName}</p>
                                 </div>
                             </div>
-                            <div className='flex mb-3'>
-                                <div className='w-1/3'>
+                            <div className="flex mb-3">
+                                <div className="w-1/3">
                                     <p className="text-lg mb-3">{t('manage.orderType')}</p>
                                     <p className="text-4xl font-bold">{t('order.type.' + selectedOrder.type)}</p>
                                 </div>

@@ -28,18 +28,12 @@
     },
     "currentOrderCard": {
       "name": "Current Order",
-      "notStarted_pickUp_one": "Waiting in line, <1>~{{count}} minute remaining.</1>",
-      "notStarted_pickUp_other": "Waiting in line, <1>~{{count}} minutes remaining.</1>",
-      "inProgress_pickUp_one": "Making your drink, <1>~{{count}} minute remaining.</1>",
-      "inProgress_pickUp_other": "Making your drink, <1>~{{count}} minutes remaining.</1>",
-      "ready_pickUp": "Ready for pick up! <1>Bring your tablet to pay.</1>",
-      "pickedUp_pickUp": "Order finished, thank you for your patronage!",
-      "notStarted_delivery_one": "Waiting in line, <1>~{{count}} minute remaining.</1>",
-      "notStarted_delivery_other": "Waiting in line, <1>~{{count}} minutes remaining.</1>",
-      "inProgress_delivery_one": "Making your drink, <1>~{{count}} minute remaining.</1>",
-      "inProgress_delivery_other": "Making your drink, <1>~{{count}} minutes remaining.</1>",
-      "ready_delivery": "Delivering your drink! <1>You will pay on delivery.</1>",
-      "pickedUp_delivery": "Order finished and paid, thank you for your patronage!"
+      "waiting_pickUp_one": "Waiting for your drink, <1>~{{count}} minute remaining.</1>",
+      "waiting_pickUp_other": "Waiting for your drink, <1>~{{count}} minutes remaining.</1>",
+      "done_pickUp": "Completed! <1>Remember to pay in-person.</1>",
+      "waiting_delivery_one": "Waiting in line, <1>~{{count}} minute remaining.</1>",
+      "waiting_delivery_other": "Waiting in line, <1>~{{count}} minutes remaining.</1>",
+      "done_delivery": "Delivering your drink! <1>You will pay on delivery.</1>"
     }
   },
   "order": {
@@ -99,14 +93,10 @@
     "payQR": "Pay in advance with WeChat Pay",
     "payQRNote": "Please make sure to note your order number when paying!",
     "status": {
-      "notStarted_pickUp": "Not Started",
-      "inProgress_pickUp": "In Progress",
-      "ready_pickUp": "Ready to Pick",
-      "pickedUp_pickUp": "Paid",
-      "notStarted_delivery": "Not Started",
-      "inProgress_delivery": "In Progress",
-      "ready_delivery": "Delivering",
-      "pickedUp_delivery": "Paid",
+      "waiting_pickUp": "Waiting",
+      "done_pickUp": "Done",
+      "waiting_delivery": "Waiting",
+      "done_delivery": "Delivering",
       "current": "(Current Status)"
     },
     "message": {
@@ -118,10 +108,8 @@
     "cancelLoading": "...",
     "cancelFailed": "Cannot cancel",
     "cancelConfirm": "Confirm?",
-    "ready_pickUp": "Ready for pick up! Remember to pay in-person.",
-    "ready_delivery": "Delivering your drink! You will pay on delivery.",
-    "pickedUp_pickUp": "Thank you for visiting Whale Cafe!",
-    "pickedUp_delivery": "Thank you for visiting Whale Cafe!",
+    "done_pickUp": "Ready for pick up! Remember to pay in-person.",
+    "done_delivery": "Delivering your drink! You will pay on delivery.",
     "totalPrice": "Total Price",
     "modal": {
       "title": "Check Your Order",
@@ -153,14 +141,10 @@
   },
   "history": {
     "status": {
-      "notStarted_pickUp": "Waiting in line...",
-      "inProgress_pickUp": "Making your drink...",
-      "ready_pickUp": "Ready to pick up!",
-      "pickedUp_pickUp": "Order finished, thank you!",
-      "notStarted_delivery": "Waiting in line...",
-      "inProgress_delivery": "Making your drink...",
-      "ready_delivery": "Delivering...",
-      "pickedUp_delivery": "Order finished, thank you!"
+      "waiting_pickUp": "Making your drink...",
+      "done_pickUp": "Ready to pick up!",
+      "waiting_delivery": "Making your drink...",
+      "done_delivery": "Delivering!"
     },
     "loadMore": "Load More"
   },
@@ -200,6 +184,9 @@
     "unselected": "Select an order to get started",
     "noOrders": "Phew, all orders completed!",
     "updateStatus": "Update Order Status",
+    "updatePaid": "Update Payment Status",
+    "notPaid": "Not Paid",
+    "paid": "Paid",
     "amountCharge": "Amount to Charge",
     "orderTime": "Client Waited For",
     "orderBy": "Ordered By",

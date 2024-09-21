@@ -148,8 +148,8 @@ export async function getAvailableOrders(token: string): Promise<OrderSchema[] |
     return await get('orders/available', new Map(), token)
 }
 
-export async function updateOrderStatus(orderId: number, status: OrderStatus, token: string): Promise<OrderSchema | GenericError> {
-    return await patch('order', { id: orderId, status }, token)
+export async function updateOrderStatus(orderId: number, status: OrderStatus | null, paid: boolean | null, token: string): Promise<OrderSchema | GenericError> {
+    return await patch('order', { id: orderId, status, paid }, token)
 }
 
 export async function cancelOrder(id: number, token: string): Promise<boolean | GenericError> {
