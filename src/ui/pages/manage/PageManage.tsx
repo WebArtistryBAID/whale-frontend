@@ -12,7 +12,7 @@ import {
 import { type PersistentStorage, usePersistentStorage } from '../../../data/persistentStorage'
 import ComponentError from '../../common/ComponentError'
 import ComponentLoading from '../../common/ComponentLoading'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     faCircleCheck,
@@ -20,6 +20,7 @@ import {
     faMoneyBill,
     faMugSaucer,
     faPiggyBank,
+    faSpinner,
     faTruck
 } from '@fortawesome/free-solid-svg-icons'
 import { type OrderSchema, OrderStatus, OrderType } from '../../../data/dataTypes'
@@ -32,6 +33,7 @@ export default function PageManage(): JSX.Element {
 
     const [currentTime, setCurrentTime] = useState(0)
     const [cancelConfirm, setCancelConfirm] = useState(false)
+    const [tab, setTab] = useState('today')
     let legacyInterval = -1
 
     const now = new Date()
@@ -151,23 +153,130 @@ export default function PageManage(): JSX.Element {
             <p className="text-lg mb-5 flex-shrink">{t('manage.title')}</p>
             <div className="flex flex-grow min-h-0">
                 <div className="w-1/3 2xl:w-1/4 mr-5 rounded-3xl h-full flex flex-col min-h-0">
+                    <div className="flex-shrink mb-3 flex w-full">
+                        <button onClick={() => {
+                            setTab('today')
+                        }}
+                                className={`rounded-3xl transition-all duration-200 w-1/3 p-2 mr-3 ${tab === 'today' ? 'bg-white shadow-md font-bold' : 'bg-gray-100'}`}>
+                            {t('manage.today')}
+                        </button>
+                        <button onClick={() => {
+                            setTab('all')
+                        }}
+                                className={`rounded-3xl transition-all duration-200 w-1/3 p-2 mr-3 ${tab === 'all' ? 'bg-white shadow-md font-bold' : 'bg-gray-100'}`}>
+                            {t('manage.all')}
+                        </button>
+                        <button onClick={() => {
+                            setTab('unpaid')
+                        }}
+                                className={`rounded-3xl transition-all duration-200 w-1/3 p-2 ${tab === 'unpaid' ? 'bg-white shadow-md font-bold' : 'bg-gray-100'}`}>
+                            {t('manage.unpaid')}
+                        </button>
+                    </div>
                     <div className="rounded-3xl bg-gray-100 p-3 mb-3 flex-grow overflow-y-auto">
-                        {todayOrders.isPending ? <ComponentLoading/> : null}
-                        {todayOrders.isSuccess
-                            ? todayOrders.data.map(order => <button key={order.id} onClick={() => {
-                                setSelectedOrder(order)
-                            }}
-                                                                    className={`p-3 rounded-2xl w-full text-left ${order.type === OrderType.pickUp ? 'bg-white hover:bg-gray-50' : 'bg-orange-50 hover:bg-orange-100'} mb-3 
+                        {
+                            tab === 'today'
+                                ? <>
+                                    {todayOrders.isPending ? <ComponentLoading/> : null}
+                                    {todayOrders.isSuccess
+                                        ? todayOrders.data.map(order => <button key={order.id} onClick={() => {
+                                            setSelectedOrder(order)
+                                        }}
+                                                                                className={`p-3 rounded-2xl w-full text-left ${order.type === OrderType.pickUp ? 'bg-white hover:bg-gray-50' : 'bg-orange-50 hover:bg-orange-100'} mb-3 
                                         ${selectedOrder?.id === order.id ? 'shadow-lg text-accent-orange' : ''} transition-colors duration-100`}>
-                                <p className="font-bold text-xl">{order.number}</p>
-                            </button>)
-                            : null}
-                        {todayOrders.isSuccess && todayOrders.data.length < 1
-                            ? <div className='w-full h-full flex justify-center items-center flex-col'>
-                                <FontAwesomeIcon icon={faMugSaucer} className='text-7xl text-gray-400 mb-3' />
-                                <p className="text-lg mb-1">{t('manage.noOrders')}</p>
-                            </div>
-                            : null}
+                                            <p className="font-bold text-xl">{order.number}</p>
+                                        </button>)
+                                        : null}
+                                    {todayOrders.isSuccess && todayOrders.data.length < 1
+                                        ? <div className="w-full h-full flex justify-center items-center flex-col">
+                                            <FontAwesomeIcon icon={faMugSaucer} className="text-7xl text-gray-400 mb-3"/>
+                                            <p className="text-lg mb-1">{t('manage.noOrders')}</p>
+                                        </div>
+                                        : null}
+                                </>
+                                : null}
+
+                        {
+                            tab === 'all'
+                                ? <>
+                                    {allOrders.isPending ? <ComponentLoading/> : null}
+                                    {allOrders.isSuccess
+                                        ? allOrders.data.pages.map((page, i) => (
+                                            <React.Fragment key={i}>
+                                                {(page != null && !('detail' in page))
+                                                    ? page.items.map(order => <button key={order.id} onClick={() => {
+                                                        setSelectedOrder(order)
+                                                    }}
+                                                                                      className={`p-3 rounded-2xl w-full text-left ${order.type === OrderType.pickUp ? 'bg-white hover:bg-gray-50' : 'bg-orange-50 hover:bg-orange-100'} mb-3 
+                                        ${selectedOrder?.id === order.id ? 'shadow-lg text-accent-orange' : ''} transition-colors duration-100`}>
+                                                        <p className="font-bold text-xl">{order.number}</p>
+                                                        <p className="text-gray-500 text-sm">{order.createdTime.substring(0, 10)}</p>
+                                                    </button>)
+                                                    : null}
+                                            </React.Fragment>
+                                        ))
+                                        : null}
+                                    {allOrders.isFetchingNextPage
+                                        ? <div className="flex justify-center items-center mb-3"><FontAwesomeIcon
+                                            icon={faSpinner}
+                                            aria-label={t('a11y.loading')}
+                                            className="text-4xl text-gray-400"
+                                            spin={true}/></div>
+                                        : null}
+
+                                    {allOrders.hasNextPage && !allOrders.isFetchingNextPage
+                                        ? <div className="flex justify-center items-center">
+                                            <button onClick={() => {
+                                                void allOrders.fetchNextPage()
+                                            }}
+                                                    className="rounded-full py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100">{t('history.loadMore')}</button>
+                                        </div>
+                                        : null
+                                    }
+                                </>
+                                : null}
+
+                        {
+                            tab === 'unpaid'
+                                ? <>
+                                    {allOrders.isPending ? <ComponentLoading/> : null}
+                                    {allOrders.isSuccess
+                                        ? allOrders.data.pages.map((page, i) => (
+                                            <React.Fragment key={i}>
+                                                {(page != null && !('detail' in page))
+                                                    ? page.items.map(order => (!order.paid
+                                                        ? <button key={order.id} onClick={() => {
+                                                            setSelectedOrder(order)
+                                                        }}
+                                                                  className={`p-3 rounded-2xl w-full text-left ${order.type === OrderType.pickUp ? 'bg-white hover:bg-gray-50' : 'bg-orange-50 hover:bg-orange-100'} mb-3 
+                                        ${selectedOrder?.id === order.id ? 'shadow-lg text-accent-orange' : ''} transition-colors duration-100`}>
+                                                            <p className="font-bold text-xl">{order.number}</p>
+                                                            <p className="text-gray-500 text-sm">{order.createdTime.substring(0, 10)}</p>
+                                                        </button>
+                                                        : null))
+                                                    : null}
+                                            </React.Fragment>
+                                        ))
+                                        : null}
+                                    {allOrders.isFetchingNextPage
+                                        ? <div className="flex justify-center items-center mb-3"><FontAwesomeIcon
+                                            icon={faSpinner}
+                                            aria-label={t('a11y.loading')}
+                                            className="text-4xl text-gray-400"
+                                            spin={true}/></div>
+                                        : null}
+
+                                    {allOrders.hasNextPage && !allOrders.isFetchingNextPage
+                                        ? <div className="flex justify-center items-center">
+                                            <button onClick={() => {
+                                                void allOrders.fetchNextPage()
+                                            }}
+                                                    className="rounded-full py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100">{t('history.loadMore')}</button>
+                                        </div>
+                                        : null
+                                    }
+                                </>
+                                : null}
                     </div>
                     <div className='flex-shrink flex items-center'>
                         {getShopOpen.isPending

@@ -201,7 +201,8 @@
     "toggleShopClose": "闭店",
     "done": "已完成!",
     "today": "今天",
-    "historical": "历史"
+    "all": "全部",
+    "unpaid": "未付款"
   },
   "stats": {
     "title": "白鲸: 总计数据",

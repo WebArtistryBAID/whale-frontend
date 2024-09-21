@@ -201,7 +201,8 @@
     "toggleShopClose": "Disable Ordering",
     "done": "Done!",
     "today": "Today",
-    "historical": "Historical"
+    "all": "All",
+    "unpaid": "Unpaid"
   },
   "stats": {
     "title": "Whale Cafe: Statistics",
