@@ -1,7 +1,14 @@
 import { useTranslation } from 'react-i18next'
 import BasePage from '../../../BasePage.tsx'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { cancelOrder, getAvailableOrders, getSettings, setSettings, updateOrderStatus } from '../../../data/api'
+import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query'
+import {
+    cancelOrder,
+    getAllOrders,
+    getSettings,
+    getTodayOrders,
+    setSettings,
+    updateOrderStatus
+} from '../../../data/api'
 import { type PersistentStorage, usePersistentStorage } from '../../../data/persistentStorage'
 import ComponentError from '../../common/ComponentError'
 import ComponentLoading from '../../common/ComponentLoading'
@@ -44,10 +51,22 @@ export default function PageManage(): JSX.Element {
         return () => { clearInterval(legacyInterval) }
     }, [selectedOrder])
 
-    const availableOrders = useQuery({
-        queryKey: ['available-orders'],
-        queryFn: async () => await getAvailableOrders(persistentStorage.getToken()!),
+    const todayOrders = useQuery({
+        queryKey: ['today-orders'],
+        queryFn: async () => await getTodayOrders(persistentStorage.getToken()!),
         refetchInterval: 7000
+    })
+
+    const allOrders = useInfiniteQuery({
+        queryKey: ['all-orders'],
+        queryFn: async ({ pageParam }) => await getAllOrders(pageParam, persistentStorage.getToken()!),
+        initialPageParam: 1,
+        getNextPageParam: (lastPage) => {
+            if ('detail' in lastPage || lastPage.page >= lastPage.pages) {
+                return null
+            }
+            return lastPage.page + 1
+        }
     })
 
     const getShopOpen = useQuery({
@@ -73,7 +92,8 @@ export default function PageManage(): JSX.Element {
                 return
             }
             setSelectedOrder(data)
-            void availableOrders.refetch()
+            void todayOrders.refetch()
+            void allOrders.refetch()
         }
     })
 
@@ -85,7 +105,8 @@ export default function PageManage(): JSX.Element {
                 return
             }
             setSelectedOrder(null)
-            void availableOrders.refetch()
+            void todayOrders.refetch()
+            void allOrders.refetch()
         },
         onError: () => {
             setCancelConfirm(false)
@@ -118,8 +139,11 @@ export default function PageManage(): JSX.Element {
         return h + m + s
     }
 
-    if (availableOrders.isError || (availableOrders.data != null && 'detail' in availableOrders.data)) {
-        return <ComponentError detail={availableOrders} screen={true} />
+    if (todayOrders.isError || (todayOrders.data != null && 'detail' in todayOrders.data)) {
+        return <ComponentError detail={todayOrders} screen={true}/>
+    }
+    if (allOrders.isError || (allOrders.data != null && 'detail' in allOrders.data)) {
+        return <ComponentError detail={allOrders} screen={true}/>
     }
 
     return <BasePage>
@@ -128,33 +152,17 @@ export default function PageManage(): JSX.Element {
             <div className="flex flex-grow min-h-0">
                 <div className="w-1/3 2xl:w-1/4 mr-5 rounded-3xl h-full flex flex-col min-h-0">
                     <div className="rounded-3xl bg-gray-100 p-3 mb-3 flex-grow overflow-y-auto">
-                        {availableOrders.isPending ? <ComponentLoading /> : null}
-                        {availableOrders.isSuccess
-                            ? <>
-                                <p className="text-center text-sm text-gray-800 mb-3">{t('manage.today')}</p>
-                                {availableOrders.data.map(order => order.createdTime.startsWith(day)
-                                    ? <button key={order.id} onClick={() => {
-                                        setSelectedOrder(order)
-                                    }}
-                                              className={`p-3 rounded-2xl w-full text-left ${order.type === OrderType.pickUp ? 'bg-white hover:bg-gray-50' : 'bg-orange-50 hover:bg-orange-100'} mb-3 
+                        {todayOrders.isPending ? <ComponentLoading/> : null}
+                        {todayOrders.isSuccess
+                            ? todayOrders.data.map(order => <button key={order.id} onClick={() => {
+                                setSelectedOrder(order)
+                            }}
+                                                                    className={`p-3 rounded-2xl w-full text-left ${order.type === OrderType.pickUp ? 'bg-white hover:bg-gray-50' : 'bg-orange-50 hover:bg-orange-100'} mb-3 
                                         ${selectedOrder?.id === order.id ? 'shadow-lg text-accent-orange' : ''} transition-colors duration-100`}>
-                                        <p className="font-bold text-xl">{order.number}</p>
-                                    </button>
-                                    : null)}
-
-                                <p className="text-center text-sm text-gray-800 mt-5 mb-3">{t('manage.historical')}</p>
-                                {availableOrders.data.map(order => !order.createdTime.startsWith(day)
-                                    ? <button key={order.id} onClick={() => {
-                                        setSelectedOrder(order)
-                                    }}
-                                              className={`p-3 rounded-2xl w-full text-left ${order.type === OrderType.pickUp ? 'bg-white hover:bg-gray-50' : 'bg-orange-50 hover:bg-orange-100'} mb-3 
-                                        ${selectedOrder?.id === order.id ? 'shadow-lg text-accent-orange' : ''} transition-colors duration-100`}>
-                                        <p className="font-bold text-xl">{order.number}</p>
-                                    </button>
-                                    : null)}
-                            </>
+                                <p className="font-bold text-xl">{order.number}</p>
+                            </button>)
                             : null}
-                        {availableOrders.isSuccess && availableOrders.data.length < 1
+                        {todayOrders.isSuccess && todayOrders.data.length < 1
                             ? <div className='w-full h-full flex justify-center items-center flex-col'>
                                 <FontAwesomeIcon icon={faMugSaucer} className='text-7xl text-gray-400 mb-3' />
                                 <p className="text-lg mb-1">{t('manage.noOrders')}</p>

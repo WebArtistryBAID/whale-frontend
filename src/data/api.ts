@@ -9,11 +9,11 @@ import {
 import {
     type GenericError,
     type LoginRedirectTarget,
+    type MultipleOrdersResponse,
     type OrderCreateSchema,
     type OrderEstimateSchema,
     type OrderQuotaSchema,
     type StatsAggregateSchema,
-    type UserOrdersResponse,
     type UserStatisticsSchema
 } from './apiDataTypes.ts'
 
@@ -124,7 +124,7 @@ export async function getOrder(id: number): Promise<OrderSchema | GenericError> 
     return await get('order', new Map([['id', id.toString()]]))
 }
 
-export async function getOrders(page: number, token: string): Promise<UserOrdersResponse | GenericError> {
+export async function getOrders(page: number, token: string): Promise<MultipleOrdersResponse | GenericError> {
     return await get('orders', new Map([['page', page.toString()], ['size', '20']]), token)
 }
 
@@ -144,8 +144,12 @@ export async function getOrderTimeEstimate(id: number): Promise<OrderEstimateSch
     return await get('order/estimate', new Map([['id', id.toString()]]))
 }
 
-export async function getAvailableOrders(token: string): Promise<OrderSchema[] | GenericError> {
-    return await get('orders/available', new Map(), token)
+export async function getTodayOrders(token: string): Promise<OrderSchema[] | GenericError> {
+    return await get('orders/today', new Map(), token)
+}
+
+export async function getAllOrders(page: number, token: string): Promise<MultipleOrdersResponse | GenericError> {
+    return await get('orders/all', new Map([['page', page.toString()], ['size', '10']]), token)
 }
 
 export async function updateOrderStatus(orderId: number, status: OrderStatus | null, paid: boolean | null, token: string): Promise<OrderSchema | GenericError> {

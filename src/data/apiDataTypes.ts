@@ -26,7 +26,7 @@ export interface OrderEstimateSchema {
     status: OrderStatus | null
 }
 
-export interface UserOrdersResponse {
+export interface MultipleOrdersResponse {
     items: OrderSchema[]
     total: number
     page: number
