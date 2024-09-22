@@ -150,6 +150,8 @@
   },
   "account": {
     "userGratification": "Thank you for being with Whale Cafe!",
+    "administration": "Administrative Features",
+    "administrationMobile": "Administration features are not available on small screens. Please use a larger screen to access these features.",
     "basicInformation": "Basic Information",
     "eduId": "SEIUE User ID",
     "phone": "Phone Number",

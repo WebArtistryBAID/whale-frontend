@@ -150,6 +150,8 @@
   },
   "account": {
     "userGratification": "感谢光临白鲸咖啡馆!",
+    "administration": "管理功能",
+    "administrationMobile": "管理功能不支持小屏幕设备，请使用大屏幕设备访问。",
     "basicInformation": "基本信息",
     "eduId": "希悦用户 ID",
     "phone": "手机号码",

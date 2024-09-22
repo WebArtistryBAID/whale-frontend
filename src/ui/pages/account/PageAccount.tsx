@@ -103,33 +103,30 @@ export default function PageAccount(): JSX.Element {
                         }}
                                 className="rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3">{t('account.viewHistory')}</button>
 
+                        <p className="text-sm mb-1">{t('account.administration')}</p>
                         <div className="hidden lg:block">
-                            {(Boolean(me.data.permissions.includes('admin.manage'))) && <><p
-                            className="text-sm mb-1">{t('account.orderManagement')}</p>
+                            {(Boolean(me.data.permissions.includes('admin.manage'))) &&
                                 <button onClick={() => {
-                                navigate('/manage')
-                            }}
-                                    className="rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3">{t('account.orderManagement')}</button>
-                            </>}
+                                    navigate('/manage')
+                                }}
+                                        className="rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3 block">{t('account.orderManagement')}</button>}
 
-                            {(Boolean(me.data.permissions.includes('admin.manage'))) && <><p
-                            className="text-sm mb-1">{t('account.onSiteOrdering')}</p>
+                            {(Boolean(me.data.permissions.includes('admin.manage'))) &&
                                 <button onClick={onSiteOrdering}
-                                    className="rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3">{t('account.onSiteOrdering')}</button>
-                            </>}
+                                        className="rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3">{t('account.onSiteOrdering')}</button>}
 
-                            {(Boolean(me.data.permissions.includes('admin.cms'))) && <><p
-                            className="text-sm mb-1">{t('account.contentManagement')}</p>
+                            {(Boolean(me.data.permissions.includes('admin.cms'))) &&
                                 <a href={`${import.meta.env.VITE_API_HOST}/admin/`}
-                               className="block rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3 text-center">{t('account.contentManagement')}</a></>}
+                                   className="block rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3 text-center">{t('account.contentManagement')}</a>}
 
-                            {(Boolean(me.data.permissions.includes('admin.cms'))) && <><p
-                            className="text-sm mb-1">{t('account.statisticsManagement')}</p>
+                            {(Boolean(me.data.permissions.includes('admin.cms'))) &&
                                 <button onClick={() => {
-                                navigate('/statistics')
-                            }}
-                                    className="rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3">{t('account.statisticsManagement')}</button>
-                            </>}
+                                    navigate('/statistics')
+                                }}
+                                        className="rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3">{t('account.statisticsManagement')}</button>}
+                        </div>
+                        <div className="lg:hidden mb-3">
+                            <p>{t('account.administrationMobile')}</p>
                         </div>
 
                         <p className="text-sm">{t('account.totalSpent')}</p>
