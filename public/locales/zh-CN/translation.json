@@ -72,6 +72,7 @@
       "onSiteNameError": "必须填写您的姓名",
       "onSiteNameReal": "必须填写您的真实全名",
       "onSiteNameIneligible": "您有尚未付款的订单",
+      "onSiteMatchFailed": "找不到与此姓名关联的用户。您将无法通过此次购买获得积分。",
       "importantInformation": "重要信息",
       "waitError": "暂时无法加载点单等待时间信息。",
       "waitLoading": "现在点单需要等待约 ... 分钟。",

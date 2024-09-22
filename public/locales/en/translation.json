@@ -72,6 +72,7 @@
       "onSiteNameError": "Enter your name",
       "onSiteNameReal": "Enter your full name",
       "onSiteNameIneligible": "You have an active order",
+      "onSiteMatchFailed": "Cannot find a user associated with this name. You will not be able to earn points with this purchase.",
       "importantInformation": "Important Information",
       "waitError": "Failed to load wait time information.",
       "waitLoading": "You will be waiting for approximately ... minutes.",

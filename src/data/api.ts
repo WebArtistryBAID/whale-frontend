@@ -133,7 +133,7 @@ export async function getOrderQuota(): Promise<OrderQuotaSchema | GenericError> 
 }
 
 export async function getOrderByNumber(number: string): Promise<OrderSchema | GenericError> {
-    return await get('order/bynumber', new Map([['number', number]]))
+    return await get('order/by-number', new Map([['number', number]]))
 }
 
 export async function getOrderTimeEstimateNow(): Promise<OrderEstimateSchema | GenericError> {
@@ -164,6 +164,10 @@ export async function getOnSiteEligibility(name: string): Promise<boolean> {
     return await get('order/on-site-eligibility', new Map([['name', name]]))
 }
 
+export async function getCanMatchUser(name: string): Promise<boolean> {
+    return await get('order/can-match-user', new Map([['name', name]]))
+}
+
 export async function order(create: OrderCreateSchema, token: string): Promise<OrderSchema | GenericError> {
     return await post('order', create, token)
 }
@@ -177,7 +181,7 @@ export async function getMe(token: string): Promise<UserSchemaSecure | GenericEr
 }
 
 export async function getMeCanOrder(token: string): Promise<boolean | GenericError> {
-    return await get('me/canorder', new Map(), token)
+    return await get('me/can-order', new Map(), token)
 }
 
 export async function getMeStatistics(token: string): Promise<UserStatisticsSchema | GenericError> {

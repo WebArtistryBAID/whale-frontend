@@ -6,7 +6,7 @@ import { type OptionTypeSchema, type OrderedItemSchema, type OrderSchema, OrderT
 import ComponentOrderedItem from './ComponentOrderedItem.tsx'
 import { useShoppingCart } from '../../../data/shoppingCart.tsx'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { getOnSiteEligibility, getOrderTimeEstimateNow, order } from '../../../data/api.ts'
+import { getCanMatchUser, getOnSiteEligibility, getOrderTimeEstimateNow, order } from '../../../data/api.ts'
 import {
     type OrderCreateSchema,
     type OrderedItemCreateSchema,
@@ -60,6 +60,27 @@ export default function ComponentOrderConfirmModal({
         enabled: false,
         gcTime: Infinity
     })
+
+    const osnMatchUser = useQuery({
+        queryKey: ['osn-match-users', `osn-match-users-${onSiteName}`],
+        queryFn: async () => await getCanMatchUser(onSiteName),
+        enabled: false,
+        gcTime: Infinity
+    })
+
+    async function rematchUser(name: string): Promise<void> {
+        setOnSiteNameError('')
+        if (name.length < 2) {
+            return
+        }
+        const match = await osnMatchUser.refetch()
+        if (match.isError) {
+            return
+        }
+        if (match.data === false || match.data === undefined) {
+            setOnSiteNameError(t('order.confirm.onSiteMatchFailed'))
+        }
+    }
 
     async function submit(): Promise<void> {
         setOnSiteName(onSiteName.trim())
@@ -188,6 +209,7 @@ export default function ComponentOrderConfirmModal({
                                                    className="w-full bg-transparent" value={onSiteName}
                                                    onChange={(e) => {
                                                        setOnSiteName(e.target.value)
+                                                       void rematchUser(e.target.value)
                                                    }}/>
                                         </div>
                                         <p className="mb-2 text-xs text-accent-red">{onSiteNameError}</p>
