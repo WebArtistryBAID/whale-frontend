@@ -62,6 +62,9 @@ export default function ComponentOrderConfirmModal({
     })
 
     async function submit(): Promise<void> {
+        setOnSiteName(onSiteName.trim())
+        setDeliveryRoom(deliveryRoom.trim())
+
         setDeliveryRoomError('')
         if (orderType === OrderType.delivery && (deliveryRoom.length !== 3 || Number.isNaN(parseInt(deliveryRoom)) ||
             parseInt(deliveryRoom[0]) < 1 || parseInt(deliveryRoom[0]) > 4 || parseInt(deliveryRoom[1]) > 2)) {
@@ -74,6 +77,22 @@ export default function ComponentOrderConfirmModal({
             setOnSiteNameError(t('order.confirm.onSiteNameError'))
             return
         }
+
+        // Some people like to use 3-character abbreviations for their names,
+        // and that makes it difficult to track who they are. We block this
+        // behavior.
+        let hasNonEnglish = false
+        for (const char of onSiteName) {
+            if (char.charCodeAt(0) > 127) {
+                hasNonEnglish = true
+                break
+            }
+        }
+        if (!hasNonEnglish && onSiteName.length < 5) {
+            setOnSiteNameError(t('order.confirm.onSiteNameReal'))
+            return
+        }
+
         const result = await osnEligibility.refetch()
         if (result.isError) {
             return
