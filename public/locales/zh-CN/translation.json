@@ -157,6 +157,8 @@
     "eduId": "希悦用户 ID",
     "phone": "手机号码",
     "unavailable": "无",
+    "points": "积分",
+    "pointsMessage": "积分通过消费获得，可用于兑换奖励。",
     "statistics": "统计数据",
     "purchaseHistory": "购买记录",
     "viewHistory": "查询记录",

@@ -3,6 +3,7 @@ export interface UserSchema {
     name: string
     permissions: string
     blocked: boolean
+    points: string
 }
 
 export interface UserSchemaSecure {
@@ -12,6 +13,7 @@ export interface UserSchemaSecure {
     pinyin: string | null
     phone: string | null
     blocked: boolean
+    points: string
 }
 
 export interface CategorySchema {

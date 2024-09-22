@@ -86,7 +86,7 @@ export default function PageAccount(): JSX.Element {
                         </div>
 
                         <div className="flex lg:flex-row flex-col">
-                            <div className="w-full lg:w-1/2 lg:mr-3">
+                            <div className="w-full lg:w-1/2 lg:mr-5">
                                 <p className="text-sm text-gray-500 mb-1">{t('account.basicInformation')}</p>
                                 <hr className="w-full border-gray-200 mb-3"/>
 
@@ -95,6 +95,13 @@ export default function PageAccount(): JSX.Element {
 
                                 <p className="text-sm">{t('account.phone')}</p>
                                 <p className="text-2xl font-bold font-display mb-5">{me.data.phone ?? t('account.unavailable')}</p>
+
+                                <p className="text-sm mb-1">{t('account.points')}</p>
+                                <div
+                                    className="mb-5 bg-white rounded-3xl transition-shadow duration-100 shadow-xl hover:shadow-md p-5">
+                                    <p className="text-2xl font-bold font-display text-accent-orange">{me.data.points}</p>
+                                    <p className="text-sm">{t('account.pointsMessage')}</p>
+                                </div>
 
                                 <p className="text-xs text-gray-500 mb-1">{t('account.privacy')}</p>
                                 <hr className="w-full border-gray-200 mb-3"/>
@@ -122,7 +129,7 @@ export default function PageAccount(): JSX.Element {
                                 </p>
                             </div>
 
-                            <div className="w-full lg:w-1/2 lg:ml-3">
+                            <div className="w-full lg:w-1/2 lg:ml-5">
                                 <p className="text-sm text-gray-500 mb-1">{t('account.statistics')}</p>
                                 <hr className="w-full border-gray-200 mb-3"/>
 
