@@ -78,7 +78,8 @@ export function PersistentStorageProvider({ children }: { children: ReactNode })
             id: decoded.id,
             name: decoded.name,
             permissions: decoded.permissions,
-            blocked: false
+            blocked: false,
+            points: '0.00'
         }
     }
 
