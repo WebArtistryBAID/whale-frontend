@@ -85,83 +85,89 @@ export default function PageAccount(): JSX.Element {
                             </div>
                         </div>
 
-                        <p className="text-sm text-gray-500 mb-1">{t('account.basicInformation')}</p>
-                        <hr className="w-full border-gray-200 mb-3"/>
+                        <div className="flex lg:flex-row flex-col">
+                            <div className="w-full lg:w-1/2 lg:mr-3">
+                                <p className="text-sm text-gray-500 mb-1">{t('account.basicInformation')}</p>
+                                <hr className="w-full border-gray-200 mb-3"/>
 
-                        <p className="text-sm">{t('account.eduId')}</p>
-                        <p className="text-2xl font-bold font-display mb-3">{me.data.id}</p>
+                                <p className="text-sm">{t('account.eduId')}</p>
+                                <p className="text-2xl font-bold font-display mb-3">{me.data.id}</p>
 
-                        <p className="text-sm">{t('account.phone')}</p>
-                        <p className="text-2xl font-bold font-display mb-5">{me.data.phone ?? t('account.unavailable')}</p>
+                                <p className="text-sm">{t('account.phone')}</p>
+                                <p className="text-2xl font-bold font-display mb-5">{me.data.phone ?? t('account.unavailable')}</p>
 
-                        <p className="text-sm text-gray-500 mb-1">{t('account.statistics')}</p>
-                        <hr className="w-full border-gray-200 mb-3"/>
+                                <p className="text-xs text-gray-500 mb-1">{t('account.privacy')}</p>
+                                <hr className="w-full border-gray-200 mb-3"/>
 
-                        <p className="text-sm mb-1">{t('account.purchaseHistory')}</p>
-                        <button onClick={() => {
-                            navigate('/history')
-                        }}
-                                className="rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3">{t('account.viewHistory')}</button>
+                                <p className="text-sm mb-3">{t('account.privacyHint')}</p>
 
-                        <p className="text-sm mb-1">{t('account.administration')}</p>
-                        <div className="hidden lg:block">
-                            {(Boolean(me.data.permissions.includes('admin.manage'))) &&
                                 <button onClick={() => {
-                                    navigate('/manage')
+                                    persistentStorage.setToken(null)
+                                    navigate('/')
                                 }}
-                                        className="rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3 block">{t('account.orderManagement')}</button>}
+                                        className="rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3">{t('account.logOut')}</button>
 
-                            {(Boolean(me.data.permissions.includes('admin.manage'))) &&
-                                <button onClick={onSiteOrdering}
-                                        className="rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3">{t('account.onSiteOrdering')}</button>}
-
-                            {(Boolean(me.data.permissions.includes('admin.cms'))) &&
-                                <a href={`${import.meta.env.VITE_API_HOST}/admin/`}
-                                   className="block rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3 text-center">{t('account.contentManagement')}</a>}
-
-                            {(Boolean(me.data.permissions.includes('admin.cms'))) &&
                                 <button onClick={() => {
-                                    navigate('/statistics')
+                                    setOpen(true)
                                 }}
-                                        className="rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3">{t('account.statisticsManagement')}</button>}
+                                        className="rounded-full text-white w-48 py-2 px-5 bg-accent-red hover:bg-red-500 transition-colors duration-100 mb-5">{t('account.deleteAccount')}</button>
+
+                                <p className="text-xs text-gray-500 mb-1">{t('account.about')}</p>
+                                <hr className="w-full border-gray-200 mb-3"/>
+
+                                <p className="text-sm mb-3">
+                                    <Trans i18nKey="account.credits" components={{
+                                        1: <a className="underline" href="https://github.com/BAIDWebDev/whale-docker"/>
+                                    }}/>
+                                </p>
+                            </div>
+
+                            <div className="w-full lg:w-1/2 lg:ml-3">
+                                <p className="text-sm text-gray-500 mb-1">{t('account.statistics')}</p>
+                                <hr className="w-full border-gray-200 mb-3"/>
+
+                                <p className="text-sm mb-1">{t('account.purchaseHistory')}</p>
+                                <button onClick={() => {
+                                    navigate('/history')
+                                }}
+                                        className="rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3">{t('account.viewHistory')}</button>
+
+                                <p className="text-sm mb-1">{t('account.administration')}</p>
+                                <div className="hidden lg:block">
+                                    {(Boolean(me.data.permissions.includes('admin.manage'))) &&
+                                        <button onClick={() => {
+                                            navigate('/manage')
+                                        }}
+                                                className="rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3 block">{t('account.orderManagement')}</button>}
+
+                                    {(Boolean(me.data.permissions.includes('admin.manage'))) &&
+                                        <button onClick={onSiteOrdering}
+                                                className="rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3">{t('account.onSiteOrdering')}</button>}
+
+                                    {(Boolean(me.data.permissions.includes('admin.cms'))) &&
+                                        <a href={`${import.meta.env.VITE_API_HOST}/admin/`}
+                                           className="block rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3 text-center">{t('account.contentManagement')}</a>}
+
+                                    {(Boolean(me.data.permissions.includes('admin.cms'))) &&
+                                        <button onClick={() => {
+                                            navigate('/statistics')
+                                        }}
+                                                className="rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3">{t('account.statisticsManagement')}</button>}
+                                </div>
+                                <div className="lg:hidden mb-3">
+                                    <p>{t('account.administrationMobile')}</p>
+                                </div>
+
+                                <p className="text-sm">{t('account.totalSpent')}</p>
+                                <p className="text-2xl font-bold font-display mb-3">¥{meStatistics.data.totalSpent}</p>
+
+                                <p className="text-sm">{t('account.totalOrders')}</p>
+                                <p className="text-2xl font-bold font-display mb-3">{meStatistics.data.totalOrders}</p>
+
+                                <p className="text-sm">{t('account.totalCups')}</p>
+                                <p className="text-2xl font-bold font-display mb-5">{meStatistics.data.totalCups}</p>
+                            </div>
                         </div>
-                        <div className="lg:hidden mb-3">
-                            <p>{t('account.administrationMobile')}</p>
-                        </div>
-
-                        <p className="text-sm">{t('account.totalSpent')}</p>
-                        <p className="text-2xl font-bold font-display mb-3">¥{meStatistics.data.totalSpent}</p>
-
-                        <p className="text-sm">{t('account.totalOrders')}</p>
-                        <p className="text-2xl font-bold font-display mb-3">{meStatistics.data.totalOrders}</p>
-
-                        <p className="text-sm">{t('account.totalCups')}</p>
-                        <p className="text-2xl font-bold font-display mb-5">{meStatistics.data.totalCups}</p>
-
-                        <p className="text-xs text-gray-500 mb-1">{t('account.privacy')}</p>
-                        <hr className="w-full border-gray-200 mb-3"/>
-
-                        <p className="text-sm mb-3">{t('account.privacyHint')}</p>
-
-                        <button onClick={() => {
-                            persistentStorage.setToken(null)
-                            navigate('/')
-                        }}
-                                className="rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3">{t('account.logOut')}</button>
-
-                        <button onClick={() => {
-                            setOpen(true)
-                        }}
-                                className="rounded-full text-white w-48 py-2 px-5 bg-accent-red hover:bg-red-500 transition-colors duration-100 mb-5">{t('account.deleteAccount')}</button>
-
-                        <p className="text-xs text-gray-500 mb-1">{t('account.about')}</p>
-                        <hr className="w-full border-gray-200 mb-3"/>
-
-                        <p className="text-sm mb-3">
-                            <Trans i18nKey="account.credits" components={{
-                                1: <a className="underline" href="https://github.com/BAIDWebDev/whale-docker"/>
-                            }}/>
-                        </p>
                     </div>
                 </div>
             </div>

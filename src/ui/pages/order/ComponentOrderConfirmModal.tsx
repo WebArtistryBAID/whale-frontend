@@ -88,18 +88,21 @@ export default function ComponentOrderConfirmModal({
                 break
             }
         }
-        if (!hasNonEnglish && onSiteName.length < 5) {
-            setOnSiteNameError(t('order.confirm.onSiteNameReal'))
-            return
-        }
 
-        const result = await osnEligibility.refetch()
-        if (result.isError) {
-            return
-        }
-        if (result.data === false) {
-            setOnSiteNameError(t('order.confirm.onSiteNameIneligible'))
-            return
+        if (getOnSiteOrderMode()) {
+            if (!hasNonEnglish && onSiteName.length < 5) {
+                setOnSiteNameError(t('order.confirm.onSiteNameReal'))
+                return
+            }
+
+            const result = await osnEligibility.refetch()
+            if (result.isError) {
+                return
+            }
+            if (result.data === false) {
+                setOnSiteNameError(t('order.confirm.onSiteNameIneligible'))
+                return
+            }
         }
 
         const createItems: OrderedItemCreateSchema[] = []
