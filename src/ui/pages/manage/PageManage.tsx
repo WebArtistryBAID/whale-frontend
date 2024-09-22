@@ -370,11 +370,13 @@ export default function PageManage(): JSX.Element {
                                     <p className="text-lg mb-3">{t('manage.deliveryRoom')}</p>
                                     <p className="text-4xl font-bold">{selectedOrder.type === OrderType.delivery ? selectedOrder.deliveryRoom : 'N/A'}</p>
                                 </div>
-                                <button
+                                {selectedOrder.status === OrderStatus.done || selectedOrder.paid
+                                    ? null
+                                    : <button
                                     className="w-1/3 rounded-3xl bg-accent-red hover:bg-red-500 p-8 font-bold text-3xl text-white"
                                     onClick={cancel}>
-                                    {cancelConfirm ? t('check.cancelConfirm') : t('check.cancel')}
-                                </button>
+                                        {cancelConfirm ? t('check.cancelConfirm') : t('check.cancel')}
+                                    </button>}
                             </div>
 
                             <p className="text-lg mb-3">{t('manage.itemOrdered')}</p>
