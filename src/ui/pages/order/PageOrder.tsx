@@ -63,14 +63,9 @@ export default function PageOrder(): JSX.Element {
         queryFn: async () => await getSettings('order-quota')
     })
 
-    const onSiteQuota = useQuery({
-        queryKey: ['order-on-site-quota'],
-        queryFn: async () => await getSettings('on-site-quota')
-    })
-
-    const onlineQuota = useQuery({
-        queryKey: ['order-online-quota'],
-        queryFn: async () => await getSettings('online-quota')
+    const totalQuota = useQuery({
+        queryKey: ['order-total-quota'],
+        queryFn: async () => await getSettings('total-quota')
     })
 
     useEffect(() => {
@@ -79,15 +74,15 @@ export default function PageOrder(): JSX.Element {
         }
     }, [])
 
-    if (categories.isError || getShopOpen.isError || me.isError || ads.isError || meCanOrder.isError || quota.isError || onSiteQuota.isError || onlineQuota.isError ||
+    if (categories.isError || getShopOpen.isError || me.isError || ads.isError || meCanOrder.isError || quota.isError || totalQuota.isError ||
         (typeof categories.data === 'object' && 'detail' in categories.data) || (typeof me.data === 'object' && 'detail' in me.data) ||
-        (typeof quota.data === 'object' && 'detail' in quota.data) || typeof onSiteQuota.data === 'object' || typeof onlineQuota.data === 'object' ||
+        (typeof quota.data === 'object' && 'detail' in quota.data) || typeof totalQuota.data === 'object' ||
         typeof singleQuota.data === 'object' || singleQuota.isError) {
         return <BasePage><ComponentError detail={categories} screen={true}/></BasePage>
     }
 
     if (categories.isPending || getShopOpen.isPending || me.isPending || ads.isPending || meCanOrder.isPending || quota.isPending ||
-        onSiteQuota.isPending || onlineQuota.isPending || singleQuota.isPending) {
+        totalQuota.isPending || singleQuota.isPending) {
         return <BasePage><ComponentLoading screen={true}/></BasePage>
     }
 
@@ -105,31 +100,11 @@ export default function PageOrder(): JSX.Element {
         return <FullScreenMessage title={t('order.notOpenTitle')} description={t('order.notOpenDescription')}/>
     }
 
-    const onSiteQuotaInt = parseInt(onSiteQuota.data ?? 999)
-    const onlineQuotaInt = parseInt(onlineQuota.data ?? 999)
-    if (quota.data.onSiteToday >= onSiteQuotaInt && (Boolean(shoppingCart.getOnSiteOrderMode()))) {
-        if (quota.data.onlineToday < onlineQuotaInt) {
-            return <FullScreenMessage title={t('order.quotaTitle')} description={t('order.quotaOnSiteRedirect', {
-                count: quota.data.onSiteToday,
-                quota: onSiteQuotaInt
-            })}/>
-        }
-        return <FullScreenMessage title={t('order.quotaTitle')} description={t('order.quotaOnSiteDescription', {
-            count: quota.data.onSiteToday,
-            quota: onSiteQuotaInt
-        })}/>
-    }
-
-    if (quota.data.onlineToday >= onlineQuotaInt && !(shoppingCart.getOnSiteOrderMode())) {
-        if (quota.data.onSiteToday < onSiteQuotaInt) {
-            return <FullScreenMessage title={t('order.quotaTitle')} description={t('order.quotaOnlineRedirect', {
-                count: quota.data.onlineToday,
-                quota: onlineQuotaInt
-            })}/>
-        }
-        return <FullScreenMessage title={t('order.quotaTitle')} description={t('order.quotaOnlineDescription', {
-            count: quota.data.onlineToday,
-            quota: onlineQuotaInt
+    const totalQuotaInt = parseInt(totalQuota.data ?? 999)
+    if (quota.data.onlineToday + quota.data.onSiteToday >= totalQuotaInt) {
+        return <FullScreenMessage title={t('order.quotaTitle')} description={t('order.quotaDescription', {
+            count: quota.data.onlineToday + quota.data.onSiteToday,
+            quota: totalQuotaInt
         })}/>
     }
 
