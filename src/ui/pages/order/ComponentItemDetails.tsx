@@ -35,10 +35,14 @@ function ComponentOption({
             <div className='flex'>
                 {optionType.items.map(item => {
                     return <button onClick={() => {
+                        if (item.soldOut) {
+                            return
+                        }
                         setSelected(item.id)
                     }} key={item.id}
-                                   className={`${selected.get(optionType.id) === item.id ? 'bg-black text-white font-bold' : 'bg-gray-100'} rounded-full mr-3 
-                            transition-colors duration-100 px-3 py-1`}>
+                                   className={`${selected.get(optionType.id) === item.id ? 'bg-black text-white font-bold' : 'bg-gray-100'}
+                                    ${item.soldOut ? 'text-gray-500' : ''} rounded-full mr-3 transition-colors duration-100 px-3 py-1`}
+                                   disabled={item.soldOut}>
                         <p className='text-[0]'>{t('a11y.selection')}</p>
                         <p className='text-sm'>{item.name}</p>
                     </button>
