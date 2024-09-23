@@ -124,7 +124,8 @@ export default function PageAccount(): JSX.Element {
 
                                 <p className="text-sm mb-3">
                                     <Trans i18nKey="account.credits" components={{
-                                        1: <a className="underline" href="https://github.com/BAIDWebDev/whale-docker"/>
+                                        1: <a className="underline"
+                                              href="https://github.com/WebArtistryBAID/whale-docker"/>
                                     }}/>
                                 </p>
                             </div>
@@ -162,7 +163,7 @@ export default function PageAccount(): JSX.Element {
                                                 className="rounded-full w-48 py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 mb-3">{t('account.statisticsManagement')}</button>}
                                 </div>
                                 <div className="lg:hidden mb-3">
-                                    <p>{t('account.administrationMobile')}</p>
+                                    <p className="text-xs">{t('account.administrationMobile')}</p>
                                 </div>
 
                                 <p className="text-sm">{t('account.totalSpent')}</p>
