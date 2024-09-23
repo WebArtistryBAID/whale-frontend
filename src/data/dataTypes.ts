@@ -39,6 +39,7 @@ export interface OptionItemSchema {
     typeId: number
     isDefault: boolean
     priceChange: string
+    soldOut: boolean
 }
 
 export interface ItemTypeSchema {
