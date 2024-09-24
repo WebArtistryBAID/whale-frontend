@@ -14,9 +14,11 @@ import ComponentIconText from '../../common/ComponentIconText.tsx'
 import ComponentOrderedItem from '../order/ComponentOrderedItem.tsx'
 
 import payQR from './assets/pay-qr.jpg'
+import { useState } from 'react'
 
 export default function PageCheck(): JSX.Element {
     const { t } = useTranslation()
+    const [confirmedRemark, setConfirmedRemark] = useState(false)
 
     const { id } = useParams()
     if (id == null) {
@@ -133,8 +135,19 @@ export default function PageCheck(): JSX.Element {
                             : null}
 
                         <p className="text-gray-400 text-xs mb-2">{t('check.payQR')}</p>
-                        <p className="text-accent-red text-xl mb-2">{t('check.payQRNote')}</p>
-                        <img src={payQR} alt="QR code" className="w-full rounded-3xl mx-auto mb-5"/>
+                        <div className="w-full rounded-3xl mx-auto mb-5 relative">
+                            <div className={`z-20 absolute w-full h-full backdrop-blur-lg transition-opacity duration-100 bg-black/50
+                                backdrop-filter rounded-3xl flex flex-col justify-center items-center p-5 ${confirmedRemark ? 'opacity-0' : ''}`}>
+                                <p className="text-white font-bold text-center text-lg mb-3">{t('check.payQRNote')}</p>
+                                <button onClick={() => {
+                                    setConfirmedRemark(true)
+                                }}
+                                        className="rounded-full py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100">
+                                    {t('order.confirm.confirm')}
+                                </button>
+                            </div>
+                            <img src={payQR} alt="QR code" className="w-full rounded-3xl"/>
+                        </div>
 
                         <p className="text-gray-400 text-xs mb-2">{t('check.products')}</p>
                         {order.data.items.map((item: OrderedItemSchema) => <ComponentOrderedItem key={item.id}
@@ -225,8 +238,19 @@ export default function PageCheck(): JSX.Element {
                             : null}
 
                         <p className="text-gray-400 text-xs mb-2">{t('check.payQR')}</p>
-                        <p className="text-accent-red text-2xl mb-2">{t('check.payQRNote')}</p>
-                        <img src={payQR} alt="QR code" className="w-full rounded-3xl xl:w-1/2 mx-auto mb-5"/>
+                        <div className="w-full xl:w-1/2 rounded-3xl mx-auto mb-5 relative">
+                            <div className={`z-20 absolute w-full h-full backdrop-blur-lg transition-opacity duration-100 bg-black/50
+                                backdrop-filter rounded-3xl flex flex-col justify-center items-center p-5 ${confirmedRemark ? 'opacity-0' : ''}`}>
+                                <p className="text-white font-bold text-center text-lg mb-3">{t('check.payQRNote')}</p>
+                                <button onClick={() => {
+                                    setConfirmedRemark(true)
+                                }}
+                                        className="rounded-full py-2 px-5 bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100">
+                                    {t('order.confirm.confirm')}
+                                </button>
+                            </div>
+                            <img src={payQR} alt="QR code" className="w-full rounded-3xl"/>
+                        </div>
 
                         <p className="text-gray-400 text-xs mb-2">{t('check.products')}</p>
                         {order.data.items.map((item: OrderedItemSchema) => <ComponentOrderedItem key={item.id}
