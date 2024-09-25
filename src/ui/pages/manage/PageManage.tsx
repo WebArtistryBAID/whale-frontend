@@ -24,7 +24,7 @@ import {
     faTruck
 } from '@fortawesome/free-solid-svg-icons'
 import { type OrderSchema, OrderStatus, OrderType } from '../../../data/dataTypes'
-import ComponentOrderedItem from '../order/ComponentOrderedItem'
+import ComponentManagedItem from './ComponentManagedItem'
 
 export default function PageManage(): JSX.Element {
     const { t } = useTranslation()
@@ -382,7 +382,7 @@ export default function PageManage(): JSX.Element {
                             <p className="text-lg mb-3">{t('manage.itemOrdered')}</p>
                             <div className='grid xl:grid-cols-1 2xl:grid-cols-2 gap-5'>
                                 {selectedOrder.items.map(item => <div key={item.id} className='rounded-3xl bg-accent-yellow-bg p-1'>
-                                    <ComponentOrderedItem item={item} />
+                                    <ComponentManagedItem item={item}/>
                                 </div>)}
                             </div>
                         </div>}
