@@ -185,7 +185,9 @@
   "manage": {
     "title": "白鲸: 订单处理",
     "unselected": "请在左侧选择订单",
-    "noOrders": "暂无未处理的订单",
+    "noOrders": "今天暂无订单!",
+    "noOrdersAll": "暂无订单",
+    "noOrdersUnpaid": "所有订单均已支付",
     "updateStatus": "更新订单状态",
     "updatePaymentStatus": "更新付款状态",
     "notPaid": "未付款",
@@ -199,6 +201,7 @@
     "deliveryRoom": "外送房间号",
     "itemOrdered": "订单产品",
     "shopOpen": "正在接受订单",
+    "totalQuota": "最大点单杯数",
     "shopClosed": "未开始接受订单",
     "toggleShopOpen": "开店",
     "toggleShopClose": "闭店",

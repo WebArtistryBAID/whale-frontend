@@ -1,21 +1,17 @@
 import { useTranslation } from 'react-i18next'
 import BasePage from '../../../BasePage.tsx'
 import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query'
-import {
-    cancelOrder,
-    getAllOrders,
-    getSettings,
-    getTodayOrders,
-    setSettings,
-    updateOrderStatus
-} from '../../../data/api'
+import { cancelOrder, getAllOrders, getSettings, getTodayOrders, setSettings, updateOrderStatus } from '../../../data/api'
 import { type PersistentStorage, usePersistentStorage } from '../../../data/persistentStorage'
 import ComponentError from '../../common/ComponentError'
 import ComponentLoading from '../../common/ComponentLoading'
 import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
+    faCheck,
     faCircleCheck,
+    faClose,
+    faEdit,
     faHourglass,
     faMoneyBill,
     faMugSaucer,
@@ -33,6 +29,8 @@ export default function PageManage(): JSX.Element {
 
     const [currentTime, setCurrentTime] = useState(0)
     const [cancelConfirm, setCancelConfirm] = useState(false)
+    const [editingQuota, setEditingQuota] = useState(false)
+    const [setQuota, setSetQuota] = useState('')
     const [tab, setTab] = useState('today')
     let legacyInterval = -1
 
@@ -77,10 +75,28 @@ export default function PageManage(): JSX.Element {
         refetchInterval: 7000
     })
 
+    const totalQuota = useQuery({
+        queryKey: ['order-total-quota'],
+        queryFn: async () => await getSettings('total-quota'),
+        refetchInterval: 7000
+    })
+
     const changeShopOpen = useMutation({
         mutationFn: async (open: string) => await setSettings('shop-open', open === '1' ? '0' : '1', persistentStorage.getToken()!),
         onSuccess: () => {
             void getShopOpen.refetch()
+        }
+    })
+
+    const changeQuota = useMutation({
+        mutationFn: async () => {
+            if (isNaN(parseInt(setQuota)) || parseInt(setQuota) < 0) {
+                return
+            }
+            await setSettings('total-quota', parseInt(setQuota).toString(), persistentStorage.getToken()!)
+        },
+        onSuccess: () => {
+            void totalQuota.refetch()
         }
     })
 
@@ -278,7 +294,7 @@ export default function PageManage(): JSX.Element {
                                 </>
                                 : null}
                     </div>
-                    <div className='flex-shrink flex items-center'>
+                    <div className="flex-shrink flex items-center mb-3">
                         {getShopOpen.isPending
                             ? <ComponentLoading />
                             : <>
@@ -287,11 +303,50 @@ export default function PageManage(): JSX.Element {
                                         className="rounded-full bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 px-4 py-2">{getShopOpen.data === '1' ? t('manage.toggleShopClose') : t('manage.toggleShopOpen')}</button>
                             </>}
                     </div>
+                    <div className="flex-shrink flex items-center">
+                        {totalQuota.isPending
+                            ? <ComponentLoading/>
+                            : <>
+                                <p className="flex-grow mr-3">{t('manage.totalQuota')}</p>
+                                {!editingQuota ? <p className="mr-3">{totalQuota.data as string}</p> : null}
+                                {editingQuota
+                                    ? <input
+                                        aria-label={t('manage.totalQuota')} type="number"
+                                        className="w-16 p-3 bg-gray-50 rounded-3xl appearance-none" value={setQuota}
+                                        onChange={(e) => {
+                                            setSetQuota(e.target.value)
+                                        }}/>
+                                    : null}
+                                {!editingQuota
+                                    ? <button onClick={() => {
+                                        setEditingQuota(true)
+                                        setSetQuota(totalQuota.data as string)
+                                    }}
+                                              className="rounded-full bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 px-4 py-2">
+                                        <FontAwesomeIcon icon={faEdit}/></button>
+                                    : null}
+                                {editingQuota
+                                    ? <button onClick={() => {
+                                        changeQuota.mutate()
+                                        setEditingQuota(false)
+                                    }}
+                                              className="rounded-full bg-accent-yellow-bg hover:bg-accent-orange-bg mr-2 transition-colors duration-100 px-4 py-2">
+                                        <FontAwesomeIcon icon={faCheck}/></button>
+                                    : null}
+                                {editingQuota
+                                    ? <button onClick={() => {
+                                        setEditingQuota(false)
+                                    }}
+                                              className="rounded-full bg-accent-yellow-bg hover:bg-accent-orange-bg transition-colors duration-100 px-4 py-2">
+                                        <FontAwesomeIcon icon={faClose}/></button>
+                                    : null}
+                            </>}
+                    </div>
                 </div>
-                <div className='w-2/3 2xl:w-3/4 ml-5'>
+                <div className="w-2/3 2xl:w-3/4 ml-5">
                     {selectedOrder == null
-                        ? <div className='w-full h-full flex justify-center items-center flex-col'>
-                            <FontAwesomeIcon icon={faMugSaucer} className='text-7xl text-gray-400 mb-3' />
+                        ? <div className="w-full h-full flex justify-center items-center flex-col">
+                            <FontAwesomeIcon icon={faMugSaucer} className="text-7xl text-gray-400 mb-3"/>
                             <p className="text-lg mb-1">{t('manage.unselected')}</p>
                         </div>
                         : <div>

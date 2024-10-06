@@ -185,7 +185,9 @@
   "manage": {
     "title": "Whale Cafe: Process Orders",
     "unselected": "Select an order to get started",
-    "noOrders": "Phew, all orders completed!",
+    "noOrders": "No orders yet for today!",
+    "noOrdersAll": "No orders yet",
+    "noOrdersUnpaid": "Everyone paid already!",
     "updateStatus": "Update Order Status",
     "updatePaid": "Update Payment Status",
     "notPaid": "Not Paid",
@@ -199,6 +201,7 @@
     "deliveryRoom": "Delivery Room",
     "itemOrdered": "Items Ordered",
     "shopOpen": "Ready for Ordering",
+    "totalQuota": "Max. # of Cups",
     "shopClosed": "Ordering Closed",
     "toggleShopOpen": "Enable Ordering",
     "toggleShopClose": "Disable Ordering",
