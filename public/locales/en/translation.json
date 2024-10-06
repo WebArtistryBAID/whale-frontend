@@ -90,7 +90,7 @@
     "estimateTime_other": "~<1>{{count}}</1> minutes remaining",
     "waitingToStart": "Production starts at 12:30 p.m.",
     "payQR": "Pay in advance with WeChat Pay",
-    "payQRNote": "Please make sure to note your order number when paying!",
+    "payQRNote": "Please make sure to add a remark with your order number or name when paying!",
     "status": {
       "waiting_pickUp": "Waiting",
       "done_pickUp": "Done",

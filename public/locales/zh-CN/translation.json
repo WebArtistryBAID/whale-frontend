@@ -90,7 +90,7 @@
     "estimateTime_other": "需要等待约 <1>{{count}}</1> 分钟",
     "waitingToStart": "12:30 将开始制作",
     "payQR": "使用微信提前扫描二维码付款",
-    "payQRNote": "付款时请务必备注您的订单号!",
+    "payQRNote": "付款时请务必备注您的订单号或姓名!",
     "status": {
       "waiting_pickUp": "制作中",
       "done_pickUp": "已完成",
