@@ -26,6 +26,14 @@ export interface OrderEstimateSchema {
     status: OrderStatus | null
 }
 
+export interface MeCanOrderResultSchema {
+    result: boolean
+    orderId: number | null
+    orderNumber: string | null
+    orderDate: string | null
+    orderTotalPrice: string | null
+}
+
 export interface MultipleOrdersResponse {
     items: OrderSchema[]
     total: number
