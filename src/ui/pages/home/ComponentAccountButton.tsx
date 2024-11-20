@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { type PersistentStorage, usePersistentStorage } from '../../../data/persistentStorage.tsx'
 import { useNavigate } from 'react-router-dom'
+import { redirectToLogin } from '../../../utils.ts'
 
 export default function ComponentAccountButton(): JSX.Element {
     const { t } = useTranslation()
@@ -14,7 +15,7 @@ export default function ComponentAccountButton(): JSX.Element {
                             px-3 py-5 bg-white hover:bg-gray-100 transition-colors duration-100'
                 onClick={() => {
                     if (persistentStorage.getToken() == null) {
-                        navigate('/login/oauth2/_account')
+                        redirectToLogin()
                         return
                     }
                     navigate('/account')

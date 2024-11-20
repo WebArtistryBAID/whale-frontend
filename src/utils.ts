@@ -23,3 +23,7 @@ export function frontendCalculate(item: OrderedItemSchema): Decimal {
             .reduce((partialSum, current) => partialSum.add(current), new Decimal(0))
         ).mul(item.amount)
 }
+
+export function redirectToLogin(): void {
+    location.href = `${import.meta.env.VITE_ONELOGIN_HOST}/oauth2/authorize?client_id=${import.meta.env.VITE_ONELOGIN_CLIENT_ID}&redirect_uri=${import.meta.env.VITE_API_HOST}/login/authorize&scope=basic+phone+sms&response_type=code`
+}

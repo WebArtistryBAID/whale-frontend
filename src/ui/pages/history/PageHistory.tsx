@@ -11,12 +11,11 @@ import ComponentHistoricalOrder from './ComponentHistoricalOrder.tsx'
 import React, { useEffect } from 'react'
 import { faMugSaucer, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useNavigate } from 'react-router-dom'
+import { redirectToLogin } from '../../../utils.ts'
 
 export default function PageHistory(): JSX.Element {
     const { t } = useTranslation()
     const persistentStorage: PersistentStorage = usePersistentStorage()
-    const navigate = useNavigate()
 
     const query = useInfiniteQuery({
         queryKey: ['user-orders'],
@@ -32,7 +31,7 @@ export default function PageHistory(): JSX.Element {
 
     useEffect(() => {
         if (persistentStorage.getToken() == null) {
-            navigate('/login/oauth2/_history')
+            redirectToLogin()
         }
     }, [])
 

@@ -15,7 +15,9 @@ To run in development:
   the backend development server.
 * Copy `.env.example` to `.env`, and change `VITE_API_HOST` accordingly. Typically, you will change it
   to `http://localhost:8000`.
-* Also change `VITE_HOST` according to where the frontend is hosted.
+* Change `VITE_HOST` according to where the frontend is hosted.
+* Change `VITE_ONELOGIN_CLIENT_ID` according to your OneLogin client ID.
+* Change `VITE_ONELOGIN_HOST` according to the location where OneLogin is hosted, no trailing slashes.
 * Run `npm install`.
 * Run `npm run dev`.
 

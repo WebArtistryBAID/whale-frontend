@@ -11,6 +11,7 @@ import ComponentError from '../../common/ComponentError'
 import ComponentDeleteAccountModal from './ComponentDeleteAccountModal'
 import ComponentBottomNav from '../../common/ComponentBottomNav.tsx'
 import { type ShoppingCart, useShoppingCart } from '../../../data/shoppingCart.tsx'
+import { redirectToLogin } from '../../../utils.ts'
 
 export default function PageAccount(): JSX.Element {
     const persistentStorage: PersistentStorage = usePersistentStorage()
@@ -22,7 +23,7 @@ export default function PageAccount(): JSX.Element {
 
     useEffect(() => {
         if (persistentStorage.getToken() == null) {
-            navigate('/login/oauth2/_account')
+            redirectToLogin()
         }
     }, [])
 

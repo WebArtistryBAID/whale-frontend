@@ -18,6 +18,7 @@ import { useTranslation } from 'react-i18next'
 import ComponentTopBar from '../../common/ComponentTopBar.tsx'
 
 import FullScreenMessage from '../../common/FullScreenMessage.tsx'
+import { redirectToLogin } from '../../../utils.ts'
 
 export default function PageOrder(): JSX.Element {
     const { t } = useTranslation()
@@ -70,7 +71,7 @@ export default function PageOrder(): JSX.Element {
 
     useEffect(() => {
         if (persistentStorage.getToken() == null) {
-            navigate('/login/oauth2/_order')
+            redirectToLogin()
         }
     }, [])
 

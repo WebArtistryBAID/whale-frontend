@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMugHot } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
 import { type PersistentStorage, usePersistentStorage } from '../../../data/persistentStorage.tsx'
+import { redirectToLogin } from '../../../utils.ts'
 
 export default function ComponentPickupButton(): JSX.Element {
     const { t } = useTranslation()
@@ -14,7 +15,7 @@ export default function ComponentPickupButton(): JSX.Element {
                             px-3 py-5 bg-white hover:bg-gray-100 transition-colors duration-100'
                 onClick={() => {
                     if (persistentStorage.getToken() == null) {
-                        navigate('/login/oauth2/_order')
+                        redirectToLogin()
                         return
                     }
                     navigate('/order')
