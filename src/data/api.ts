@@ -9,6 +9,7 @@ import {
 import {
     type GenericError,
     type LoginRedirectTarget,
+    type MeCanOrderResultSchema,
     type MultipleOrdersResponse,
     type OrderCreateSchema,
     type OrderEstimateSchema,
@@ -180,7 +181,7 @@ export async function getMe(token: string): Promise<UserSchemaSecure | GenericEr
     return await get('me', new Map(), token)
 }
 
-export async function getMeCanOrder(token: string): Promise<boolean | GenericError> {
+export async function getMeCanOrder(token: string): Promise<MeCanOrderResultSchema | GenericError> {
     return await get('me/can-order', new Map(), token)
 }
 

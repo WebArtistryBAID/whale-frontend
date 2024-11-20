@@ -58,7 +58,11 @@
     "exitOnSite": "Exit On-Site Ordering",
     "activeOrder": {
       "title": "Active Order",
-      "description": "Whale Cafe has a cause to support. All of your purchases aid charity causes. Please complete and pay for your previous order before making a new one."
+      "description": "Whale Cafe has a cause to support. All of your purchases aid charity causes.",
+      "orderInfo": "You haven't paid for this order yet:",
+      "qr": "Please scan the following QR code to pay.",
+      "qrInfo": "Please add a remark noting your order number and name when paying!",
+      "alreadyPaid": "Already paid? Please contact us for help."
     },
     "confirm": {
       "title": "Confirm Your Order",

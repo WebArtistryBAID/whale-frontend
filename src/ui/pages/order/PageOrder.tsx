@@ -13,12 +13,17 @@ import { type ItemTypeSchema } from '../../../data/dataTypes.ts'
 import ComponentItemDetails from './ComponentItemDetails.tsx'
 import { useShoppingCart } from '../../../data/shoppingCart.tsx'
 import { type PersistentStorage, usePersistentStorage } from '../../../data/persistentStorage.tsx'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import ComponentTopBar from '../../common/ComponentTopBar.tsx'
 
 import FullScreenMessage from '../../common/FullScreenMessage.tsx'
 import { redirectToLogin } from '../../../utils.ts'
+
+import payQR from '../check/assets/pay-qr.jpg'
+import loginBg from '../../common/assets/login-bg.webp'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 export default function PageOrder(): JSX.Element {
     const { t } = useTranslation()
@@ -78,7 +83,7 @@ export default function PageOrder(): JSX.Element {
     if (categories.isError || getShopOpen.isError || me.isError || ads.isError || meCanOrder.isError || quota.isError || totalQuota.isError ||
         (typeof categories.data === 'object' && 'detail' in categories.data) || (typeof me.data === 'object' && 'detail' in me.data) ||
         (typeof quota.data === 'object' && 'detail' in quota.data) || typeof totalQuota.data === 'object' ||
-        typeof singleQuota.data === 'object' || singleQuota.isError) {
+        typeof singleQuota.data === 'object' || (typeof meCanOrder.data === 'object' && 'detail' in meCanOrder.data) || singleQuota.isError) {
         return <BasePage><ComponentError detail={categories} screen={true}/></BasePage>
     }
 
@@ -92,9 +97,59 @@ export default function PageOrder(): JSX.Element {
         return <></>
     }
 
-    if (meCanOrder.data === false && shoppingCart.getOnSiteOrderMode() === false) {
-        return <FullScreenMessage title={t('order.activeOrder.title')}
-                                  description={t('order.activeOrder.description')}/>
+    if (!meCanOrder.data.result && shoppingCart.getOnSiteOrderMode() === false) {
+        return <BasePage>
+            <div className="flex justify-center items-center w-screen lg:h-screen bg-gray-50 bg-cover bg-center"
+                 style={{ backgroundImage: `url(${loginBg})` }}>
+                <div className="p-8 w-full h-full lg:w-2/3 lg:h-auto bg-white rounded-3xl">
+                    <div className="flex items-center mb-16">
+                        <a className="skip-to-main" href="#main">{t('a11y.skipToMain')}</a>
+                        <button onClick={() => {
+                            navigate('/')
+                        }} className="rounded-full p-1 hover:bg-gray-200 transition-colors duration-100 w-8 h-8 mr-3"
+                                aria-label={t('a11y.back')}>
+                            <FontAwesomeIcon icon={faArrowLeft} className="text-gray-800 text-lg"/>
+                        </button>
+                        <p className="font-display">{t('name')}</p>
+                    </div>
+
+                    <div id="main" className="h-full">
+                        <h1 className="font-display text-3xl font-bold mb-5">{t('order.activeOrder.title')}</h1>
+                        <div className="flex flex-col lg:flex-row w-full mb-5">
+                            <div className="lg:w-1/2 lg:mr-3">
+                                <p className="mb-1">{t('order.activeOrder.description')}</p>
+                                <p className="mb-3">{t('order.activeOrder.orderInfo')}</p>
+                                <Link to={`/check/${meCanOrder.data.orderId!}`}
+                                      className="block hover:bg-accent-latte transition-colors duration-100 w-full bg-accent-yellow-bg rounded-3xl p-5 mb-3">
+                                    <p className="font-display text-xl font-bold">{meCanOrder.data.orderNumber}</p>
+                                    <p className="text-sm">{meCanOrder.data.orderDate!.substring(0, 10)}</p>
+                                    <p className="text-lg font-display">¥{meCanOrder.data.orderTotalPrice}</p>
+                                </Link>
+                                <p className="mb-1">{t('order.activeOrder.qr')}</p>
+                                <p className="text-sm text-gray-500 mb-1">{t('order.activeOrder.alreadyPaid')}</p>
+                            </div>
+                            <div className="lg:w-1/2 lg:ml-3">
+                                <p className="mb-3 text-lg text-red-500">{t('order.activeOrder.qrInfo')}</p>
+                                <div className="flex justify-center items-center">
+                                    <img src={payQR} alt="QR code" className="w-full lg:w-72 rounded-3xl"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="w-full flex justify-center items-center">
+                            <button
+                                className="w-full max-w-96 rounded-full bg-blue-500 hover:bg-blue-600 hover:shadow-lg
+                     transition-colors duration-100 p-2 text-white mb-8"
+                                onClick={() => {
+                                    navigate('/')
+                                }}>
+                                {t('order.back')}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </BasePage>
     }
 
     if (getShopOpen.data === '0' || typeof getShopOpen.data === 'object') {

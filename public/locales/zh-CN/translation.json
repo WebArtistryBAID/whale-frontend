@@ -58,7 +58,11 @@
     "exitOnSite": "退出现场点单",
     "activeOrder": {
       "title": "尚未付款",
-      "description": "在白鲸咖啡馆，您的每一次消费都在助力公益事业。您有一个尚未完成的订单，请完成后再重新点单。"
+      "description": "在白鲸咖啡馆，您的每一次消费都在助力公益事业。",
+      "orderInfo": "您尚未为本订单付款:",
+      "qr": "请使用微信 (WeChat) 扫描二维码付款。",
+      "qrInfo": "付款时请务必备注您的订单号或姓名!",
+      "alreadyPaid": "已经付款? 请联系我们获得帮助。"
     },
     "confirm": {
       "title": "确认点单",
@@ -89,7 +93,7 @@
     "estimateTime_one": "需要等待约 <1>{{count}}</1> 分钟",
     "estimateTime_other": "需要等待约 <1>{{count}}</1> 分钟",
     "waitingToStart": "12:30 将开始制作",
-    "payQR": "使用微信提前扫描二维码付款",
+    "payQR": "使用微信 (WeChat) 提前扫描二维码付款",
     "payQRNote": "付款时请务必备注您的订单号或姓名!",
     "status": {
       "waiting_pickUp": "制作中",
